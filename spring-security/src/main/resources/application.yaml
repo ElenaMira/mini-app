@@ -1,0 +1,28 @@
+spring:
+  data:
+    redis:
+      host: 127.0.0.1
+      database: 3
+      port: 6379
+  datasource:
+    url: jdbc:mysql://localhost:3306/springbootlab?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: zss200417
+  security:
+    permit-all_urls:
+      - /login
+#  boot:
+#    admin:
+#      client:
+#        password: admin
+#        username: admin
+#        url: http://127.0.0.1:${server.port}/${spring.boot.admin.context-path}
+#        instance:
+#          service-host-type: IP
+#      context-path: /admin
+application:
+  scan:
+    base-package: cn.iocoder.boot
+logging:
+  level:
+    cn.iocoder.boot.springsecurity: debug
