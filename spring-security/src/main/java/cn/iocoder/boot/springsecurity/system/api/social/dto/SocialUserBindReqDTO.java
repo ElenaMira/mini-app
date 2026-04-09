@@ -5,10 +5,12 @@ import cn.iocoder.boot.springsecurity.common.enums.UserTypeEnum;
 import cn.iocoder.boot.springsecurity.common.validation.InEnum;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 
 /**
  * @author xiaosheng
  */
+@AllArgsConstructor
 public class SocialUserBindReqDTO {
 
     /**

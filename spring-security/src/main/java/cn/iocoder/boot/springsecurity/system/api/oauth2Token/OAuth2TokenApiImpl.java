@@ -2,6 +2,8 @@ package cn.iocoder.boot.springsecurity.system.api.oauth2Token;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.iocoder.boot.springsecurity.system.api.oauth2Token.dto.OAuth2AccessTokenCheckRespDTO;
+import cn.iocoder.boot.springsecurity.system.api.oauth2Token.dto.OAuth2AccessTokenCreateReqDTO;
+import cn.iocoder.boot.springsecurity.system.api.oauth2Token.dto.OAuth2AccessTokenCreateRespDTO;
 import cn.iocoder.boot.springsecurity.system.dal.DO.OAuth2AccessTokenDO;
 import cn.iocoder.boot.springsecurity.system.service.OAuth2TokenService;
 import jakarta.annotation.Resource;
@@ -19,5 +21,10 @@ public class OAuth2TokenApiImpl implements OAuth2TokenCommonApi {
     public OAuth2AccessTokenCheckRespDTO checkAccessToken(String accessToken) {
         OAuth2AccessTokenDO accessTokenDO = oauth2TokenService.checkAccessToken(accessToken);
         return BeanUtil.toBean(accessTokenDO, OAuth2AccessTokenCheckRespDTO.class);
+    }
+
+    @Override
+    public OAuth2AccessTokenCreateRespDTO createAccessToken(OAuth2AccessTokenCreateReqDTO reqDTO) {
+       retuen oauth2TokenService.createAccessToken(reqDTO);
     }
 }

@@ -1,10 +1,16 @@
 package cn.iocoder.boot.springsecurity.member.service.authService;
 
 import cn.iocoder.boot.springsecurity.common.enums.CommonStatusEnum;
+import cn.iocoder.boot.springsecurity.common.enums.UserTypeEnum;
 import cn.iocoder.boot.springsecurity.member.control.vo.AppAuthLoginReqVO;
 import cn.iocoder.boot.springsecurity.member.control.vo.AppAuthLoginRespVO;
 import cn.iocoder.boot.springsecurity.member.dal.dataObject.MemberUserDO;
+import cn.iocoder.boot.springsecurity.member.vilidation.Mobile;
+import cn.iocoder.boot.springsecurity.system.api.oauth2Token.OAuth2TokenCommonApi;
+import cn.iocoder.boot.springsecurity.system.api.social.dto.SocialUserBindReqDTO;
+import cn.iocoder.boot.springsecurity.system.service.SocialUserService;
 import jakarta.annotation.Resource;
+import jakarta.validation.constraints.NotEmpty;
 
 import static cn.iocoder.boot.springsecurity.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.boot.springsecurity.member.enums.ErrorCodeConstants.AUTH_LOGIN_BAD_CREDENTIALS;
@@ -17,6 +23,12 @@ import static cn.iocoder.boot.springsecurity.member.enums.ErrorCodeConstants.AUT
 public class AuthServiceImpl implements AuthService{
     @Resource
     private MemberUserService memberUserService;
+    @Resource
+    private SocialUserService socialUserService;
+
+    @Resource
+    private OAuth2TokenCommonApi oauth2TokenApi;
+
     @Override
     public AppAuthLoginRespVO login(AppAuthLoginReqVO reqVO) {
         //1. 判断是否存在合法的登录信息
@@ -25,9 +37,21 @@ public class AuthServiceImpl implements AuthService{
         String openid = null;
         if(reqVO.getSocialType()!=null){
             // 说明有绑定社交用户(第三方)
-            openid =
-
+            openid = socialUserService.bindSocialUser(new SocialUserBindReqDTO(
+                    userDO.getId()
+                    ,getUserType().getValue()
+                    ,reqVO.getSocialType(),reqVO.getSocialCode(), reqVO.getSocialState()
+            ));
         }
+        // 创建 Token 令牌，记录登录日志
+//        return createTokenAfterLoginSuccess(userDO, reqVO.getMobile(), LoginLogTypeEnum.LOGIN_MOBILE, openid);
+        return createTokenAfterLoginSuccess(userDO, reqVO.getMobile(),openid);
+    }
+
+    private AppAuthLoginRespVO createTokenAfterLoginSuccess(MemberUserDO userDO, @NotEmpty(message = "手机号不能为空") @Mobile String mobile, String openid) {
+        //1. 创建登录日志
+        //2. 创建 Token 令牌
+
     }
 
     public MemberUserDO login0(String mobile, String password){
@@ -46,5 +70,8 @@ public class AuthServiceImpl implements AuthService{
             throw exception(AUTH_LOGIN_USER_DISABLED);
         }
         return memberUser;
+    }
+    private UserTypeEnum getUserType() {
+        return UserTypeEnum.MEMBER;
     }
 }

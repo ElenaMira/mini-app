@@ -1,7 +1,7 @@
 package cn.iocoder.boot.springsecurity.member.service.authService;
 
 import cn.iocoder.boot.springsecurity.member.dal.dataObject.MemberUserDO;
-import cn.iocoder.boot.springsecurity.member.dal.user.MemberUserMapper;
+import cn.iocoder.boot.springsecurity.member.dal.mysql.user.MemberUserMapper;
 import jakarta.annotation.Resource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

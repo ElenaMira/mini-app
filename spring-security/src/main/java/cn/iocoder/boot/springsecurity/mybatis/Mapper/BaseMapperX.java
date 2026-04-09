@@ -18,4 +18,21 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
     default T selectOne(SFunction<T, ?> field, Object value) {
         return selectOne(new LambdaQueryWrapper<T>().eq(field,value));
     }
+    /**
+     * 根据俩个字段查询一条记录
+     */
+    default T selectOne(SFunction<T, ?> field0, Object value0,SFunction<T, ?> field1, Object value1) {
+        return selectOne(new LambdaQueryWrapper<T>().eq(field0,value0).eq(field1,value1));
+    }
+    /**
+     * 根据三个字段查询一条记录
+     */
+    default T selectOne(SFunction<T, ?> field0, Object value0
+            ,SFunction<T, ?> field1, Object value1
+            ,SFunction<T, ?> field2, Object value3
+    ) {
+        return selectOne(new LambdaQueryWrapper<T>().eq(field0,value0)
+                .eq(field1,value1)
+                .eq(field2,value3));
+    }
 }

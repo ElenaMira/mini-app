@@ -91,6 +91,18 @@
 			<artifactId>guava</artifactId>
 			<version>33.5.0-jre</version>
 		</dependency>
+
+		<!-- JustAuth 官方依赖 -->
+		<dependency>
+			<groupId>me.zhyd.oauth</groupId>
+			<artifactId>JustAuth</artifactId>
+			<version>1.16.7</version>
+		</dependency>
+		<dependency>
+			<groupId>com.xkcoding.justauth</groupId>
+			<artifactId>justauth-spring-boot-starter</artifactId>
+			<version>1.4.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

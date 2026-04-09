@@ -1,5 +1,6 @@
 package cn.iocoder.boot.springsecurity.common.enums;
 
+import cn.hutool.core.util.ArrayUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -31,5 +32,11 @@ public enum SocialTypeEnum implements ArrayValuable<Integer>{
     @Override
     public Integer[] array() {
         return ARRAYS;
+    }
+
+    public static SocialTypeEnum valueOfType(Integer type){
+        // 基于hutool工具实现对应Type的枚举返回
+        return ArrayUtil
+                .firstMatch(o->o.getType().equals(type),values());
     }
 }

@@ -23,6 +23,19 @@ spring:
 application:
   scan:
     base-package: cn.iocoder.boot
+
+justauth:
+  enabled: true  # 必须加！新版开关
+  cache:
+    prefix: 'social_auth_state:' # 缓存前缀，目前只对 Redis 缓存生效，默认 JUSTAUTH::STATE::
+    type: redis
+    timeout: 3m
+  type:
+    WECHAT_MINI_PROGRAM:
+
+
+
+
 logging:
   level:
     cn.iocoder.boot.springsecurity: debug
