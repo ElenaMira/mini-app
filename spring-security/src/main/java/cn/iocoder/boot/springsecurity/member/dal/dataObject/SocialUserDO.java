@@ -1,6 +1,7 @@
 package cn.iocoder.boot.springsecurity.member.dal.dataObject;
 
 import cn.iocoder.boot.springsecurity.common.enums.SocialTypeEnum;
+import cn.iocoder.boot.springsecurity.system.dal.DO.BaseDO;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -10,7 +11,7 @@ import lombok.Data;
  */
 @Data
 @TableName(value = "system_social_user",autoResultMap = true)
-public class SocialUserDO {
+public class SocialUserDO extends BaseDO {
     /**
      * 自增主键
      */

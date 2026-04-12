@@ -1,0 +1,10 @@
+### config: http/env.json
+### 请求 /login 接口 => 成功
+POST {{appApi}}}/member/auth/login
+Content-Type: application/json
+tenant-id: {{appTenantId}}
+
+{
+  "mobile": "15601691388",
+  "password": "admin123"
+}

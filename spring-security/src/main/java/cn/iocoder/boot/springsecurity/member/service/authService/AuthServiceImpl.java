@@ -1,5 +1,6 @@
 package cn.iocoder.boot.springsecurity.member.service.authService;
 
+import cn.iocoder.boot.springsecurity.common.Object.BeanUtils;
 import cn.iocoder.boot.springsecurity.common.enums.CommonStatusEnum;
 import cn.iocoder.boot.springsecurity.common.enums.UserTypeEnum;
 import cn.iocoder.boot.springsecurity.member.control.vo.AppAuthLoginReqVO;
@@ -7,11 +8,16 @@ import cn.iocoder.boot.springsecurity.member.control.vo.AppAuthLoginRespVO;
 import cn.iocoder.boot.springsecurity.member.dal.dataObject.MemberUserDO;
 import cn.iocoder.boot.springsecurity.member.vilidation.Mobile;
 import cn.iocoder.boot.springsecurity.system.api.oauth2Token.OAuth2TokenCommonApi;
+import cn.iocoder.boot.springsecurity.system.api.oauth2Token.dto.OAuth2AccessTokenCheckRespDTO;
+import cn.iocoder.boot.springsecurity.system.api.oauth2Token.dto.OAuth2AccessTokenCreateReqDTO;
+import cn.iocoder.boot.springsecurity.system.api.oauth2Token.dto.OAuth2AccessTokenCreateRespDTO;
 import cn.iocoder.boot.springsecurity.system.api.social.dto.SocialUserBindReqDTO;
 import cn.iocoder.boot.springsecurity.system.service.SocialUserService;
+import com.fasterxml.jackson.databind.util.BeanUtil;
 import jakarta.annotation.Resource;
 import jakarta.validation.constraints.NotEmpty;
 
+import static cn.iocoder.boot.springsecurity.common.Object.BeanUtils.toBean;
 import static cn.iocoder.boot.springsecurity.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.boot.springsecurity.member.enums.ErrorCodeConstants.AUTH_LOGIN_BAD_CREDENTIALS;
 import static cn.iocoder.boot.springsecurity.member.enums.ErrorCodeConstants.AUTH_LOGIN_USER_DISABLED;
@@ -51,7 +57,10 @@ public class AuthServiceImpl implements AuthService{
     private AppAuthLoginRespVO createTokenAfterLoginSuccess(MemberUserDO userDO, @NotEmpty(message = "手机号不能为空") @Mobile String mobile, String openid) {
         //1. 创建登录日志
         //2. 创建 Token 令牌
-
+        OAuth2AccessTokenCreateRespDTO respDTO = oauth2TokenApi.createAccessToken(new OAuth2AccessTokenCreateReqDTO()
+                .setUserId(userDO.getId()).setUserType(getUserType().getValue()).setClientId("default")
+        );
+        return BeanUtils.toBean(respDTO,AppAuthLoginRespVO.class);
     }
 
     public MemberUserDO login0(String mobile, String password){

@@ -3,6 +3,7 @@ package cn.iocoder.boot.springsecurity.system.api.oauth2Token;
 import cn.iocoder.boot.springsecurity.system.api.oauth2Token.dto.OAuth2AccessTokenCheckRespDTO;
 import cn.iocoder.boot.springsecurity.system.api.oauth2Token.dto.OAuth2AccessTokenCreateReqDTO;
 import cn.iocoder.boot.springsecurity.system.api.oauth2Token.dto.OAuth2AccessTokenCreateRespDTO;
+import jakarta.validation.Valid;
 
 /**
  * @author xiaosheng
@@ -16,5 +17,5 @@ public interface OAuth2TokenCommonApi {
      */
     OAuth2AccessTokenCheckRespDTO checkAccessToken(String accessToken);
 
-    OAuth2AccessTokenCreateRespDTO createAccessToken(OAuth2AccessTokenCreateReqDTO reqDTO)
+    OAuth2AccessTokenCreateRespDTO createAccessToken(@Valid OAuth2AccessTokenCreateReqDTO reqDTO);
 }

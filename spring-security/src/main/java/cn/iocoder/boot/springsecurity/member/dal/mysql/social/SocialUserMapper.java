@@ -14,4 +14,9 @@ public interface SocialUserMapper extends BaseMapperX<SocialUserDO> {
                 ,SocialUserDO::getCode,code
                 ,SocialUserDO::getState,state);
    }
+   default  SocialUserDO selectByTypeAndOpenId(Integer socialType,String openId){
+      return  selectFirst(SocialUserDO::getType,socialType,
+               SocialUserDO::getOpenid,openId
+               );
+   }
 }

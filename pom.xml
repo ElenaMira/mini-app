@@ -21,7 +21,12 @@
 
     <properties>
         <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.compilerVersion>17</maven.compiler.compilerVersion>
     </properties>
+
+
     <repositories>
         <repository>
             <id>aliyunmaven</id>

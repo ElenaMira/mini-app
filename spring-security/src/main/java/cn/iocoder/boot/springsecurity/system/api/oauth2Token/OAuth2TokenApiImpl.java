@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 /**
  * @author xiaosheng
  */
-@Service
+@Service("OAuth2TokenApiImpl")
 public class OAuth2TokenApiImpl implements OAuth2TokenCommonApi {
 
     @Resource
@@ -25,6 +25,12 @@ public class OAuth2TokenApiImpl implements OAuth2TokenCommonApi {
 
     @Override
     public OAuth2AccessTokenCreateRespDTO createAccessToken(OAuth2AccessTokenCreateReqDTO reqDTO) {
-       retuen oauth2TokenService.createAccessToken(reqDTO);
+        OAuth2AccessTokenDO accessTokenDO = oauth2TokenService.createAccessToken(
+                reqDTO.getUserId(),
+                reqDTO.getUserType(),
+                reqDTO.getClientId(),
+                reqDTO.getScopes()
+        );
+        return BeanUtil.toBean(accessTokenDO,OAuth2AccessTokenCreateRespDTO.class);
     }
 }
