@@ -12,4 +12,12 @@ public interface RedisKeyConstants {
      * VALUE 数据类型：String 客户端信息
      */
     String OAUTH_CLIENT = "oauth_client";
+
+    /**
+     * 短信模版的缓存
+     * <p>
+     * KEY 格式：sms_template:{id}
+     * VALUE 数据格式：String 模版信息
+     */
+    String SMS_TEMPLATE = "sms_template";
 }

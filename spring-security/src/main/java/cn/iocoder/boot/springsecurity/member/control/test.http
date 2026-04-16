@@ -1,10 +1,19 @@
 ### config: http/env.json
 ### 请求 /login 接口 => 成功
-POST {{appApi}}}/member/auth/login
+POST {{appApi}}/member/auth/login
 Content-Type: application/json
 tenant-id: {{appTenantId}}
 
 {
   "mobile": "15601691388",
   "password": "admin123"
+}
+### 请求 /send-sms-code 接口 => 成功
+POST {{appApi}}/member/auth/send-sms-code
+Content-Type: application/json
+tenant-id: {{appTenantId}}
+
+{
+  "mobile": "13123057856",
+  "scene": 1
 }

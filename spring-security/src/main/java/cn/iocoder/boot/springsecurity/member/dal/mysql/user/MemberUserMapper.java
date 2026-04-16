@@ -1,7 +1,7 @@
 package cn.iocoder.boot.springsecurity.member.dal.mysql.user;
 
 import cn.iocoder.boot.springsecurity.member.dal.dataObject.MemberUserDO;
-import cn.iocoder.boot.springsecurity.mybatis.Mapper.BaseMapperX;
+import cn.iocoder.boot.springsecurity.mybatis.mapper.BaseMapperX;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

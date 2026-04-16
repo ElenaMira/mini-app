@@ -1,7 +1,7 @@
 package cn.iocoder.boot.springsecurity.system.api.social;
 
 import cn.iocoder.boot.springsecurity.system.api.social.dto.SocialUserBindReqDTO;
-import cn.iocoder.boot.springsecurity.system.service.SocialUserService;
+import cn.iocoder.boot.springsecurity.system.service.social.SocialUserService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 

@@ -23,8 +23,93 @@
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+<!--        <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>-->
+<!--        <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>-->
         <maven.compiler.compilerVersion>17</maven.compiler.compilerVersion>
+        <lombok.version>1.18.30</lombok.version>
+        <mapstruct.version>1.6.3</mapstruct.version>
+        <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
     </properties>
+
+<!--    <build>-->
+<!--        <pluginManagement>-->
+<!--            <plugins>-->
+<!--                &lt;!&ndash; maven-surefire-plugin 插件，用于运行单元测试。 &ndash;&gt;-->
+<!--                &lt;!&ndash; 注意，需要使用 3.0.X+，因为要支持 Junit 5 版本 &ndash;&gt;-->
+<!--                <plugin>-->
+<!--                    <groupId>org.apache.maven.plugins</groupId>-->
+<!--                    <artifactId>maven-surefire-plugin</artifactId>-->
+<!--                    <version>${maven-surefire-plugin.version}</version>-->
+<!--                </plugin>-->
+<!--                &lt;!&ndash; maven-compiler-plugin 插件，解决 spring-boot-configuration-processor + Lombok + MapStruct 组合 &ndash;&gt;-->
+<!--                &lt;!&ndash; https://stackoverflow.com/questions/33483697/re-run-spring-boot-configuration-annotation-processor-to-update-generated-metada &ndash;&gt;-->
+<!--                <plugin>-->
+<!--                    <groupId>org.apache.maven.plugins</groupId>-->
+<!--                    <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                    <version>${maven-compiler-plugin.version}</version>-->
+<!--                    <configuration>-->
+<!--                        <annotationProcessorPaths>-->
+<!--                            <path>-->
+<!--                                <groupId>org.springframework.boot</groupId>-->
+<!--                                <artifactId>spring-boot-configuration-processor</artifactId>-->
+<!--                                <version>${spring.boot.version}</version>-->
+<!--                            </path>-->
+<!--                            <path>-->
+<!--                                <groupId>org.projectlombok</groupId>-->
+<!--                                <artifactId>lombok</artifactId>-->
+<!--                                <version>${lombok.version}</version>-->
+<!--                            </path>-->
+<!--                            <path>-->
+<!--                                &lt;!&ndash; 确保 Lombok 生成的 getter/setter 方法能被 MapStruct 正确识别，-->
+<!--                                     避免出现 No property named “xxx" exists 的编译错误 &ndash;&gt;-->
+<!--                                <groupId>org.projectlombok</groupId>-->
+<!--                                <artifactId>lombok-mapstruct-binding</artifactId>-->
+<!--                                <version>0.2.0</version>-->
+<!--                            </path>-->
+<!--                            <path>-->
+<!--                                <groupId>org.mapstruct</groupId>-->
+<!--                                <artifactId>mapstruct-processor</artifactId>-->
+<!--                                <version>${mapstruct.version}</version>-->
+<!--                            </path>-->
+<!--                        </annotationProcessorPaths>-->
+<!--                    </configuration>-->
+<!--                </plugin>-->
+<!--                <plugin>-->
+<!--                    <groupId>org.codehaus.mojo</groupId>-->
+<!--                    <artifactId>flatten-maven-plugin</artifactId>-->
+<!--                </plugin>-->
+<!--            </plugins>-->
+<!--        </pluginManagement>-->
+
+<!--        <plugins>-->
+<!--            &lt;!&ndash; 统一 revision 版本 &ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <groupId>org.codehaus.mojo</groupId>-->
+<!--                <artifactId>flatten-maven-plugin</artifactId>-->
+<!--                <version>${flatten-maven-plugin.version}</version>-->
+<!--                <configuration>-->
+<!--                    <flattenMode>oss</flattenMode>-->
+<!--                    <updatePomFile>true</updatePomFile>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>flatten</goal>-->
+<!--                        </goals>-->
+<!--                        <id>flatten</id>-->
+<!--                        <phase>process-resources</phase>-->
+<!--                    </execution>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>clean</goal>-->
+<!--                        </goals>-->
+<!--                        <id>flatten.clean</id>-->
+<!--                        <phase>clean</phase>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
 
 
     <repositories>

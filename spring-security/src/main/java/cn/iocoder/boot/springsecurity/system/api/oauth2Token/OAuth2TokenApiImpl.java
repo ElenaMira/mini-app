@@ -4,8 +4,8 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.iocoder.boot.springsecurity.system.api.oauth2Token.dto.OAuth2AccessTokenCheckRespDTO;
 import cn.iocoder.boot.springsecurity.system.api.oauth2Token.dto.OAuth2AccessTokenCreateReqDTO;
 import cn.iocoder.boot.springsecurity.system.api.oauth2Token.dto.OAuth2AccessTokenCreateRespDTO;
-import cn.iocoder.boot.springsecurity.system.dal.DO.OAuth2AccessTokenDO;
-import cn.iocoder.boot.springsecurity.system.service.OAuth2TokenService;
+import cn.iocoder.boot.springsecurity.system.dal.DO.OAuth.OAuth2AccessTokenDO;
+import cn.iocoder.boot.springsecurity.system.service.oauth.OAuth2TokenService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 

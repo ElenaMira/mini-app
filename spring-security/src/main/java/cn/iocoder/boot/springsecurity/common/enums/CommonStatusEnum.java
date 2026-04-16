@@ -13,8 +13,8 @@ import java.util.Arrays;
 @AllArgsConstructor
 public enum CommonStatusEnum implements ArrayValuable<Integer>{
 
-    ENABLE(1,"开启"),
-    DISABLE(0,"关闭");
+    ENABLE(0,"开启"),
+    DISABLE(1,"关闭");
 
     /**
      *

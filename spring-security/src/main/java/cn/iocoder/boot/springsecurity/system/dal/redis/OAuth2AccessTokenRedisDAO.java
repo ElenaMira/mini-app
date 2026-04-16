@@ -1,7 +1,7 @@
 package cn.iocoder.boot.springsecurity.system.dal.redis;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
-import cn.iocoder.boot.springsecurity.system.dal.DO.OAuth2AccessTokenDO;
+import cn.iocoder.boot.springsecurity.system.dal.DO.OAuth.OAuth2AccessTokenDO;
 import cn.iocoder.boot.springsecurity.system.uitl.json.JsonUtils;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Repository;
@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author xiaosheng
- * {@link cn.iocoder.boot.springsecurity.system.dal.DO.OAuth2AccessTokenDO}
+ * {@link OAuth2AccessTokenDO}
  */
 @Repository
 public class OAuth2AccessTokenRedisDAO {

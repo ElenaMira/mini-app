@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * @author xiaosheng
  */
 @Data
-public class BaseDO implements Serializable {
+public class BaseDO implements Serializable{
     /**
      * 创建时间
      */

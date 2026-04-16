@@ -1,3 +1,7 @@
+.idea/
+*.iws
+*.iml
+*.ipr
 # 默认忽略的文件
 /shelf/
 /workspace.xml
@@ -8,3 +12,9 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+#忽略项目生成文件
+target/
+*.jar
+*.class
+
+sql/mysql/

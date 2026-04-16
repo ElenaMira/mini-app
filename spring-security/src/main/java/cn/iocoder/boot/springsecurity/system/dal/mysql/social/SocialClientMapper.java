@@ -1,7 +1,7 @@
 package cn.iocoder.boot.springsecurity.system.dal.mysql.social;
 
-import cn.iocoder.boot.springsecurity.mybatis.Mapper.BaseMapperX;
-import cn.iocoder.boot.springsecurity.system.dal.DO.SocialClientDO;
+import cn.iocoder.boot.springsecurity.mybatis.mapper.BaseMapperX;
+import cn.iocoder.boot.springsecurity.system.dal.DO.social.SocialClientDO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

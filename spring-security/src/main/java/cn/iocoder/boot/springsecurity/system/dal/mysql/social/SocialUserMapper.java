@@ -1,7 +1,7 @@
 package cn.iocoder.boot.springsecurity.system.dal.mysql.social;
 
 import cn.iocoder.boot.springsecurity.member.dal.dataObject.SocialUserDO;
-import cn.iocoder.boot.springsecurity.mybatis.Mapper.BaseMapperX;
+import cn.iocoder.boot.springsecurity.mybatis.mapper.BaseMapperX;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -14,4 +14,9 @@ public interface SocialUserMapper extends BaseMapperX<SocialUserDO> {
                 ,SocialUserDO::getCode,code
                 ,SocialUserDO::getState,state);
    }
+    default  SocialUserDO selectByTypeAndOpenId(Integer socialType,String openId){
+        return  selectFirst(SocialUserDO::getType,socialType,
+                SocialUserDO::getOpenid,openId
+        );
+    }
 }

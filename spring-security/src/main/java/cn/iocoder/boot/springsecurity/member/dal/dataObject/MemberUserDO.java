@@ -12,7 +12,8 @@ import lombok.Data;
 @Data
 public class MemberUserDO {
     @TableId
-    private long id;
+    //企业标准: 强制用包装类区分：未赋值 vs 赋值为 0
+    private Long id;
 
     private String mobile;
 

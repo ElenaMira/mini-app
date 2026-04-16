@@ -6,11 +6,12 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.iocoder.boot.springsecurity.common.enums.CommonStatusEnum;
 import cn.iocoder.boot.springsecurity.common.uitl.string.StrUtils;
-import cn.iocoder.boot.springsecurity.system.dal.DO.OAuth2ClientDO;
+import cn.iocoder.boot.springsecurity.system.dal.DO.OAuth.OAuth2ClientDO;
 import cn.iocoder.boot.springsecurity.system.dal.mysql.auth2.Auth2ClientMapper;
 import cn.iocoder.boot.springsecurity.system.dal.redis.RedisKeyConstants;
 import jakarta.annotation.Resource;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
@@ -20,6 +21,7 @@ import static cn.iocoder.boot.springsecurity.system.enums.ErrorCodeConstant.*;
 /**
  * @author xiaosheng
  */
+@Service
 public class OAuth2ClientServiceImpl implements OAuth2ClientService{
     @Resource
     private Auth2ClientMapper auth2ClientMapper;

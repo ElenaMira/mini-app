@@ -1,6 +1,6 @@
 package cn.iocoder.boot.springsecurity.system.service.oauth;
 
-import cn.iocoder.boot.springsecurity.system.dal.DO.OAuth2ClientDO;
+import cn.iocoder.boot.springsecurity.system.dal.DO.OAuth.OAuth2ClientDO;
 
 import java.util.Collection;
 

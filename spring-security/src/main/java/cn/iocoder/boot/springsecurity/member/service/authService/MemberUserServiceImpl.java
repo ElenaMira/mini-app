@@ -4,10 +4,12 @@ import cn.iocoder.boot.springsecurity.member.dal.dataObject.MemberUserDO;
 import cn.iocoder.boot.springsecurity.member.dal.mysql.user.MemberUserMapper;
 import jakarta.annotation.Resource;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 /**
  * @author xiaosheng
  */
+@Service
 public class MemberUserServiceImpl implements MemberUserService{
     @Resource
     private MemberUserMapper memberUserMapper;

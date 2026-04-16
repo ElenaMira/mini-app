@@ -5,7 +5,7 @@ spring:
       database: 3
       port: 6379
   datasource:
-    url: jdbc:mysql://localhost:3306/springbootlab?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/mini_app_houduan?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
     password: zss200417
   security:
@@ -46,3 +46,11 @@ justauth:
 logging:
   level:
     cn.iocoder.boot.springsecurity: debug
+
+houduan:
+  sms-code:
+    expire-times: 10m
+    send-frequency: 1s #测试使用todo
+    send-maximum-quantity-per-day: 9999
+    begin-code: 1000 # 这里配置 9999 的原因是，测试方便。
+    end-code: 9999 # 这里配置 9999 的原因是，测试方便。

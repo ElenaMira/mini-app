@@ -1,8 +1,8 @@
 package cn.iocoder.boot.springsecurity.system.dal.mysql.social;
 
-import cn.iocoder.boot.springsecurity.mybatis.Mapper.BaseMapperX;
-import cn.iocoder.boot.springsecurity.mybatis.Mapper.query.LambdaQueryWrapperX;
-import cn.iocoder.boot.springsecurity.system.dal.DO.SocialUserBindDO;
+import cn.iocoder.boot.springsecurity.mybatis.mapper.BaseMapperX;
+import cn.iocoder.boot.springsecurity.mybatis.mapper.query.LambdaQueryWrapperX;
+import cn.iocoder.boot.springsecurity.system.dal.DO.social.SocialUserBindDO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
