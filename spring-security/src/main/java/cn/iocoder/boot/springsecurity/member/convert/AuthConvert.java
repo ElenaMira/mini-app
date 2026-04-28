@@ -1,7 +1,9 @@
 package cn.iocoder.boot.springsecurity.member.convert;
 
+import cn.iocoder.boot.springsecurity.member.control.vo.AppAuthSmsLoginReqVO;
 import cn.iocoder.boot.springsecurity.member.control.vo.AppSendSmsCodeReqVO;
 import cn.iocoder.boot.springsecurity.system.api.sms.dto.SmsCodeSendReqDTO;
+import cn.iocoder.boot.springsecurity.system.api.sms.dto.SmsCodeUseReqDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -15,5 +17,7 @@ public interface AuthConvert {
 //    SocialUserBindReqDTO convert(Long userId, Integer userType, AppAuthSocialLoginReqVO reqVO);
 
     SmsCodeSendReqDTO convert(AppSendSmsCodeReqVO reqVO);
+
+    SmsCodeUseReqDTO convert(AppAuthSmsLoginReqVO reqVO,Integer scene,String ip);
 
 }

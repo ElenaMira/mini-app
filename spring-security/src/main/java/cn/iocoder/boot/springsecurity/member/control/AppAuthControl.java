@@ -3,6 +3,7 @@ package cn.iocoder.boot.springsecurity.member.control;
 import cn.iocoder.boot.springsecurity.common.pojo.CommonResult;
 import cn.iocoder.boot.springsecurity.member.control.vo.AppAuthLoginReqVO;
 import cn.iocoder.boot.springsecurity.member.control.vo.AppAuthLoginRespVO;
+import cn.iocoder.boot.springsecurity.member.control.vo.AppAuthSmsLoginReqVO;
 import cn.iocoder.boot.springsecurity.member.control.vo.AppSendSmsCodeReqVO;
 import cn.iocoder.boot.springsecurity.member.service.authService.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,9 +32,9 @@ public class AppAuthControl {
     }
 
     @PostMapping("/sms-login")
-    @Operation(summary = "手机号登录/注册(自动注册)")
+    @Operation(summary = "手机号+验证码登录/注册(自动注册)")
     @PermitAll
-    public CommonResult<AppAuthLoginRespVO> smsLogin(@RequestBody @Valid AppAuthLoginReqVO reqVO){
+    public CommonResult<AppAuthLoginRespVO> smsLogin(@RequestBody @Valid AppAuthSmsLoginReqVO reqVO){
         return CommonResult.success(authService.smsLogin(reqVO));
     }
     @PostMapping("/send-sms-code")

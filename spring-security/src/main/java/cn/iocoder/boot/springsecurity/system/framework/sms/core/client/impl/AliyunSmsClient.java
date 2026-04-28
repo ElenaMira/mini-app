@@ -25,8 +25,12 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public class AliyunSmsClient extends AbstractSmsClient{
-    private static final String URL = "https://dysmsapi.aliyuncs.com";
-    private static final String HOST = "dysmsapi.aliyuncs.com";
+    //商业短信API
+//    private static final String URL = "https://dysmsapi.aliyuncs.com";
+//    private static final String HOST = "dysmsapi.aliyuncs.com";
+    //号码认证服务下的短信API
+    private static final String URL = "https://dypnsapi.aliyuncs.com";
+    private static final String HOST = "dypnsapi.aliyuncs.com";
     private static final String VERSION = "2017-05-25";
 
     private static final String RESPONSE_CODE_SUCCESS = "OK";
@@ -44,12 +48,18 @@ public class AliyunSmsClient extends AbstractSmsClient{
         //1. 执行请求
         //参考链接 https://api.aliyun.com/document/Dysmsapi/2017-05-25/SendSms
         TreeMap<String, Object> queryParam = new TreeMap<>();
-        queryParam.put("PhoneNumbers", mobile);
+//        queryParam.put("PhoneNumbers", mobile);
+        //个人短信请求字段
+        queryParam.put("PhoneNumber", mobile);
         queryParam.put("SignName", properties.getSignature());
         queryParam.put("TemplateCode", apiTemplateId);
+        //个人的下的TemplateParam
         queryParam.put("TemplateParam", JsonUtils.toJsonString(MapUtils.convertMap(templateParams)));
         queryParam.put("OutId", sendLogId);
-        JSONObject response = request("SendSms", queryParam);
+        log.info("请求入参:{}",queryParam);
+        //企业级短信方法
+//        JSONObject response = request("SendSms", queryParam);
+        JSONObject response = request("SendSmsVerifyCode", queryParam);
 
         log.info("请求成功,响应:{}",response);
         // 2. 解析请求

@@ -21,12 +21,12 @@ import java.util.concurrent.ConcurrentMap;
 public class SmsClientFactoryImpl implements SmsClientFactory {
 
     /**
-     * 短信客户端 Map
+     * 基于Id映射的短信客户端 Map
      * key：渠道编号，使用 {@link SmsChannelProperties#getId()}
      */
     private final ConcurrentMap<Long, AbstractSmsClient> channelIdClients = new ConcurrentHashMap<>();
     /**
-     * 短信客户端 Map
+     * 基于Code映射的短信客户端 Map
      * key：渠道编码，使用 {@link SmsChannelProperties#getCode()} ()}
      *
      * 注意，一些场景下，需要获得某个渠道类型的客户端，所以需要使用它。
@@ -50,6 +50,7 @@ public class SmsClientFactoryImpl implements SmsClientFactory {
     @Override
     public SmsClient createOrUpdateSmsClient(SmsChannelProperties smsChannelProperties) {
         AbstractSmsClient client = channelIdClients.get(smsChannelProperties.getId());
+        //如果是第一次创建,则使用Code枚举值创建
         if(client==null){
             client=this.createSmsClient(smsChannelProperties);
             client.init();

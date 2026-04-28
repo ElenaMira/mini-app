@@ -47,7 +47,7 @@ public class SmsSendServiceImpl implements SmsSendService{
         List<KeyValue<String, Object>> newTemplateParams = buildTemplateParams(smsTemplateDO,templateParams);
 
         //创建发送日志。如果模板被禁用，则不发送短信，todo只记录日志,暂时用固定值作为日志编号
-        Boolean isSend = CommonStatusEnum.ENABLE.getStatus().equals(smsTemplateDO.getStatus())
+        boolean isSend = CommonStatusEnum.ENABLE.getStatus().equals(smsTemplateDO.getStatus())
                 && CommonStatusEnum.ENABLE.getStatus().equals(channelDO.getStatus());
 //        String content = smsTemplateService.formatSmsTemplateContent(template.getContent(), templateParams);
 //        Long sendLogId = smsLogService.createSmsLog(mobile, userId, userType, isSend, template, content, templateParams);

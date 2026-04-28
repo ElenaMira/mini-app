@@ -21,18 +21,19 @@ public abstract class AbstractSmsClient implements SmsClient {
      */
     protected volatile SmsChannelProperties properties;
 
+    /**
+     *
+     * @param properties
+     * 优化建议: 替换"引用赋值"可以使用copy(properties)实现properties对象不变
+     */
     AbstractSmsClient(SmsChannelProperties properties){
         this.properties = properties;
     }
 
     @Override
     public Long getId() {
-        return 0L;
+        return this.properties.getId();
     }
-
-    /**
-     * 短信渠道配置
-     */
 
     /**
      * 初始化
@@ -42,8 +43,9 @@ public abstract class AbstractSmsClient implements SmsClient {
     }
     /**
      * 更新properties
+     * 缺陷: 未考虑事务一致性
      */
-    public final void refresh(SmsChannelProperties properties){
+    public final synchronized void refresh(SmsChannelProperties properties){
         if(properties.equals(this.properties)){
             return;
         }

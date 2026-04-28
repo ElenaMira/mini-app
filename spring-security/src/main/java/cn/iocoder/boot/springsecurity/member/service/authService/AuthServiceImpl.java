@@ -5,25 +5,29 @@ import cn.iocoder.boot.springsecurity.common.enums.CommonStatusEnum;
 import cn.iocoder.boot.springsecurity.common.enums.UserTypeEnum;
 import cn.iocoder.boot.springsecurity.member.control.vo.AppAuthLoginReqVO;
 import cn.iocoder.boot.springsecurity.member.control.vo.AppAuthLoginRespVO;
+import cn.iocoder.boot.springsecurity.member.control.vo.AppAuthSmsLoginReqVO;
 import cn.iocoder.boot.springsecurity.member.control.vo.AppSendSmsCodeReqVO;
 import cn.iocoder.boot.springsecurity.member.convert.AuthConvert;
 import cn.iocoder.boot.springsecurity.member.dal.dataObject.MemberUserDO;
+import cn.iocoder.boot.springsecurity.member.service.user.MemberUserService;
 import cn.iocoder.boot.springsecurity.member.vilidation.Mobile;
 import cn.iocoder.boot.springsecurity.system.api.oauth2Token.OAuth2TokenCommonApi;
 import cn.iocoder.boot.springsecurity.system.api.oauth2Token.dto.OAuth2AccessTokenCreateReqDTO;
 import cn.iocoder.boot.springsecurity.system.api.oauth2Token.dto.OAuth2AccessTokenCreateRespDTO;
 import cn.iocoder.boot.springsecurity.system.api.sms.SmsCodeApi;
 import cn.iocoder.boot.springsecurity.system.api.social.dto.SocialUserBindReqDTO;
+import cn.iocoder.boot.springsecurity.system.enums.sms.SmsSceneEnum;
 import cn.iocoder.boot.springsecurity.system.service.social.SocialUserService;
 import jakarta.annotation.Resource;
 import jakarta.validation.constraints.NotEmpty;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
+
 import static cn.iocoder.boot.springsecurity.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.boot.springsecurity.common.uitl.servlet.ServletUtils.getClientIP;
-import static cn.iocoder.boot.springsecurity.member.enums.ErrorCodeConstants.AUTH_LOGIN_BAD_CREDENTIALS;
-import static cn.iocoder.boot.springsecurity.member.enums.ErrorCodeConstants.AUTH_LOGIN_USER_DISABLED;
+import static cn.iocoder.boot.springsecurity.member.enums.ErrorCodeConstants.*;
 
 
 /**
@@ -63,34 +67,38 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     @Transactional
-    public AppAuthLoginRespVO smsLogin(AppAuthLoginReqVO appAuthLoginReqVO) {
-        //获取请求体验证码
+    public AppAuthLoginRespVO smsLogin(AppAuthSmsLoginReqVO reqVO) {
+        //校验并使用验证码
         String userIp = getClientIP();
+        smsCodeApi.useSmsCode(AuthConvert.INSTANCE.convert(reqVO,SmsSceneEnum.MEMBER_LOGIN.getScene(),userIp));
+
+        //获得|注册用户
+//        memberUserService.createUserIfAbsent(reqVO.getMobile(),)
         return null;
     }
 
     @Override
     public void sendSmsCode(Long loginUserId, AppSendSmsCodeReqVO reqVO) {
-        //        // 情况 1：如果是修改手机场景，需要校验新手机号是否已经注册，说明不能使用该手机了
-        //        if (Objects.equals(reqVO.getScene(), SmsSceneEnum.MEMBER_UPDATE_MOBILE.getScene())) {
-        //            MemberUserDO user = userService.getUserByMobile(reqVO.getMobile());
-        //            if (user != null && !Objects.equals(user.getId(), userId)) {
-        //                throw exception(AUTH_MOBILE_USED);
-        //            }
-        //        }
-        //        // 情况 2：如果是重置密码场景，需要校验手机号是存在的
-        //        if (Objects.equals(reqVO.getScene(), SmsSceneEnum.MEMBER_RESET_PASSWORD.getScene())) {
-        //            MemberUserDO user = userService.getUserByMobile(reqVO.getMobile());
-        //            if (user == null) {
-        //                throw exception(USER_MOBILE_NOT_EXISTS);
-        //            }
-        //        }
-        //        // 情况 3：如果是修改密码场景，需要查询手机号，无需前端传递
-        //        if (Objects.equals(reqVO.getScene(), SmsSceneEnum.MEMBER_UPDATE_PASSWORD.getScene())) {
-        //            MemberUserDO user = userService.getUser(userId);
-        //            // TODO 芋艿：后续 member user 手机非强绑定，这块需要做下调整；
-        //            reqVO.setMobile(user.getMobile());
-        //        }
+        // 情况 1：如果是修改手机场景，需要校验新手机号是否已经注册，说明不能使用该手机了
+        if (Objects.equals(reqVO.getScene(), SmsSceneEnum.MEMBER_UPDATE_MOBILE.getScene())) {
+            MemberUserDO user = memberUserService.getUserByMobile(reqVO.getMobile());
+            if (user != null && !Objects.equals(user.getId(), loginUserId)) {
+                throw exception(AUTH_MOBILE_USED);
+            }
+        }
+        // 情况 2：如果是重置密码场景，需要校验手机号是存在的
+        if (Objects.equals(reqVO.getScene(), SmsSceneEnum.MEMBER_RESET_PASSWORD.getScene())) {
+            MemberUserDO user = memberUserService.getUserByMobile(reqVO.getMobile());
+            if (user == null) {
+                throw exception(USER_MOBILE_NOT_EXISTS);
+            }
+        }
+        // 情况 3：如果是修改密码场景，需要查询手机号，无需前端传递
+        if (Objects.equals(reqVO.getScene(), SmsSceneEnum.MEMBER_UPDATE_PASSWORD.getScene())) {
+            MemberUserDO user = memberUserService.getUser(loginUserId);
+            // TODO 后续 member user 手机非强绑定，这块需要做下调整；(手机号可能非强制绑定)
+            reqVO.setMobile(user.getMobile());
+        }
         smsCodeApi.sendSmsCode(AuthConvert.INSTANCE.convert(reqVO).setCreateIp(getClientIP()));
     }
 

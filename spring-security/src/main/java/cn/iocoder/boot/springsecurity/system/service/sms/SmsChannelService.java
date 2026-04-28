@@ -9,5 +9,10 @@ import cn.iocoder.boot.springsecurity.system.framework.sms.core.client.SmsClient
 public interface SmsChannelService {
     SmsChannelDO getChannel(Long channelId);
 
+    /**
+     *
+     * @param channelId channel表Id
+     * @return
+     */
     SmsClient getSmsClient(Long channelId);
 }

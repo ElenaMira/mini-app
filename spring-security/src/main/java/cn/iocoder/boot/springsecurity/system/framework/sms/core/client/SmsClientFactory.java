@@ -6,5 +6,10 @@ import cn.iocoder.boot.springsecurity.system.framework.sms.core.property.SmsChan
  * @author xiaosheng
  */
 public interface SmsClientFactory {
+    /**
+     *
+     * @param smsChannelProperties 创建客户端必要的字段
+     * @return
+     */
     SmsClient createOrUpdateSmsClient(SmsChannelProperties smsChannelProperties);
 }

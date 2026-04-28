@@ -51,7 +51,8 @@ public class SmsTemplateDO extends BaseDO {
      */
     private String content;
     /**
-     * 参数数组(自动根据内容生成) 例如: {operation} 验证码：{code} -> params = ["operation", "code"]
+     * 参数数组 例如: {operation} 验证码：{code} -> params = ["operation", "code"]
+     * 基于字段映射,接收模板参数
      */
     @TableField(typeHandler = JacksonTypeHandler.class)
     private List<String> params;

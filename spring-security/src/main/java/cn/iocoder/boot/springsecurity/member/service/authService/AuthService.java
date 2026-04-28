@@ -2,6 +2,7 @@ package cn.iocoder.boot.springsecurity.member.service.authService;
 
 import cn.iocoder.boot.springsecurity.member.control.vo.AppAuthLoginReqVO;
 import cn.iocoder.boot.springsecurity.member.control.vo.AppAuthLoginRespVO;
+import cn.iocoder.boot.springsecurity.member.control.vo.AppAuthSmsLoginReqVO;
 import cn.iocoder.boot.springsecurity.member.control.vo.AppSendSmsCodeReqVO;
 import jakarta.validation.Valid;
 
@@ -16,7 +17,7 @@ public interface AuthService {
      * @param appAuthLoginReqVO
      * @return
      */
-    public AppAuthLoginRespVO smsLogin(@Valid AppAuthLoginReqVO appAuthLoginReqVO);
+    public AppAuthLoginRespVO smsLogin(@Valid AppAuthSmsLoginReqVO appAuthLoginReqVO);
 
     public void sendSmsCode(Long loginUserId, @Valid AppSendSmsCodeReqVO appAuthLoginReqVO);
 }
