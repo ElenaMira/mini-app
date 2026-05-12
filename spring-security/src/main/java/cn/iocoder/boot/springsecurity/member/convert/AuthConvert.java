@@ -1,7 +1,9 @@
 package cn.iocoder.boot.springsecurity.member.convert;
 
-import cn.iocoder.boot.springsecurity.member.control.vo.AppAuthSmsLoginReqVO;
-import cn.iocoder.boot.springsecurity.member.control.vo.AppSendSmsCodeReqVO;
+import cn.iocoder.boot.springsecurity.member.control.app.auth.vo.AppAuthLoginRespVO;
+import cn.iocoder.boot.springsecurity.member.control.app.auth.vo.AppAuthSmsLoginReqVO;
+import cn.iocoder.boot.springsecurity.member.control.app.auth.vo.AppSendSmsCodeReqVO;
+import cn.iocoder.boot.springsecurity.system.api.oauth2Token.dto.OAuth2AccessTokenBaseRespDTO;
 import cn.iocoder.boot.springsecurity.system.api.sms.dto.SmsCodeSendReqDTO;
 import cn.iocoder.boot.springsecurity.system.api.sms.dto.SmsCodeUseReqDTO;
 import org.mapstruct.Mapper;
@@ -19,5 +21,7 @@ public interface AuthConvert {
     SmsCodeSendReqDTO convert(AppSendSmsCodeReqVO reqVO);
 
     SmsCodeUseReqDTO convert(AppAuthSmsLoginReqVO reqVO,Integer scene,String ip);
+
+    AppAuthLoginRespVO convert(OAuth2AccessTokenBaseRespDTO bean, String openid);
 
 }

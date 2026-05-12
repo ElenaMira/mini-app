@@ -1,0 +1,33 @@
+package cn.iocoder.boot.springsecurity.system.api.social.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+/**
+ * @author xiaosheng
+ */
+@AllArgsConstructor
+@Data
+@NoArgsConstructor
+@Builder
+public class SocialUserRespDTO {
+    /**
+     * 社交用户的 openid
+     */
+    private String openid;
+    /**
+     * 社交用户的昵称
+     */
+    private String nickname;
+    /**
+     * 社交用户的头像
+     */
+    private String avatar;
+
+    /**
+     * 关联的用户编号
+     */
+    private Long userId;
+}

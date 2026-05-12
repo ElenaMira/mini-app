@@ -30,4 +30,8 @@ public interface OAuth2TokenService {
      * @return 访问令牌的信息
      */
     OAuth2AccessTokenDO createAccessToken(Long userId, Integer userType, String clientId, List<String> scopes);
+
+    OAuth2AccessTokenDO removeAccessToken(String token);
+
+    OAuth2AccessTokenDO refreshToken(String refreshToken, String clientId);
 }

@@ -23,7 +23,7 @@ import java.util.Objects;
 
 import static cn.iocoder.boot.springsecurity.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.boot.springsecurity.system.enums.ErrorCodeConstant.SOCIAL_USER_AUTH_FAILURE;
-import static cn.iocoder.boot.springsecurity.system.uitl.json.JsonUtils.toJsonString;
+import static cn.iocoder.boot.springsecurity.common.uitl.json.JsonUtils.toJsonString;
 
 /**
  * @author xiaosheng
@@ -63,10 +63,11 @@ public class SocialClientServiceImpl implements SocialClientService{
      */
     @VisibleForTesting  //实现单元测试时的public,生成自动改为private
     AuthRequest buildAuthRequest(Integer socialType,Integer userType){
-        //1. 先查找默认的配置项，从 application-*.yaml 中读取
+        //1. 底层先查找默认的配置项，从 application-*.yaml 中读取autoconfig
         AuthRequest request = authRequestFactory.get(SocialTypeEnum.valueOfType(socialType).getSource());
         Assert.notNull(request, String.format("社交平台(%d) 不存在", socialType));
-        //2.查询 DB 的配置项，如果存在则进行覆盖(使用当前请求用户的数据,而不是配置的通用模板)
+
+        //2.查询 DB 的配置项，如果存在autoconfig则进行覆盖
         SocialClientDO client = socialClientMapper.selectBySocialTypeAndUserType(socialType, userType);
         if(client!=null&& Objects.equals(client.getStatus(), CommonStatusEnum.ENABLE.getStatus())){
             // 2.1 构造新的 AuthConfig 对象(不影响复用)
@@ -78,7 +79,7 @@ public class SocialClientServiceImpl implements SocialClientService{
             // 2.2 修改对应的 clientId + clientSecret 密钥
             newAuthConfig.setClientId(client.getClientId());
             newAuthConfig.setClientSecret(client.getClientSecret());
-//            if (client.getAgentId() != null) { // 如果有 agentId 则修改 agentId
+//            if (client.getAgentId() != null) { // 如果有 agentId 则修改 agentId(企业wx)
 //                newAuthConfig.setAgentId(client.getAgentId());
 //            }
 //            // 如果是阿里的小程序

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>cn.iocoder.boot</groupId>
+    <artifactId>dependencies</artifactId>
+    <version>jdk17-spring3.x</version>
+    <packaging>pom</packaging>
+
+
+    <name>dependencies</name>
+    <description>dependencies</description>
+    <url></url>
+
+    <properties>
+        <revision>jdk17-spring3.x</revision>
+        <!-- 统一依赖管理 -->
+        <spring.boot.version>3.5.14</spring.boot.version>
+
+
+        <!-- 工具类版本 -->
+        <lombok.version>1.18.42</lombok.version>
+        <mapstruct.version>1.6.3</mapstruct.version>
+        <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
+        <hutool.version>5.8.42</hutool.version>
+        <guava.version>33.5.0-jre</guava.version>
+        <ttl.version>2.14.5</ttl.version>
+        <mybatis.plus.version>3.5.12</mybatis.plus.version>
+        <justauth.version>1.16.7</justauth.version>
+        <justauth-starter.version>1.4.0</justauth-starter.version>
+        <swagger.version>2.2.21</swagger.version>
+        <!-- 第三方依赖 -->
+        <redisson.version>3.52.0</redisson.version>
+        <wx-java.version>4.8.3.B</wx-java.version>
+
+    </properties>
+
+    <dependencyManagement>
+        <!-- 统一版本管理 -->
+            <dependencies>
+                <!-- Spring Boot 官方 BOM -->
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-dependencies</artifactId>
+                    <version>${spring.boot.version}</version>
+                    <type>pom</type>
+                    <scope>import</scope>
+                </dependency>
+                <!-- 项目模块 -->
+                <dependency>
+                    <groupId>cn.iocoder.boot</groupId>
+                    <artifactId>common</artifactId>
+                    <version>${revision}</version>
+                </dependency>
+                <dependency>
+                    <groupId>cn.iocoder.boot</groupId>
+                    <artifactId>spring-web</artifactId>
+                    <version>${revision}</version>
+                </dependency>
+                <dependency>
+                    <groupId>cn.iocoder.boot</groupId>
+                    <artifactId>mybatis</artifactId>
+                    <version>${revision}</version>
+                </dependency>
+                <dependency>
+                    <groupId>cn.iocoder.boot</groupId>
+                    <artifactId>redis</artifactId>
+                    <version>${revision}</version>
+                </dependency>
+                <dependency>
+                    <groupId>cn.iocoder.boot</groupId>
+                    <artifactId>spring-security</artifactId>
+                    <version>${revision}</version>
+                </dependency>
+                <dependency>
+                    <groupId>cn.iocoder.boot</groupId>
+                    <artifactId>module-system</artifactId>
+                    <version>${revision}</version>
+                </dependency>
+                <dependency>
+                    <groupId>cn.iocoder.boot</groupId>
+                    <artifactId>module-member</artifactId>
+                    <version>${revision}</version>
+                </dependency>
+
+
+                <!-- MyBatis Plus -->
+                <dependency>
+                    <groupId>com.baomidou</groupId>
+                    <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+                    <version>${mybatis.plus.version}</version>
+                </dependency>
+                <!-- DB类 -->
+                <!-- Redis -->
+                <dependency>
+                    <groupId>org.redisson</groupId>
+                    <artifactId>redisson-spring-boot-starter</artifactId>
+                    <version>${redisson.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.redisson</groupId>
+                    <artifactId>redisson-spring-data-32</artifactId>
+                    <version>${redisson.version}</version>
+                </dependency>
+
+                <!-- 工具类 -->
+                <dependency>
+                    <groupId>org.projectlombok</groupId>
+                    <artifactId>lombok</artifactId>
+                    <version>${lombok.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.mapstruct</groupId>
+                    <artifactId>mapstruct</artifactId>
+                    <version>${mapstruct.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.mapstruct</groupId>
+                    <artifactId>mapstruct-processor</artifactId>
+                    <version>${mapstruct.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>cn.hutool</groupId>
+                    <artifactId>hutool-all</artifactId>
+                    <version>${hutool.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                    <version>${guava.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.alibaba</groupId>
+                    <artifactId>transmittable-thread-local</artifactId>
+                    <version>${ttl.version}</version>
+                </dependency>
+
+                <!-- 第三方wx -->
+                <dependency>
+                    <groupId>com.github.binarywang</groupId>
+                    <artifactId>wx-java-bom</artifactId>
+                    <version>${wx-java.version}</version>
+                    <type>pom</type>
+                    <scope>import</scope>
+                </dependency>
+
+
+                <!-- JustAuth 第三方登录 -->
+                <dependency>
+                    <groupId>me.zhyd.oauth</groupId>
+                    <artifactId>JustAuth</artifactId>
+                    <version>${justauth.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.xkcoding.justauth</groupId>
+                    <artifactId>justauth-spring-boot-starter</artifactId>
+                    <version>${justauth-starter.version}</version>
+                </dependency>
+
+                <!-- Swagger -->
+                <dependency>
+                    <groupId>io.swagger.core.v3</groupId>
+                    <artifactId>swagger-core</artifactId>
+                    <version>${swagger.version}</version>
+                </dependency>
+            </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

@@ -24,4 +24,8 @@ public interface SocialUserBindMapper extends BaseMapperX<SocialUserBindDO> {
         );
     }
 
+    default SocialUserBindDO selectByUserTypeAndSocialUserId(Integer userType, Long id){
+        return selectOne(SocialUserBindDO::getUserType,userType,
+                SocialUserBindDO::getUserId,id);
+    }
 }

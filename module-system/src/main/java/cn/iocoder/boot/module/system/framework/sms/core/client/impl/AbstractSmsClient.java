@@ -1,0 +1,58 @@
+package cn.iocoder.boot.module.system.framework.sms.core.client.impl;
+
+
+import cn.iocoder.boot.module.system.framework.sms.core.client.SmsClient;
+import cn.iocoder.boot.module.system.framework.sms.core.client.dto.SmsSendRespDTO;
+import cn.iocoder.boot.module.system.framework.sms.core.property.SmsChannelProperties;
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
+
+/**
+ * 短信客户端的抽象类，提供模板方法，减少子类的冗余代码
+ * @author xiaosheng
+ */
+@Slf4j
+public abstract class AbstractSmsClient implements SmsClient {
+    /**
+     * 短信渠道配置
+     * protected = 给子类用
+     * volatile = 强制线程每次都读 “最新的值”，不读缓存里的旧值,保证多线程下，properties 的值 最新、可见、不脏读
+     */
+    protected volatile SmsChannelProperties properties;
+
+    /**
+     *
+     * @param properties
+     * 优化建议: 替换"引用赋值"可以使用copy(properties)实现properties对象不变
+     */
+    AbstractSmsClient(SmsChannelProperties properties){
+        this.properties = properties;
+    }
+
+    @Override
+    public Long getId() {
+        return this.properties.getId();
+    }
+
+    /**
+     * 初始化
+     */
+    public final void init() {
+        log.debug("[init][配置({}) 初始化完成]", properties);
+    }
+    /**
+     * 更新properties
+     * 缺陷: 未考虑事务一致性
+     */
+    public final synchronized void refresh(SmsChannelProperties properties){
+        if(properties.equals(this.properties)){
+            return;
+        }
+        //更新当前线程的properties
+        log.info("[refresh][配置({})发生变化，重新初始化]", properties);
+        this.properties = properties;
+        // 初始化
+        this.init();
+    }
+}

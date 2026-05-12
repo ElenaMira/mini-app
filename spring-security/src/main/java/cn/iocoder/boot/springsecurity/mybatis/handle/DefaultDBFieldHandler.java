@@ -1,7 +1,7 @@
 package cn.iocoder.boot.springsecurity.mybatis.handle;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
-import cn.iocoder.boot.springsecurity.core.uitl.SecurityUtil;
+import cn.iocoder.boot.springsecurity.core.uitl.SecurityUtils;
 import cn.iocoder.boot.springsecurity.system.dal.DO.BaseDO;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
@@ -28,7 +28,7 @@ public class DefaultDBFieldHandler implements MetaObjectHandler {
                 baseDO.setUpdateTime(currentTime);
             }
 
-            Long userId = SecurityUtil.getLoginUserId();
+            Long userId = SecurityUtils.getLoginUserId();
             // 当前登录用户不为空，创建人为空，则当前登录用户为创建人
             if(Objects.nonNull(userId)&&Objects.isNull(baseDO.getCreator())){
                 baseDO.setCreator(userId.toString());
@@ -50,7 +50,7 @@ public class DefaultDBFieldHandler implements MetaObjectHandler {
 
         // 当前登录用户不为空，更新人为空，则当前登录用户为更新人
         Object updater = getFieldValByName("updater", metaObject);
-        Long userId = SecurityUtil.getLoginUserId();
+        Long userId = SecurityUtils.getLoginUserId();
         if (Objects.nonNull(userId) && Objects.isNull(updater)) {
             setFieldValByName("updater", userId.toString(), metaObject);
         }

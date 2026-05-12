@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>cn.iocoder.boot</groupId>
+        <artifactId>framework</artifactId>
+        <version>jdk17-spring3.x</version>
+    </parent>
+    <!--模块信息-->
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>mybatis</artifactId>
+    <packaging>jar</packaging>
+    <name>${project.artifactId}</name>
+    <description>
+        1. security：用户的认证、权限的校验，实现「谁」可以做「什么事」
+        2. operatelog：操作日志，实现「谁」在「什么时间」对「什么」做了「什么事」
+    </description>
+    <url></url>
+    <!--本模块依赖-->
+    <dependencies>
+        <dependency>
+            <groupId>cn.iocoder.boot</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
+
+        <!-- DB 相关 -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+        </dependency>
+        <!-- mybatis相关 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.oracle.database.jdbc</groupId>-->
+<!--            <artifactId>ojdbc8</artifactId>-->
+<!--            <optional>true</optional>-->
+<!--        </dependency>-->
+        <!-- 工具类相关 -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+    <!--业务模块依赖-->
+        <dependency>
+            <groupId>cn.iocoder.boot</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <!-- security相关 -->
+        <dependency>
+            <groupId>cn.iocoder.boot</groupId>
+            <artifactId>spring-security</artifactId>
+            <scope>provided</scope> <!-- 设置为 provided，只有 DefaultDBFieldHandler 使用到 -->
+        </dependency>
+    </dependencies>
+
+</project>

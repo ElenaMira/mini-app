@@ -1,9 +1,12 @@
 package cn.iocoder.boot.springsecurity.system.service.oauth;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.iocoder.boot.springsecurity.common.Object.BeanUtils;
 import cn.iocoder.boot.springsecurity.common.enums.UserTypeEnum;
+import cn.iocoder.boot.springsecurity.common.exception.ServiceException;
 import cn.iocoder.boot.springsecurity.common.exception.enums.GlobalErrorCodeConstants;
 import cn.iocoder.boot.springsecurity.common.uitl.DataUtils;
 import cn.iocoder.boot.springsecurity.system.dal.DO.OAuth.OAuth2AccessTokenDO;
@@ -14,6 +17,7 @@ import cn.iocoder.boot.springsecurity.system.dal.mysql.auth2.OAuth2RefreshTokenM
 import cn.iocoder.boot.springsecurity.system.dal.redis.OAuth2AccessTokenRedisDAO;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -21,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import static cn.iocoder.boot.springsecurity.common.exception.util.ServiceExceptionUtil.exception0;
+import static cn.iocoder.boot.springsecurity.common.uitl.collection.CollectionUtils.convertSet;
 
 /**
  * @author xiaosheng
@@ -55,14 +60,59 @@ public class OAuth2TokenServiceImpl implements OAuth2TokenService {
 
     @Override
     public OAuth2AccessTokenDO createAccessToken(Long userId, Integer userType, String clientId, List<String> scopes) {
-        //校验客户端ID
+        //基于客户端ID校验客户端模板
         OAuth2ClientDO oAuth2ClientDO = oAuth2ClientService.validOAuthClientFromCache(clientId);
         //创建刷新令牌
-        OAuth2RefreshTokenDO refreshToken = createOAuth2RefreshToken(userId, userType, clientId, scopes);
+        OAuth2RefreshTokenDO refreshToken = createOAuth2RefreshToken(userId, userType, oAuth2ClientDO, scopes);
         //创建访问令牌
         return createOAuth2AccessToken(refreshToken,oAuth2ClientDO);
-
     }
+
+    @Override
+    public OAuth2AccessTokenDO removeAccessToken(String token) {
+        OAuth2AccessTokenDO tokenDO = oAuth2AccessTokenMapper.selectByAccessToken(token);
+        if (tokenDO == null){
+            return null;
+        }
+        oAuth2AccessTokenMapper.deleteById(tokenDO.getId());
+        oAuth2AccessTokenRedisDAO.delect(token);
+
+        //删除刷新令牌
+        oAuth2RefreshTokenMapper.deleteByRefreshToken(tokenDO.getRefreshToken());
+        return tokenDO;
+    }
+
+    @Override
+    @Transactional(noRollbackFor = ServiceException.class)
+    public OAuth2AccessTokenDO refreshToken(String refreshToken, String clientId) {
+        // 校验访问令牌
+        OAuth2RefreshTokenDO refreshTokenDO = oAuth2RefreshTokenMapper.selectByRefreshToken(refreshToken);
+        if (refreshTokenDO==null){
+            throw exception0(GlobalErrorCodeConstants.BAD_REQUEST.getCode(), "无效的刷新令牌");
+        }
+
+        // 校验 Client 匹配
+        OAuth2ClientDO clientDO = oAuth2ClientService.validOAuthClientFromCache(clientId);
+        if (ObjectUtil.notEqual(clientId,refreshTokenDO.getClientId())){
+            throw exception0(GlobalErrorCodeConstants.BAD_REQUEST.getCode(), "刷新令牌的客户端编号不正确");
+        }
+        //移除对应的access令牌
+        List<OAuth2AccessTokenDO> accesstokenDOS = oAuth2AccessTokenMapper.selectListByRefreshToken(refreshToken);
+        if (CollUtil.isNotEmpty(accesstokenDOS)){
+            oAuth2AccessTokenMapper.deleteByIds(convertSet(accesstokenDOS,OAuth2AccessTokenDO::getId));
+            oAuth2AccessTokenRedisDAO.delectList(convertSet(accesstokenDOS,OAuth2AccessTokenDO::getAccessToken));
+        }
+
+        //校验refresh过期时间
+        if (DataUtils.isExpired(refreshTokenDO.getExpiresTime())){
+            oAuth2RefreshTokenMapper.deleteById(refreshTokenDO.getId());
+            throw exception0(GlobalErrorCodeConstants.UNAUTHORIZED.getCode(), "刷新令牌已过期");
+        }
+
+        //创建新的访问令牌
+        return createOAuth2AccessToken(refreshTokenDO,clientDO);
+    }
+
     @Override
     public OAuth2AccessTokenDO getAccessToken(String accessToken){
         //1. 调用redisDAO
@@ -90,16 +140,23 @@ public class OAuth2TokenServiceImpl implements OAuth2TokenService {
                 .setAccessToken(oAuth2RefreshTokenDO.getRefreshToken());
     }
 
-    private OAuth2RefreshTokenDO createOAuth2RefreshToken(Long userId, Integer userType, String clientId, List<String> scopes){
+    private OAuth2RefreshTokenDO createOAuth2RefreshToken(Long userId, Integer userType, OAuth2ClientDO clientDO, List<String> scopes){
         OAuth2RefreshTokenDO oAuth2RefreshTokenDO = new OAuth2RefreshTokenDO()
+                .setRefreshToken(generateRefreshToken())
                 .setUserId(userId)
                 .setUserType(userType)
-                .setClientId(clientId)
-                .setScopes(scopes);
+                .setClientId(clientDO.getClientId())
+                .setScopes(scopes)
+                .setExpiresTime(LocalDateTime.now().plusSeconds(clientDO.getRefreshTokenValiditySeconds()));
         oAuth2RefreshTokenMapper.insert(oAuth2RefreshTokenDO);
         return oAuth2RefreshTokenDO;
 
     }
+
+    private String generateRefreshToken() {
+        return IdUtil.fastSimpleUUID();
+    }
+
     private OAuth2AccessTokenDO createOAuth2AccessToken(OAuth2RefreshTokenDO refreshTokenDO, OAuth2ClientDO clientDO){
         OAuth2AccessTokenDO accessTokenDO = new OAuth2AccessTokenDO().setAccessToken(generateAccessToken())
                 .setUserId(refreshTokenDO.getUserId()).setUserType(refreshTokenDO.getUserType())
@@ -109,7 +166,6 @@ public class OAuth2TokenServiceImpl implements OAuth2TokenService {
                 .setExpiresTime(LocalDateTime.now().plusSeconds(clientDO.getAccessTokenValiditySeconds()));
 
         oAuth2AccessTokenMapper.insert(accessTokenDO);
-
         oAuth2AccessTokenRedisDAO.set(accessTokenDO);
         return accessTokenDO;
     }

@@ -1,14 +1,18 @@
 package cn.iocoder.boot.springsecurity.system.dal.redis;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
+import cn.iocoder.boot.springsecurity.common.uitl.collection.CollectionUtils;
 import cn.iocoder.boot.springsecurity.system.dal.DO.OAuth.OAuth2AccessTokenDO;
-import cn.iocoder.boot.springsecurity.system.uitl.json.JsonUtils;
+import cn.iocoder.boot.springsecurity.common.uitl.json.JsonUtils;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -32,7 +36,21 @@ public class OAuth2AccessTokenRedisDAO {
         long time = LocalDateTimeUtil.between(LocalDateTime.now(), accessTokenDO.getExpiresTime(), ChronoUnit.SECONDS);
         stringRedisTemplate.opsForValue().set(formatKey,JsonUtils.toJsonString(accessTokenDO),time, TimeUnit.SECONDS);
     }
+    public void delect(String accessToken) {
+        String redisKey = formatKey(accessToken);
+        stringRedisTemplate.delete(redisKey);
+    }
+
     public static String formatKey(String accessToken){
         return String.format("oauth2_access_token:%s", accessToken);
+    }
+
+    /**
+     * delect方法更适配List<>集合
+     * @param accessTokens 授权token
+     */
+    public void delectList(Collection<String> accessTokens) {
+        List<String> list = CollectionUtils.convertList(accessTokens, OAuth2AccessTokenRedisDAO::formatKey);
+        stringRedisTemplate.delete(list);
     }
 }

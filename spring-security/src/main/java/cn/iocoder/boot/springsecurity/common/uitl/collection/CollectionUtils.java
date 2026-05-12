@@ -1,9 +1,8 @@
 package cn.iocoder.boot.springsecurity.common.uitl.collection;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import cn.hutool.core.collection.CollUtil;
+
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -16,5 +15,20 @@ public class CollectionUtils {
            return new ArrayList<>();
        }
        return collection.stream().map(function).filter(Objects::nonNull).collect(Collectors.toList());
+    }
+
+    /**
+     * 基于func转换器和stream流转换,获取目标类下的源类的Set集合
+     * @param collection 源类集合
+     * @param func  转换器
+     * @return
+     * @param <T> 源类
+     * @param <U> 目标类
+     */
+    public  static<T,U> Set<U> convertSet(Collection<T> collection,Function<T,U> func){
+        if (CollUtil.isEmpty(collection)){
+            return new HashSet<>();
+        }
+        return collection.stream().map(func).filter(Objects::nonNull).collect(Collectors.toSet());
     }
 }

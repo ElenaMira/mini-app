@@ -12,6 +12,8 @@ import java.util.Collections;
 import java.util.List;
 
 
+
+
 @ConfigurationProperties("spring.security")
 @Validated
 @Data

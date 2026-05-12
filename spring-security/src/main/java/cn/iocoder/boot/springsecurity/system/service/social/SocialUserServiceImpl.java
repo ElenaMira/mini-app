@@ -1,8 +1,11 @@
 package cn.iocoder.boot.springsecurity.system.service.social;
 
 import cn.hutool.core.lang.Assert;
+import cn.iocoder.boot.springsecurity.common.enums.SocialTypeEnum;
+import cn.iocoder.boot.springsecurity.common.exception.ServiceException;
 import cn.iocoder.boot.springsecurity.member.dal.dataObject.SocialUserDO;
 import cn.iocoder.boot.springsecurity.system.api.social.dto.SocialUserBindReqDTO;
+import cn.iocoder.boot.springsecurity.system.api.social.dto.SocialUserRespDTO;
 import cn.iocoder.boot.springsecurity.system.dal.DO.social.SocialUserBindDO;
 import cn.iocoder.boot.springsecurity.system.dal.mysql.social.SocialUserBindMapper;
 import cn.iocoder.boot.springsecurity.system.dal.mysql.social.SocialUserMapper;
@@ -12,7 +15,7 @@ import me.zhyd.oauth.model.AuthUser;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static cn.iocoder.boot.springsecurity.system.uitl.json.JsonUtils.toJsonString;
+import static cn.iocoder.boot.springsecurity.common.uitl.json.JsonUtils.toJsonString;
 
 /**
  * @author xiaosheng
@@ -44,6 +47,24 @@ public class SocialUserServiceImpl implements SocialUserService {
         socialUserBindMapper.insert(socialUserBind);
         return socialUser.getOpenid();
     }
+
+    @Override
+    public SocialUserRespDTO getSocialUserByCode(Integer userType, String code, Integer socialType, String state) {
+        //获取社交用户
+        SocialUserDO socialUser = authSocialUser(socialType, userType, code, state);
+        Assert.notNull(socialUser, "社交用户不能为空");
+
+        //获得绑定用户
+        SocialUserBindDO socialBindUser = socialUserBindMapper.selectByUserTypeAndSocialUserId(userType, socialUser.getId());
+
+        return SocialUserRespDTO.builder()
+                .openid(socialUser.getOpenid())
+                .avatar(socialUser.getAvatar())
+                .nickname(socialUser.getNickname())
+                .userId(socialBindUser == null?null:socialBindUser.getSocialUserId())
+                .build();
+    }
+
     /**
      * 授权获得对应的社交用户
      * 如果授权失败，则会抛出 {@link ServiceException} 异常

@@ -4,7 +4,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.iocoder.boot.springsecurity.common.exception.ServiceException;
 import cn.iocoder.boot.springsecurity.config.SecurityProperties;
 import cn.iocoder.boot.springsecurity.core.LoginUser;
-import cn.iocoder.boot.springsecurity.core.uitl.SecurityUtil;
+import cn.iocoder.boot.springsecurity.core.uitl.SecurityUtils;
 import cn.iocoder.boot.springsecurity.core.uitl.WebFrameworkUtils;
 import cn.iocoder.boot.springsecurity.system.api.oauth2Token.dto.OAuth2AccessTokenCheckRespDTO;
 import cn.iocoder.boot.springsecurity.system.api.oauth2Token.OAuth2TokenCommonApi;
@@ -30,7 +30,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-            String token = SecurityUtil.obtainToken(request,securityProperties.getTokenHeader(),securityProperties.getTokenParameter());
+            String token = SecurityUtils.obtainToken(request,securityProperties.getTokenHeader(),securityProperties.getTokenParameter());
             if(!StringUtils.isEmpty(token)){
                 //1. 获取当前请求是【管理后台用户】还是【APP用户】
                 Integer userType = WebFrameworkUtils.getLoginUserType(request);
@@ -44,7 +44,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
                     // 2. 设置当前用户
                     if (loginUser != null) {
-                        SecurityUtil.setLoginUser(loginUser, request);
+                        SecurityUtils.setLoginUser(loginUser, request);
                     }
                 }catch (Throwable e){
 //                    CommonResult<?> result = globalExceptionHandler.allExceptionHandler(request, ex);

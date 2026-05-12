@@ -3,3 +3,6 @@ cn.iocoder.boot.springsecurity.config.WebSecurityAutoConfigurationAdapter
 #cn.iocoder.operatelog.config.OperateLogConfiguration
 
 cn.iocoder.boot.springsecurity.mybatis.config.MybatisAutoConfiguration
+
+#web
+cn.iocoder.boot.springsecurity.web.jackson.config.MyJacksonAutoConfiguration

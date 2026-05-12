@@ -1,5 +1,6 @@
 package cn.iocoder.boot.springsecurity.member.service.user;
 
+import cn.iocoder.boot.springsecurity.common.enums.TerminalEnum;
 import cn.iocoder.boot.springsecurity.member.dal.dataObject.MemberUserDO;
 import cn.iocoder.boot.springsecurity.member.vilidation.Mobile;
 
@@ -30,5 +31,17 @@ public interface MemberUserService {
      * @param mobile
      * @return
      */
-    MemberUserDO createUserIfAbsent(String mobile);
+    MemberUserDO createUserIfAbsent(@Mobile String mobile,String registerIp,Integer terminal);
+
+    /**
+     * 创建用户
+     * 目的：三方登录时，如果未绑定用户时，自动创建对应用户
+     *
+     * @param nickname   昵称
+     * @param avatar      头像
+     * @param registerIp 注册 IP
+     * @param terminal   终端 {@link TerminalEnum}
+     * @return 用户对象
+     */
+    MemberUserDO createUser(String nickname, String avatar, String registerIp, Integer terminal);
 }

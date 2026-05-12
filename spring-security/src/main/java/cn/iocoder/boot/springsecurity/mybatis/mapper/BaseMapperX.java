@@ -2,6 +2,7 @@ package cn.iocoder.boot.springsecurity.mybatis.mapper;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 
@@ -39,5 +40,14 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
     default  T selectFirst(SFunction<T, ?> field0, Object value0,SFunction<T, ?> field1, Object value1){
         List<T> list = selectList(new LambdaQueryWrapper<T>().eq(field0,value0).eq(field1,value1));
         return CollUtil.getFirst(list);
+    }
+
+
+    default List<T> selectList() {
+        return selectList(new QueryWrapper<>());
+    }
+
+    default List<T> selectList(SFunction<T, ?> field, Object value) {
+        return selectList(new LambdaQueryWrapper<T>().eq(field,value));
     }
 }

@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="GithubDefaultAccount">
-    <option name="defaultAccountId" value="7aac0b6d-f1a9-4eae-833e-d0884e5af211" />
-  </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/dependencies/pom.xml" />
+        <option value="$PROJECT_DIR$/system/pom.xml" />
+        <option value="$PROJECT_DIR$/framework/common/pom.xml" />
+        <option value="$PROJECT_DIR$/framework/pom.xml" />
+        <option value="$PROJECT_DIR$/framework/spring-security/pom.xml" />
+        <option value="$PROJECT_DIR$/module-infra/pom.xml" />
+        <option value="$PROJECT_DIR$/framework/spring-web/pom.xml" />
+        <option value="$PROJECT_DIR$/framework/mybatis/pom.xml" />
+        <option value="$PROJECT_DIR$/framework/redis/pom.xml" />
+        <option value="$PROJECT_DIR$/module-server/pom.xml" />
       </list>
     </option>
   </component>

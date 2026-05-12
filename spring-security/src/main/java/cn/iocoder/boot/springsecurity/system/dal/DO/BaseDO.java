@@ -40,9 +40,11 @@ public class BaseDO implements Serializable{
     private String updater;
     /**
      * 是否删除
+     * 0: 未被删除
+     * 1: 已被删除
      */
     @TableLogic
-    private Boolean deleted;
+    private Integer deleted;
 
     /**
      * 把 creator、createTime、updateTime、updater 都清空，避免前端直接传递 creator 之类的字段，直接就被更新了
