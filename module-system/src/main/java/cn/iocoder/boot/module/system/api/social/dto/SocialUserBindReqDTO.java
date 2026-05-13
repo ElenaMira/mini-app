@@ -6,12 +6,14 @@ import cn.iocoder.boot.common.validation.InEnum;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 /**
  * @author xiaosheng
  */
 @AllArgsConstructor
 @Data
+@Builder
 public class SocialUserBindReqDTO {
 
     /**

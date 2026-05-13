@@ -2,8 +2,8 @@ package cn.iocoder.boot.module.system.dal.DO.sms;
 
 
 import cn.iocoder.boot.common.enums.CommonStatusEnum;
-import cn.iocoder.boot.module.system.dal.DO.BaseDO;
 import cn.iocoder.boot.module.system.enums.sms.SmsTemplateTypeEnum;
+import cn.iocoder.boot.mybatis.core.dataobject.BaseDO;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;

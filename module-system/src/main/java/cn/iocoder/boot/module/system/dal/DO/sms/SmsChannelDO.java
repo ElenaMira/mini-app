@@ -2,11 +2,13 @@ package cn.iocoder.boot.module.system.dal.DO.sms;
 
 
 import cn.iocoder.boot.common.enums.CommonStatusEnum;
-import cn.iocoder.boot.module.system.dal.DO.BaseDO;
 import cn.iocoder.boot.module.system.framework.sms.core.enums.SmsChannelEnum;
+import cn.iocoder.boot.mybatis.core.dataobject.BaseDO;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author xiaosheng
@@ -15,6 +17,8 @@ import lombok.Data;
 @Data
 @TableName(value = "system_sms_channel", autoResultMap = true)
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SmsChannelDO extends BaseDO {
 
     /**

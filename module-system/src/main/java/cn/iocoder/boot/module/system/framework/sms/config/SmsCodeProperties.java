@@ -10,7 +10,7 @@ import java.time.Duration;
 /**
  * @author xiaosheng
  */
-@ConfigurationProperties(value = "houduan.sms-code")
+@ConfigurationProperties(value = "hd.sms-code")
 @Data
 @Validated
 public class SmsCodeProperties {

@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author xiaosheng
  */
-@TableName(value = "")
+@TableName(value = "system_oauth2_client",autoResultMap = true)
 @Data
 public class OAuth2ClientDO {
 

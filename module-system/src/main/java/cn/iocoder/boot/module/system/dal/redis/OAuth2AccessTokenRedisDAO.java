@@ -3,9 +3,9 @@ package cn.iocoder.boot.module.system.dal.redis;
 import cn.hutool.core.date.LocalDateTimeUtil;
 
 import cn.iocoder.boot.common.uitl.collection.CollectionUtils;
+import cn.iocoder.boot.common.uitl.json.JsonUtils;
 import cn.iocoder.boot.module.system.dal.DO.OAuth.OAuth2AccessTokenDO;
 
-import cn.iocoder.boot.module.system.uitl.json.JsonUtils;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -35,7 +35,7 @@ public class OAuth2AccessTokenRedisDAO {
         //清空字段,只存有用的数据在redis中
         accessTokenDO.setUpdater(null).setUpdateTime(null).setCreateTime(null).setCreator(null).setDeleted(null);
         long time = LocalDateTimeUtil.between(LocalDateTime.now(), accessTokenDO.getExpiresTime(), ChronoUnit.SECONDS);
-        stringRedisTemplate.opsForValue().set(formatKey,JsonUtils.toJsonString(accessTokenDO),time, TimeUnit.SECONDS);
+        stringRedisTemplate.opsForValue().set(formatKey, JsonUtils.toJsonString(accessTokenDO),time, TimeUnit.SECONDS);
     }
     public void delect(String accessToken) {
         String redisKey = formatKey(accessToken);

@@ -22,7 +22,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
  */
 @AutoConfiguration
 @AutoConfigureOrder(-1)
-@EnableConfigurationProperties({SecurityProperties.class,WebProperties.class})
+@EnableConfigurationProperties({SecurityProperties.class})
 public class SecurityAutoConfiguration {
     @Resource
     private SecurityProperties securityProperties;

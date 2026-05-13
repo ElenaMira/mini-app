@@ -1,7 +1,8 @@
 package cn.iocoder.boot.springsecurity.core.uitl;
 
-import cn.iocoder.boot.springsecurity.config.WebProperties;
+
 import cn.iocoder.boot.common.enums.UserTypeEnum;
+import cn.iocoder.boot.web.web.config.WebProperties;
 import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 

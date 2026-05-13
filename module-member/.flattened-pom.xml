@@ -28,6 +28,12 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <version>3.5.14</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>cn.iocoder.boot</groupId>
       <artifactId>mybatis</artifactId>
       <version>jdk17-spring3.x</version>

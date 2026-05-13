@@ -3,7 +3,10 @@ package cn.iocoder.boot.common.biz.system.oauth2.dto;
 import cn.iocoder.boot.common.enums.UserTypeEnum;
 import cn.iocoder.boot.common.validation.InEnum;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,6 +15,9 @@ import java.util.List;
  * @author xiaosheng
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class OAuth2AccessTokenCreateReqDTO implements Serializable {
 
     /**

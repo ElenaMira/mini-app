@@ -1,12 +1,14 @@
 package cn.iocoder.boot.module.system.dal.DO.social;
 
 import cn.iocoder.boot.common.enums.UserTypeEnum;
-import cn.iocoder.boot.module.system.dal.DO.BaseDO;
 import cn.iocoder.boot.module.system.dal.DO.SocialUserDO;
+import cn.iocoder.boot.mybatis.core.dataobject.BaseDO;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author xiaosheng
@@ -14,6 +16,8 @@ import lombok.Data;
 @TableName(value = "system_social_user_bind", autoResultMap = true)
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SocialUserBindDO extends BaseDO {
 
     /**

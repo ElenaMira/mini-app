@@ -1,5 +1,6 @@
 package cn.iocoder.boot.common.uitl.json;
 
+import cn.hutool.core.util.StrUtil;
 import cn.iocoder.boot.common.uitl.json.databind.TimestampLocalDateTimeDeserializer;
 import cn.iocoder.boot.common.uitl.json.databind.TimestampLocalDateTimeSerializer;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -12,6 +13,7 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 /**
@@ -47,6 +49,18 @@ public class JsonUtils {
     @SneakyThrows
     public static String toJsonString(Object object) {
         return objectMapper.writeValueAsString(object);
+    }
+
+    public static <T> T parseObject(String text, Class<T> clazz) {
+        if (StrUtil.isEmpty(text)) {
+            return null;
+        }
+        try {
+            return objectMapper.readValue(text, clazz);
+        } catch (IOException e) {
+            log.error("json parse err,json:{}", text, e);
+            throw new RuntimeException(e);
+        }
     }
 
 }

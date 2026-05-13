@@ -17,12 +17,12 @@ public class BaseDO implements Serializable{
     /**
      * 创建时间
      */
-    @TableField(fill = FieldFill.INSERT)
+    @TableField(value = "create_time",fill = FieldFill.INSERT)
     private LocalDateTime createTime;
     /**
      * 最后更新时间
      */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @TableField(value = "update_time",fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
     /**
      * 创建者，目前使用 SysUser 的 id 编号

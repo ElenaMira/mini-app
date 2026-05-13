@@ -1,6 +1,6 @@
 package cn.iocoder.boot.module.system.dal.DO.logger;
 
-import cn.iocoder.boot.module.system.dal.DO.BaseDO;
+import cn.iocoder.boot.mybatis.core.dataobject.BaseDO;
 import lombok.Data;
 
 /**

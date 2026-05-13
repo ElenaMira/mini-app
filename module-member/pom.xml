@@ -5,6 +5,7 @@
         <groupId>cn.iocoder.boot</groupId>
         <artifactId>mini-app-houduan</artifactId>
         <version>jdk17-spring3.x</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>module-member</artifactId>
     <modelVersion>4.0.0</modelVersion>
@@ -30,7 +31,10 @@
             <groupId>cn.iocoder.boot</groupId>
             <artifactId>spring-security</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <dependency>
             <groupId>cn.iocoder.boot</groupId>
             <artifactId>mybatis</artifactId>
@@ -44,8 +48,5 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
-
-
     </dependencies>
-
 </project>

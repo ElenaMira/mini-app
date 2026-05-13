@@ -1,10 +1,9 @@
 package cn.iocoder.boot.module.system.dal.DO.sms;
 
-import cn.iocoder.boot.module.system.dal.DO.BaseDO;
 import cn.iocoder.boot.module.system.enums.sms.SmsSceneEnum;
+import cn.iocoder.boot.mybatis.core.dataobject.BaseDO;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +13,9 @@ import java.time.LocalDateTime;
 @TableName(value = "system_sms_code")
 @Data
 @Builder
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class SmsCodeDO extends BaseDO {
     /**
      * 编号
