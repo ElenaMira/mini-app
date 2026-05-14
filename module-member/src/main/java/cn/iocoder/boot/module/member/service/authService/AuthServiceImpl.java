@@ -11,7 +11,7 @@ import cn.iocoder.boot.common.enums.UserTypeEnum;
 import cn.iocoder.boot.common.validation.Mobile;
 import cn.iocoder.boot.module.member.control.app.auth.vo.*;
 import cn.iocoder.boot.module.member.convert.AuthConvert;
-import cn.iocoder.boot.module.member.dal.dataObject.MemberUserDO;
+import cn.iocoder.boot.module.member.dal.dataObject.app.user.MemberUserDO;
 import cn.iocoder.boot.module.member.service.user.MemberUserService;
 
 import cn.iocoder.boot.module.system.api.sms.SmsCodeApi;

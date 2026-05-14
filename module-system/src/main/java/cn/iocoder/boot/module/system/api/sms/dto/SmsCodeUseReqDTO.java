@@ -6,13 +6,17 @@ import cn.iocoder.boot.module.system.enums.sms.SmsSceneEnum;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author xiaosheng
  */
 @Data
 @AllArgsConstructor
+@Builder
+@NoArgsConstructor
 public class SmsCodeUseReqDTO {
 
     /**

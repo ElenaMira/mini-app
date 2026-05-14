@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>cn.iocoder.boot</groupId>
     <artifactId>mini-app-houduan</artifactId>
-    <version>jdk17-spring3.x</version>
+    <version>2026.v1.0.0</version>
     <packaging>pom</packaging>
     <name>${artifactId}</name>
     <description>基础脚手架</description>
@@ -21,7 +21,7 @@
 
     <properties>
         <!--maven-->
-        <revision>jdk17-spring3.x</revision>
+        <revision>2026.v1.0.0</revision>
         <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -29,7 +29,7 @@
         <maven.compiler.compilerVersion>${java.version}</maven.compiler.compilerVersion>
 
         <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
-        <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <flatten-maven-plugin.version>1.7.2</flatten-maven-plugin.version>
 
         <spring.boot.version>3.5.14</spring.boot.version>

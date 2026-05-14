@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>cn.iocoder.boot</groupId>
   <artifactId>module-server</artifactId>
-  <version>jdk17-spring3.x</version>
+  <version>2026.v1.0.0</version>
   <name>module-server</name>
   <description>后端 Server 的主项目，通过引入需要 yudao-module-xxx 的依赖，
         从而实现提供 RESTful API 给 yudao-ui-admin、yudao-ui-user 等前端项目。
@@ -14,19 +14,19 @@
     <dependency>
       <groupId>cn.iocoder.boot</groupId>
       <artifactId>module-system</artifactId>
-      <version>jdk17-spring3.x</version>
+      <version>2026.v1.0.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>cn.iocoder.boot</groupId>
       <artifactId>module-infra</artifactId>
-      <version>jdk17-spring3.x</version>
+      <version>2026.v1.0.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>cn.iocoder.boot</groupId>
       <artifactId>module-member</artifactId>
-      <version>jdk17-spring3.x</version>
+      <version>2026.v1.0.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

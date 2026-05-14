@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>cn.iocoder.boot</groupId>
   <artifactId>module-infra</artifactId>
-  <version>jdk17-spring3.x</version>
+  <version>2026.v1.0.0</version>
   <name>module-infra</name>
   <description></description>
   <repositories>

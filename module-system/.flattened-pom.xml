@@ -4,14 +4,14 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>cn.iocoder.boot</groupId>
   <artifactId>module-system</artifactId>
-  <version>jdk17-spring3.x</version>
+  <version>2026.v1.0.0</version>
   <name>module-system</name>
   <description></description>
   <dependencies>
     <dependency>
       <groupId>cn.iocoder.boot</groupId>
       <artifactId>spring-security</artifactId>
-      <version>jdk17-spring3.x</version>
+      <version>2026.v1.0.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -23,13 +23,13 @@
     <dependency>
       <groupId>cn.iocoder.boot</groupId>
       <artifactId>mybatis</artifactId>
-      <version>jdk17-spring3.x</version>
+      <version>2026.v1.0.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>cn.iocoder.boot</groupId>
       <artifactId>redis</artifactId>
-      <version>jdk17-spring3.x</version>
+      <version>2026.v1.0.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

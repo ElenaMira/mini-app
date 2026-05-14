@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>cn.iocoder.boot</groupId>
   <artifactId>common</artifactId>
-  <version>jdk17-spring3.x</version>
+  <version>2026.v1.0.0</version>
   <name>common</name>
   <description>该包是技术组件，每个子包，代表一个组件。每个组件包括两部分：
 		1. core 包：是该组件的核心封装

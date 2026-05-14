@@ -1,4 +1,4 @@
-package cn.iocoder.boot.module.member.dal.dataObject.level;
+package cn.iocoder.boot.module.member.dal.dataObject.app.level;
 
 import cn.iocoder.boot.common.enums.CommonStatusEnum;
 import cn.iocoder.boot.mybatis.core.dataobject.BaseDO;
@@ -36,11 +36,11 @@ public class MemberLevelDO extends BaseDO {
     private Integer discountPercent;
 
     /**
-     * 等级图标
+     * 等级图标 todo
      */
     private String icon;
     /**
-     * 等级背景图
+     * 等级背景图 todo
      */
     private String backgroundUrl;
     /**

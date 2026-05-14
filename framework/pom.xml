@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>mini-app-houduan</artifactId>
 		<groupId>cn.iocoder.boot</groupId>
-		<version>jdk17-spring3.x</version>
+		<version>2026.v1.0.0</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>

@@ -1,16 +1,22 @@
-package cn.iocoder.boot.module.member.dal.dataObject;
+package cn.iocoder.boot.module.member.dal.dataObject.app.user;
 
 import cn.iocoder.boot.common.enums.TerminalEnum;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author xiaosheng
  */
 @TableName(value = "member_user",autoResultMap = true)
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class MemberUserDO {
     // ========== 账号信息 ==========
     @TableId//企业标准: 强制用包装类区分：未赋值 vs 赋值为 0

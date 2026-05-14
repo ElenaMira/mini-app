@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>cn.iocoder.boot</groupId>
   <artifactId>framework</artifactId>
-  <version>jdk17-spring3.x</version>
+  <version>2026.v1.0.0</version>
   <packaging>pom</packaging>
   <name>framework</name>
   <description>该包是技术组件，每个子包，代表一个组件。每个组件包括两部分：

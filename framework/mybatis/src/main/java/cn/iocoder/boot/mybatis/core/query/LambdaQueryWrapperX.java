@@ -1,5 +1,6 @@
 package cn.iocoder.boot.mybatis.core.query;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 
@@ -17,6 +18,13 @@ public class LambdaQueryWrapperX<T> extends LambdaQueryWrapper<T> {
     @Override
     public LambdaQueryWrapperX<T> eq(SFunction<T, ?> column, Object val) {
         super.eq(column, val);
+        return this;
+    }
+
+    public LambdaQueryWrapperX<T> eqIfPresent(SFunction<T,?> column,Object val){
+        if (ObjectUtil.isNotEmpty(val)){
+            return (LambdaQueryWrapperX<T>) super.eq(column, val);
+        }
         return this;
     }
 }

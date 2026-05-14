@@ -4,16 +4,26 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 
+import cn.iocoder.boot.common.Object.BeanUtils;
 import cn.iocoder.boot.common.enums.CommonStatusEnum;
-import cn.iocoder.boot.module.member.dal.dataObject.MemberUserDO;
+import cn.iocoder.boot.module.member.control.app.user.vo.AppMemberUserUpdatePasswordReqVO;
+import cn.iocoder.boot.module.member.control.app.user.vo.AppMemberUserUpdateReqVO;
+import cn.iocoder.boot.module.member.dal.dataObject.app.user.MemberUserDO;
 import cn.iocoder.boot.module.member.dal.mysql.user.MemberUserMapper;
 import cn.iocoder.boot.module.member.mq.producer.user.MemberUserProducer;
+import cn.iocoder.boot.module.system.api.sms.SmsCodeApi;
+import cn.iocoder.boot.module.system.api.sms.dto.SmsCodeUseReqDTO;
+import cn.iocoder.boot.module.system.enums.sms.SmsSceneEnum;
 import jakarta.annotation.Resource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
+
+import static cn.iocoder.boot.common.exception.util.ServiceExceptionUtil.exception;
+import static cn.iocoder.boot.common.uitl.servlet.ServletUtils.getClientIP;
+import static cn.iocoder.boot.module.member.enums.ErrorCodeConstants.USER_NOT_EXISTS;
 
 /**
  * @author xiaosheng
@@ -28,6 +38,9 @@ public class MemberUserServiceImpl implements MemberUserService {
 
     @Resource
     private  MemberUserProducer memberUserProducer;
+
+    @Resource
+    private SmsCodeApi smsCodeApi;
 
     @Override
     public MemberUserDO getMemberUser(String mobile) {
@@ -63,6 +76,41 @@ public class MemberUserServiceImpl implements MemberUserService {
     @Override
     public MemberUserDO createUser(String nickname, String avatar, String registerIp, Integer terminal) {
         return createUser(null,nickname,avatar,registerIp,terminal);
+    }
+
+    @Override
+    public void updateUser(Long loginUserId, AppMemberUserUpdateReqVO reqVO) {
+        MemberUserDO memberUserDO = BeanUtils.toBean(reqVO, MemberUserDO.class).setId(loginUserId);
+        memberUserMapper.updateById(memberUserDO);
+    }
+
+    @Override
+    public void updateUserPassword(Long loginUserId, AppMemberUserUpdatePasswordReqVO reqVO) {
+        // 校验用户是否存在
+        MemberUserDO memberUserDO = validateUserExists(loginUserId);
+        //校验验证码
+        smsCodeApi.useSmsCode(SmsCodeUseReqDTO.builder()
+                        .mobile(memberUserDO.getMobile())
+                        .scene(SmsSceneEnum.MEMBER_UPDATE_PASSWORD.getScene())
+                        .code(reqVO.getCode())
+                        .usedIp(getClientIP())
+                .build());
+        //更新密码
+        memberUserMapper.updateById(MemberUserDO.builder()
+                        .id(loginUserId)
+                        .password(passwordEncoder.encode(reqVO.getPassword()))
+                .build());
+    }
+
+    private MemberUserDO validateUserExists(Long loginUserId) {
+        if (loginUserId == null){
+            return null;
+        }
+        MemberUserDO memberUserDO = memberUserMapper.selectById(loginUserId);
+        if (memberUserDO == null) {
+            throw exception(USER_NOT_EXISTS);
+        }
+        return memberUserDO;
     }
 
     private MemberUserDO createUser(String mobile, String nickname, String avtar, String registerIp, Integer terminal){

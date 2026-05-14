@@ -7,6 +7,7 @@ import lombok.Data;
 /**
  * @author xiaosheng
  */
+@Schema(description = "用户 APP - 用户个人信息 Response VO")
 @Data
 public class AppMemberUserInfoRespVO {
     @Schema(description = "用户编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
@@ -29,6 +30,12 @@ public class AppMemberUserInfoRespVO {
 
     @Schema(description = "经验值", requiredMode = Schema.RequiredMode.REQUIRED, example = "1024")
     private Integer experience;
+
+    @Schema(description = "用户等级")
+    private Level level;
+
+    @Schema(description = "是否成为推广员", requiredMode = Schema.RequiredMode.REQUIRED, example = "true")
+    private Boolean brokerageEnabled;
 
     @Schema(description = "用户 App - 会员等级")
     @Data

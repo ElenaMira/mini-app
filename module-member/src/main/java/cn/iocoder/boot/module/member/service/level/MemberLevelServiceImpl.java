@@ -1,7 +1,7 @@
 package cn.iocoder.boot.module.member.service.level;
 
-import cn.iocoder.boot.module.member.dal.dataObject.level.MemberLevelDO;
-import cn.iocoder.boot.module.member.dal.mysql.user.level.MemberLevelMapper;
+import cn.iocoder.boot.module.member.dal.dataObject.app.level.MemberLevelDO;
+import cn.iocoder.boot.module.member.dal.mysql.level.MemberLevelMapper;
 import jakarta.annotation.Resource;
 
 /**
