@@ -10,6 +10,7 @@ import cn.iocoder.boot.springsecurity.config.SecurityProperties;
 import cn.iocoder.boot.springsecurity.core.uitl.SecurityUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.annotation.security.PermitAll;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,7 +25,7 @@ import static cn.iocoder.boot.springsecurity.core.uitl.SecurityUtils.getLoginUse
 /**
  * @author xiaosheng
  */
-//@Tag(name = "用户 APP - 认证")
+@Tag(name = "用户 APP - 认证")
 @RestController
 @RequestMapping("/member/auth")
 @Validated

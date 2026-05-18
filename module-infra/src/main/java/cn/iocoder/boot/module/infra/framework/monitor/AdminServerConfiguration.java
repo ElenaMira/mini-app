@@ -1,4 +1,4 @@
-package cn.iocoder.boot.infra.framework.monitor;//package cn.iocoder.boot.springsecurity.infra.framework.monitor;
+package cn.iocoder.boot.module.infra.framework.monitor;//package cn.iocoder.boot.springsecurity.infra.framework.monitor;
 //
 //import de.codecentric.boot.admin.server.config.EnableAdminServer;
 //import jakarta.servlet.DispatcherType;

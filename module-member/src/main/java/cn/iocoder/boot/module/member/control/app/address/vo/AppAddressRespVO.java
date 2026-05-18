@@ -1,0 +1,17 @@
+package cn.iocoder.boot.module.member.control.app.address.vo;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
+/**
+ * @author xiaosheng
+ */
+@Data
+public class AppAddressRespVO extends AppAddressBaseVO{
+
+    @Schema(description = "编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "1024")
+    private Long id;
+
+    @Schema(description = "地区名字", requiredMode = Schema.RequiredMode.REQUIRED, example = "上海上海市普陀区")
+    private String areaName;
+}

@@ -29,6 +29,7 @@
 		<module>redis</module>
 		<module>spring-web</module>
 		<module>spring-security</module>
+		<module>ip</module>
 		<!--		<module>spring-websocket</module>-->
 
 	</modules>

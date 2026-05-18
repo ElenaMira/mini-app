@@ -30,6 +30,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import org.springframework.web.util.pattern.PathPattern;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -56,6 +57,9 @@ public class WebSecurityAutoConfigurationAdapter {
     @Resource
     private TokenAuthenticationFilter tokenAuthenticationFilter;
 
+    @Resource
+    private List<AuthorizeRequestsCustomizer> authorizeRequestsCustomizers;
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
@@ -81,6 +85,9 @@ public class WebSecurityAutoConfigurationAdapter {
                         //1. requestMatch
                         //1.1 静态资源，可匿名访问
                         .requestMatchers(HttpMethod.GET, "/*.html", "/*.css", "/*.js").permitAll()
+                        //项目
+                        .requestMatchers("/error").permitAll()
+                        .requestMatchers("/favicon.ico").permitAll()
                         //1.2 设置 @PermitAll 无需认证
                         .requestMatchers(HttpMethod.GET,permitAllUrls.get(HttpMethod.GET).toArray(new String[0])).permitAll()
                         .requestMatchers(HttpMethod.POST,permitAllUrls.get(HttpMethod.POST).toArray(new String[0])).permitAll()
@@ -90,10 +97,9 @@ public class WebSecurityAutoConfigurationAdapter {
                         .requestMatchers(HttpMethod.PATCH, permitAllUrls.get(HttpMethod.PATCH).toArray(new String[0])).permitAll()
                         //1.3 设置配置类无需认证
                         .requestMatchers(securityProperties.getPermitAllUrls().toArray(new String[0])).permitAll())
-//               // ②：每个项目的自定义规则
-//                .authorizeHttpRequests(c->c
-//                        .requestMatchers()
-//                )
+               // ②：每个项目的自定义规则
+                .authorizeHttpRequests(c->
+                        authorizeRequestsCustomizers.forEach(customizer->customizer.customize(c)))
                 // ③：兜底规则，必须认证
                 .authorizeHttpRequests(c -> c
 //                        .dispatcherTypeMatchers(DispatcherType.ASYNC).permitAll() // WebFlux 异步请求，无需认证，目的：SSE 场景

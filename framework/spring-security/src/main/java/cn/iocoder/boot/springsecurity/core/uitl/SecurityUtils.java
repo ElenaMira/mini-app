@@ -3,6 +3,7 @@ package cn.iocoder.boot.springsecurity.core.uitl;
 import cn.hutool.core.util.StrUtil;
 import cn.iocoder.boot.springsecurity.config.SecurityProperties;
 import cn.iocoder.boot.springsecurity.core.LoginUser;
+import cn.iocoder.boot.web.web.core.util.WebFrameworkUtils;
 import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -41,6 +42,11 @@ public class SecurityUtils {
         //当index<0时,表明请求头只有token没有标头
         return index>=0?token.substring(7+index).trim():token;
     }
+
+    /**
+     * 业务逻辑上loginUser不会为null
+     * @return loginUser
+     */
     @Nullable
     public static Long getLoginUserId(){
         LoginUser loginUser = getLoginUser();
@@ -60,7 +66,8 @@ public class SecurityUtils {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         if(request != null){
-
+            WebFrameworkUtils.setLoginUserId(request,loginUser.getId());
+            WebFrameworkUtils.setLoginUserType(request, loginUser.getUserType());
         }
     }
 

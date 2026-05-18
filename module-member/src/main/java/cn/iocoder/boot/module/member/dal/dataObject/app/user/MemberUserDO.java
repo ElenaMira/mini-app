@@ -1,6 +1,7 @@
 package cn.iocoder.boot.module.member.dal.dataObject.app.user;
 
 import cn.iocoder.boot.common.enums.TerminalEnum;
+import cn.iocoder.boot.module.member.dal.dataObject.app.level.MemberLevelDO;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -50,4 +51,10 @@ public class MemberUserDO {
      * 会员经验
      */
     private Integer experience;
+    /**
+     * 会员级别编号
+     *
+     * 关联 {@link MemberLevelDO#getId()} 字段
+     */
+    private Long levelId;
 }

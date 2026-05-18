@@ -7,12 +7,21 @@
         <version>2026.v1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
     <artifactId>module-infra</artifactId>
+    <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
     <description></description>
+    <url></url>
 
+
+    <dependencies>
+    <!-- 模块相关 -->
+        <dependency>
+            <groupId>cn.iocoder.boot</groupId>
+            <artifactId>spring-security</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

@@ -1,1 +1,2 @@
 cn.iocoder.boot.web.jackson.config.MyJacksonAutoConfiguration
+cn.iocoder.boot.web.web.config.WebAutoConfiguration

@@ -14,13 +14,13 @@ import java.util.List;
 @Mapper
 public interface MemberAddressMapper extends BaseMapperX<MemberAddressDO> {
 
-    default List<MemberAddressDO> selectByUserIdAndDefaulted(Long userId, Boolean defaulted){
-        return  selectList(new LambdaQueryWrapperX<MemberAddressDO>()
-                .eq(MemberAddressDO::getUserId,userId)
-                .eqIfPresent(MemberAddressDO::getDefaultStatus,defaulted));
-    }
-
     default MemberAddressDO selectByIdAndUserId(Long loginUserId, Long id){
         return selectOne(MemberAddressDO::getUserId, loginUserId, MemberAddressDO::getId, id);
+    }
+
+    default List<MemberAddressDO> selectListByUserIdAndDefaulted(Long loginUserId, boolean defaulted){
+        return selectList(new LambdaQueryWrapperX<MemberAddressDO>()
+                .eq(MemberAddressDO::getUserId,loginUserId)
+                .eqIfPresent(MemberAddressDO::getDefaultStatus,defaulted));
     }
 }

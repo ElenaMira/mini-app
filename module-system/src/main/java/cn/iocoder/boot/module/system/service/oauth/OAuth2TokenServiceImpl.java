@@ -123,7 +123,7 @@ public class OAuth2TokenServiceImpl implements OAuth2TokenService {
         // 2. 调用mysql获取
         OAuth2AccessTokenDO accessTokenDO = oAuth2AccessTokenMapper.selectByAccessToken(accessToken);
         if(accessTokenDO != null){
-            //看看有没有刷新Token
+            //看看有没有refreshToken
             //可以直接用accessToken来替代
             OAuth2RefreshTokenDO refreshTokenDO = oAuth2RefreshTokenMapper.selectByRefreshToken(accessToken);
             if(refreshTokenDO != null&&!DataUtils.isExpired(refreshTokenDO.getExpiresTime())){

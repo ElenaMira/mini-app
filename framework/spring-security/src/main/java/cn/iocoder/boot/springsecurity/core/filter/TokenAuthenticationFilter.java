@@ -7,8 +7,8 @@ import cn.iocoder.boot.common.exception.ServiceException;
 import cn.iocoder.boot.springsecurity.config.SecurityProperties;
 import cn.iocoder.boot.springsecurity.core.LoginUser;
 import cn.iocoder.boot.springsecurity.core.uitl.SecurityUtils;
-import cn.iocoder.boot.springsecurity.core.uitl.WebFrameworkUtils;
 
+import cn.iocoder.boot.web.web.core.util.WebFrameworkUtils;
 import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -68,7 +68,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             if (accessToken == null) {
                 return null;
             }
-            if (userType != null && !ObjectUtil.equal(accessToken.getUserType(), userType)) {
+            if (userType != null && ObjectUtil.notEqual(accessToken.getUserType(), userType)) {
                 throw new AccessDeniedException("错误的用户类型");
             }
             return new LoginUser().setId(accessToken.getUserId()).setUserType(accessToken.getUserType())
@@ -78,6 +78,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                     .setExpiresTime(accessToken.getExpiresTime());
         } catch (ServiceException e) {
             // 校验 Token 不通过时，考虑到一些接口是无需登录的，所以直接返回 null 即可
+            logger.error("Token校验不通过,原因:{}", e);
             return null;
         }
     }

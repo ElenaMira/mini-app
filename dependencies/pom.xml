@@ -29,11 +29,13 @@
         <mybatis.plus.version>3.5.12</mybatis.plus.version>
         <justauth.version>1.16.7</justauth.version>
         <justauth-starter.version>1.4.0</justauth-starter.version>
-        <swagger.version>2.2.21</swagger.version>
+
+        <ip2region.version>2.7.0</ip2region.version>
         <!-- 第三方依赖 -->
         <redisson.version>3.52.0</redisson.version>
         <wx-java.version>4.8.3.B</wx-java.version>
-
+        <!-- web相关依赖 -->
+        <springdoc.version>2.8.5</springdoc.version>
     </properties>
 
     <dependencyManagement>
@@ -48,6 +50,11 @@
                     <scope>import</scope>
                 </dependency>
                 <!-- 项目模块 -->
+                <dependency>
+                    <groupId>cn.iocoder.boot</groupId>
+                    <artifactId>ip</artifactId>
+                    <version>${revision}</version>
+                </dependency>
                 <dependency>
                     <groupId>cn.iocoder.boot</groupId>
                     <artifactId>common</artifactId>
@@ -83,13 +90,23 @@
                     <artifactId>module-member</artifactId>
                     <version>${revision}</version>
                 </dependency>
-
-
+                <!--web相关-->
+                <dependency>
+                    <groupId>org.springdoc</groupId>
+                    <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                    <version>${springdoc.version}</version>
+                </dependency>
                 <!-- MyBatis Plus -->
                 <dependency>
                     <groupId>com.baomidou</groupId>
                     <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
                     <version>${mybatis.plus.version}</version>
+                </dependency>
+                <!-- ip类 -->
+                <dependency>
+                    <groupId>org.lionsoul</groupId>
+                    <artifactId>ip2region</artifactId>
+                    <version>${ip2region.version}</version>
                 </dependency>
                 <!-- DB类 -->
                 <!-- Redis -->
@@ -163,13 +180,6 @@
                             <artifactId>hutool-core</artifactId>
                         </exclusion>
                     </exclusions>
-                </dependency>
-
-                <!-- Swagger -->
-                <dependency>
-                    <groupId>io.swagger.core.v3</groupId>
-                    <artifactId>swagger-core</artifactId>
-                    <version>${swagger.version}</version>
                 </dependency>
             </dependencies>
     </dependencyManagement>

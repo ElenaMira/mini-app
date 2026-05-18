@@ -37,7 +37,7 @@ public class AppMemberUserController {
     @Operation(summary = "获得基本信息")
     public CommonResult<AppMemberUserInfoRespVO> getUserInfo(){
         MemberUserDO user = memberUserService.getUser(getLoginUserId());
-        MemberLevelDO level = memberLevelService.getLevel(user.getId());
+        MemberLevelDO level = memberLevelService.getLevel(user.getLevelId());
         return success(MemberUserConvert.INSTANCE.convert(user,level));
     }
 

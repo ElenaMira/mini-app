@@ -43,7 +43,7 @@ tenant-id: {{appTenantId}}
 }
 
 ### 请求 /refresh-token 接口 => 成功
-POST {{appApi}}/member/auth/refresh-token?refreshToken=6a4956fe5f0e48e3bc74fbec97ba8b43
+POST {{appApi}}/member/auth/refresh-token?refreshToken=62b7d128a1294f9982ce432c614bc6cc
 Content-Type: application/json
 
 {

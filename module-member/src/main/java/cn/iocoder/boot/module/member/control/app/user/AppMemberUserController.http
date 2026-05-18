@@ -1,4 +1,4 @@
-### 请求 /member/user/profile/get 接口 => 没有权限
+### 请求 /member/user/get 接口 => 有权限(需要authToken(mock模式))
 GET {{appApi}}/member/user/get
-Authorization: Bearer test245
+Bearer: Bearer test
 tenant-id: {{appTenantId}}

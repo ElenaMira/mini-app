@@ -21,7 +21,7 @@ public class SecurityProperties {
      *
      */
     @NotEmpty(message = "Token Header不能为空")
-    private String tokenHeader = "zss";
+    private String tokenHeader = "Bearer";
     /**
      * 扫描等需要持久化的通信时,不能自定义Header,此时需要url带参token
      */
@@ -31,7 +31,7 @@ public class SecurityProperties {
      * mock模式开关,true为开
      */
     @NotNull(message = "mock开关不能为空")
-    private Boolean mockEnable = false;
+    private Boolean mockEnable = true;
 
     /**
      * mock密钥,用于获取模拟用户的信息
