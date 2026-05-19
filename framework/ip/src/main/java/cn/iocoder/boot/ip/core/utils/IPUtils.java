@@ -1,6 +1,5 @@
 package cn.iocoder.boot.ip.core.utils;
 
-import cn.hutool.core.io.resource.Resource;
 import cn.hutool.core.io.resource.ResourceUtil;
 import cn.iocoder.boot.ip.core.Area;
 import lombok.SneakyThrows;

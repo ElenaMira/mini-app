@@ -6,8 +6,8 @@ import cn.hutool.core.util.StrUtil;
 
 import cn.iocoder.boot.common.Object.BeanUtils;
 import cn.iocoder.boot.common.enums.CommonStatusEnum;
-import cn.iocoder.boot.module.member.control.app.user.vo.AppMemberUserUpdatePasswordReqVO;
-import cn.iocoder.boot.module.member.control.app.user.vo.AppMemberUserUpdateReqVO;
+import cn.iocoder.boot.module.member.controller.app.user.vo.AppMemberUserUpdatePasswordReqVO;
+import cn.iocoder.boot.module.member.controller.app.user.vo.AppMemberUserUpdateReqVO;
 import cn.iocoder.boot.module.member.dal.dataObject.app.user.MemberUserDO;
 import cn.iocoder.boot.module.member.dal.mysql.user.MemberUserMapper;
 import cn.iocoder.boot.module.member.mq.producer.user.MemberUserProducer;

@@ -1,4 +1,4 @@
-package cn.iocoder.boot.module.member.control.app.user.vo;
+package cn.iocoder.boot.module.member.controller.app.user.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

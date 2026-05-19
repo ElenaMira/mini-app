@@ -1,8 +1,6 @@
 package cn.iocoder.boot.module.member.convert;
 
-import cn.iocoder.boot.module.member.control.app.address.vo.AppAddressCreateReqVO;
-import cn.iocoder.boot.module.member.control.app.user.vo.AppMemberUserInfoRespVO;
-import cn.iocoder.boot.module.member.dal.dataObject.app.address.MemberAddressDO;
+import cn.iocoder.boot.module.member.controller.app.user.vo.AppMemberUserInfoRespVO;
 import cn.iocoder.boot.module.member.dal.dataObject.app.user.MemberUserDO;
 import cn.iocoder.boot.module.member.dal.dataObject.app.level.MemberLevelDO;
 import org.mapstruct.Mapper;

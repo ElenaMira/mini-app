@@ -1,9 +1,9 @@
 package cn.iocoder.boot.module.member.convert;
 
 import cn.iocoder.boot.common.biz.system.oauth2.dto.OAuth2AccessTokenBaseRespDTO;
-import cn.iocoder.boot.module.member.control.app.auth.vo.AppAuthLoginRespVO;
-import cn.iocoder.boot.module.member.control.app.auth.vo.AppAuthSmsLoginReqVO;
-import cn.iocoder.boot.module.member.control.app.auth.vo.AppSendSmsCodeReqVO;
+import cn.iocoder.boot.module.member.controller.app.auth.vo.AppAuthLoginRespVO;
+import cn.iocoder.boot.module.member.controller.app.auth.vo.AppAuthSmsLoginReqVO;
+import cn.iocoder.boot.module.member.controller.app.auth.vo.AppSendSmsCodeReqVO;
 
 import cn.iocoder.boot.module.system.api.sms.dto.SmsCodeSendReqDTO;
 import cn.iocoder.boot.module.system.api.sms.dto.SmsCodeUseReqDTO;

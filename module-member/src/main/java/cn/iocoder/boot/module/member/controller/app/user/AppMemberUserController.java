@@ -1,9 +1,9 @@
-package cn.iocoder.boot.module.member.control.app.user;
+package cn.iocoder.boot.module.member.controller.app.user;
 
 import cn.iocoder.boot.common.pojo.CommonResult;
-import cn.iocoder.boot.module.member.control.app.user.vo.AppMemberUserInfoRespVO;
-import cn.iocoder.boot.module.member.control.app.user.vo.AppMemberUserUpdatePasswordReqVO;
-import cn.iocoder.boot.module.member.control.app.user.vo.AppMemberUserUpdateReqVO;
+import cn.iocoder.boot.module.member.controller.app.user.vo.AppMemberUserInfoRespVO;
+import cn.iocoder.boot.module.member.controller.app.user.vo.AppMemberUserUpdatePasswordReqVO;
+import cn.iocoder.boot.module.member.controller.app.user.vo.AppMemberUserUpdateReqVO;
 import cn.iocoder.boot.module.member.convert.MemberUserConvert;
 import cn.iocoder.boot.module.member.dal.dataObject.app.user.MemberUserDO;
 import cn.iocoder.boot.module.member.dal.dataObject.app.level.MemberLevelDO;

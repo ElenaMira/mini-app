@@ -1,16 +1,12 @@
 package cn.iocoder.boot.module.member.service.address;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.ObjectUtil;
-import cn.iocoder.boot.module.member.control.app.address.vo.AppAddressCreateReqVO;
-import cn.iocoder.boot.module.member.control.app.address.vo.AppAddressUpdateReqVO;
-import cn.iocoder.boot.module.member.convert.MemberUserConvert;
+import cn.iocoder.boot.module.member.controller.app.address.vo.AppAddressCreateReqVO;
+import cn.iocoder.boot.module.member.controller.app.address.vo.AppAddressUpdateReqVO;
 import cn.iocoder.boot.module.member.convert.address.AddressConvert;
 import cn.iocoder.boot.module.member.dal.dataObject.app.address.MemberAddressDO;
-import cn.iocoder.boot.module.member.dal.dataObject.app.user.MemberUserDO;
 import cn.iocoder.boot.module.member.dal.mysql.address.MemberAddressMapper;
 import jakarta.annotation.Resource;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

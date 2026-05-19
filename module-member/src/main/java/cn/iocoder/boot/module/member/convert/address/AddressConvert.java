@@ -1,9 +1,9 @@
 package cn.iocoder.boot.module.member.convert.address;
 
 import cn.iocoder.boot.ip.core.utils.AreaUtils;
-import cn.iocoder.boot.module.member.control.app.address.vo.AppAddressCreateReqVO;
-import cn.iocoder.boot.module.member.control.app.address.vo.AppAddressRespVO;
-import cn.iocoder.boot.module.member.control.app.address.vo.AppAddressUpdateReqVO;
+import cn.iocoder.boot.module.member.controller.app.address.vo.AppAddressCreateReqVO;
+import cn.iocoder.boot.module.member.controller.app.address.vo.AppAddressRespVO;
+import cn.iocoder.boot.module.member.controller.app.address.vo.AppAddressUpdateReqVO;
 import cn.iocoder.boot.module.member.dal.dataObject.app.address.MemberAddressDO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

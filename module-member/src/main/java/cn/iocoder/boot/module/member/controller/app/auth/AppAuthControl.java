@@ -1,9 +1,9 @@
-package cn.iocoder.boot.module.member.control.app.auth;
+package cn.iocoder.boot.module.member.controller.app.auth;
 
 
 import cn.hutool.core.util.StrUtil;
 import cn.iocoder.boot.common.pojo.CommonResult;
-import cn.iocoder.boot.module.member.control.app.auth.vo.*;
+import cn.iocoder.boot.module.member.controller.app.auth.vo.*;
 import cn.iocoder.boot.module.member.service.authService.AuthService;
 
 import cn.iocoder.boot.springsecurity.config.SecurityProperties;

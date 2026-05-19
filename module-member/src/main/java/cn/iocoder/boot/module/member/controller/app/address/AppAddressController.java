@@ -1,9 +1,9 @@
-package cn.iocoder.boot.module.member.control.app.address;
+package cn.iocoder.boot.module.member.controller.app.address;
 
 import cn.iocoder.boot.common.pojo.CommonResult;
-import cn.iocoder.boot.module.member.control.app.address.vo.AppAddressCreateReqVO;
-import cn.iocoder.boot.module.member.control.app.address.vo.AppAddressRespVO;
-import cn.iocoder.boot.module.member.control.app.address.vo.AppAddressUpdateReqVO;
+import cn.iocoder.boot.module.member.controller.app.address.vo.AppAddressCreateReqVO;
+import cn.iocoder.boot.module.member.controller.app.address.vo.AppAddressRespVO;
+import cn.iocoder.boot.module.member.controller.app.address.vo.AppAddressUpdateReqVO;
 import cn.iocoder.boot.module.member.convert.address.AddressConvert;
 import cn.iocoder.boot.module.member.dal.dataObject.app.address.MemberAddressDO;
 import cn.iocoder.boot.module.member.service.address.AddressService;

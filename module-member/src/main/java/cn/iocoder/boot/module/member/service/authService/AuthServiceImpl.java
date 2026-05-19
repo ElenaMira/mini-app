@@ -9,7 +9,7 @@ import cn.iocoder.boot.common.biz.system.oauth2.dto.OAuth2AccessTokenCreateReqDT
 import cn.iocoder.boot.common.enums.CommonStatusEnum;
 import cn.iocoder.boot.common.enums.UserTypeEnum;
 import cn.iocoder.boot.common.validation.Mobile;
-import cn.iocoder.boot.module.member.control.app.auth.vo.*;
+import cn.iocoder.boot.module.member.controller.app.auth.vo.*;
 import cn.iocoder.boot.module.member.convert.AuthConvert;
 import cn.iocoder.boot.module.member.dal.dataObject.app.user.MemberUserDO;
 import cn.iocoder.boot.module.member.service.user.MemberUserService;

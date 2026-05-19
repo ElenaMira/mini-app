@@ -1,4 +1,4 @@
-package cn.iocoder.boot.module.member.control.app.auth.vo;
+package cn.iocoder.boot.module.member.controller.app.auth.vo;
 
 import cn.hutool.core.util.StrUtil;
 

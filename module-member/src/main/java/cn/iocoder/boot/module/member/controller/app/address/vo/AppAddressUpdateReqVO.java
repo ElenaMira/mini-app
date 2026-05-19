@@ -1,4 +1,4 @@
-package cn.iocoder.boot.module.member.control.app.address.vo;
+package cn.iocoder.boot.module.member.controller.app.address.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;

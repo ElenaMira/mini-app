@@ -1,6 +1,6 @@
 package cn.iocoder.boot.module.member.service.authService;
 
-import cn.iocoder.boot.module.member.control.app.auth.vo.*;
+import cn.iocoder.boot.module.member.controller.app.auth.vo.*;
 import jakarta.validation.Valid;
 
 /**
