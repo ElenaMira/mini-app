@@ -1,60 +1,15 @@
 spring:
   application:
     name: module-server
-  data:
-    redis:
-      host: 127.0.0.1
-      database: 3
-      port: 6379
-  datasource:
-    url: jdbc:mysql://localhost:3306/mini_app_houduan?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-    username: root
-    password: zss200417
-  security:
-    permit-all_urls:
-      - /login
-#  boot:
-#    admin:
-#      client:
-#        password: admin
-#        username: admin
-#        url: http://127.0.0.1:${server.port}/${spring.boot.admin.context-path}
-#        instance:
-#          service-host-type: IP
-#      context-path: /admin
-application:
-  scan:
-    base-package: cn.iocoder.boot
+  profiles:
+    active: local
 
-wx:
-  miniapp:
-    appid: wx60221e34e015df20
-    secret: 4485494f37197bfad4e0104e42b95236
-
-justauth:
-  enabled: true
-  type:
-    # noinspection SpringBootApplicationYaml
-    WECHAT_MINI_PROGRAM: # 微信小程序
-      client-id: ${wx.miniapp.appid}
-      client-secret: ${wx.miniapp.secret}
-      ignore-check-redirect-uri: true
-      ignore-check-state: true # 微信小程序，不会使用到 state，所以不进行校验
-  cache:
-    type: REDIS
-    prefix: 'social_auth_state:' # 缓存前缀，目前只对 Redis 缓存生效，默认 JUSTAUTH::STATE::
-    timeout: 24h # 超时时长，目前只对 Redis 缓存生效，默认 3 分钟
-
-logging:
-  level:
-    cn.iocoder.boot.springsecurity: debug
-
-
+# MyBatis Plus 的配置项
 mybatis-plus:
   global-config:
     db-config:
-      id-type: NONE # “智能”模式，基于 IdTypeEnvironmentPostProcessor + 数据源的类型，自动适配成 AUTO、INPUT 模式。
-      #      id-type: AUTO # 自增 ID，适合 MySQL 等直接自增的数据库
+      #id-type: NONE # “智能”模式，基于 IdTypeEnvironmentPostProcessor + 数据源的类型，自动适配成 AUTO、INPUT 模式。
+      id-type: AUTO # 自增 ID，适合 MySQL 等直接自增的数据库
       #      id-type: INPUT # 用户输入 ID，适合 Oracle、PostgreSQL、Kingbase、DB2、H2 数据库
       #      id-type: ASSIGN_ID # 分配 ID，默认使用雪花算法。注意，Oracle、PostgreSQL、Kingbase、DB2、H2 数据库时，需要去除实体类上的 @KeySequence 注解
       logic-delete-value: 1 # 逻辑已删除值(默认为 1)
@@ -65,12 +20,6 @@ hd:
   info:
     version: 1.0.0
     base-package: cn.iocoder.boot
-  sms-code:
-    expire-times: 9999d
-    send-frequency: 1s #测试使用todo
-    send-maximum-quantity-per-day: 9999
-    begin-code: 1000 # 这里配置 9999 的原因是，测试方便。
-    end-code: 9999 # 这里配置 9999 的原因是，测试方便。
 
 
 

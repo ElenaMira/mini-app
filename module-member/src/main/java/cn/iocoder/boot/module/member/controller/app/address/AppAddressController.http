@@ -2,7 +2,7 @@
 POST {{appApi}}//member/address/create
 Content-Type: application/json
 tenant-id: {{appTenantId}}
-Bearer: Bearer {{appToken}}
+Authorization: Bearer {{appToken}}
 
 {
   "name": "yunai",
@@ -10,7 +10,7 @@ Bearer: Bearer {{appToken}}
   "areaId": "610632",
   "postCode": "200000",
   "detailAddress": "芋道源码 233 号 666 室",
-  "defaulted": true
+  "defaultStatus": false
 }
 
 ### 请求 /update 接口 => 成功
@@ -20,13 +20,13 @@ tenant-id: {{appTenantId}}
 Authorization: Bearer {{appToken}}
 
 {
-  "id": "1",
+  "id": "36",
   "name": "yunai888",
   "mobile": "15601691300",
   "areaId": "610632",
   "postCode": "200000",
-  "detailAddress": "芋道源码 233 号 666 室",
-  "defaulted": false
+  "detailAddress": "zss",
+  "defaultStatus": true
 }
 
 ### 请求 /delete 接口 => 成功

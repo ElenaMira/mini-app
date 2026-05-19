@@ -17,8 +17,6 @@
         <revision>2026.v1.0.0</revision>
         <!-- 统一依赖管理 -->
         <spring.boot.version>3.5.14</spring.boot.version>
-
-
         <!-- 工具类版本 -->
         <lombok.version>1.18.42</lombok.version>
         <mapstruct.version>1.6.3</mapstruct.version>
@@ -36,6 +34,8 @@
         <wx-java.version>4.8.3.B</wx-java.version>
         <!-- web相关依赖 -->
         <springdoc.version>2.8.5</springdoc.version>
+        <!-- DB相关依赖 -->
+        <dynamic-datasource.version>4.5.0</dynamic-datasource.version>
     </properties>
 
     <dependencyManagement>
@@ -109,6 +109,11 @@
                     <version>${ip2region.version}</version>
                 </dependency>
                 <!-- DB类 -->
+                <dependency>
+                    <groupId>com.baomidou</groupId>
+                    <artifactId>dynamic-datasource-spring-boot3-starter</artifactId> <!-- 多数据源 -->
+                    <version>${dynamic-datasource.version}</version>
+                </dependency>
                 <!-- Redis -->
                 <dependency>
                     <groupId>org.redisson</groupId>

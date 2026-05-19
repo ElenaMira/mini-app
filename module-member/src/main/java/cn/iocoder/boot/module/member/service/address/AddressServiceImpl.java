@@ -29,8 +29,8 @@ public class AddressServiceImpl implements AddressService {
     public Long createAddress(Long loginUserId, AppAddressCreateReqVO reqVO) {
         //如果添加的是默认收件地址，则将原默认地址修改为非默认
         if (Boolean.TRUE.equals(reqVO.getDefaultStatus())){
-            List<MemberAddressDO> addressDOS = memberAddressMapper.selectListByUserIdAndDefaulted(loginUserId, true);
-            addressDOS.forEach(address->memberAddressMapper.updateById(MemberAddressDO.builder()
+            List<MemberAddressDO> addressDOList = memberAddressMapper.selectListByUserIdAndDefaulted(loginUserId, true);
+            addressDOList.forEach(address->memberAddressMapper.updateById(MemberAddressDO.builder()
                             .id(address.getId())
                             .defaultStatus(false)
                     .build()));
@@ -59,7 +59,6 @@ public class AddressServiceImpl implements AddressService {
         }
         //更新
         MemberAddressDO addressDO = AddressConvert.INSTANCE.convert(reqVO);
-        addressDO.setId(loginUserId);
         memberAddressMapper.updateById(addressDO);
     }
 

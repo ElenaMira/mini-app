@@ -21,7 +21,7 @@ public class SecurityProperties {
      *
      */
     @NotEmpty(message = "Token Header不能为空")
-    private String tokenHeader = "Bearer";
+    private String tokenHeader = "Authorization";
     /**
      * 扫描等需要持久化的通信时,不能自定义Header,此时需要url带参token
      */

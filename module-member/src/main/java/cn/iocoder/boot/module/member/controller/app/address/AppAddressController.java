@@ -33,7 +33,7 @@ public class AppAddressController {
         return success(addressService.createAddress(getLoginUserId(),reqVO));
     }
 
-    @PostMapping("/updata")
+    @PutMapping("/update")
     @Operation(summary = "更新用户收件地址")
     public CommonResult<Boolean> updateAddress(@Valid @RequestBody AppAddressUpdateReqVO updateReqVO) {
         addressService.updateAddress(getLoginUserId(), updateReqVO);
