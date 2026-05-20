@@ -1,7 +1,7 @@
 package cn.iocoder.boot.module.system.dal.mysql.social;
 
 
-import cn.iocoder.boot.module.system.dal.DO.SocialUserDO;
+import cn.iocoder.boot.module.system.dal.DO.social.SocialUserDO;
 import cn.iocoder.boot.mybatis.core.mapper.BaseMapperX;
 import org.apache.ibatis.annotations.Mapper;
 

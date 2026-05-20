@@ -6,7 +6,7 @@ import cn.iocoder.boot.common.biz.system.oauth2.OAuth2TokenCommonApi;
 import cn.iocoder.boot.common.biz.system.oauth2.dto.OAuth2AccessTokenBaseRespDTO;
 import cn.iocoder.boot.common.biz.system.oauth2.dto.OAuth2AccessTokenCheckRespDTO;
 import cn.iocoder.boot.common.biz.system.oauth2.dto.OAuth2AccessTokenCreateReqDTO;
-import cn.iocoder.boot.module.system.dal.DO.OAuth.OAuth2AccessTokenDO;
+import cn.iocoder.boot.module.system.dal.DO.oauth.OAuth2AccessTokenDO;
 import cn.iocoder.boot.module.system.service.oauth.OAuth2TokenService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;

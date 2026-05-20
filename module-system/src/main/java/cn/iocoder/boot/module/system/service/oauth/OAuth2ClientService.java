@@ -1,6 +1,6 @@
 package cn.iocoder.boot.module.system.service.oauth;
 
-import cn.iocoder.boot.module.system.dal.DO.OAuth.OAuth2ClientDO;
+import cn.iocoder.boot.module.system.dal.DO.oauth.OAuth2ClientDO;
 
 import java.util.Collection;
 

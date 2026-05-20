@@ -5,6 +5,7 @@ import cn.iocoder.boot.common.enums.CommonStatusEnum;
 import cn.iocoder.boot.module.system.enums.sms.SmsTemplateTypeEnum;
 import cn.iocoder.boot.mybatis.core.dataobject.BaseDO;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
@@ -21,6 +22,7 @@ public class SmsTemplateDO extends BaseDO {
     /**
      * 自增编号
      */
+    @TableId
     private Long id;
 
     // ========= 模板相关字段 =========

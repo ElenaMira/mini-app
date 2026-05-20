@@ -15,6 +15,7 @@ import cn.iocoder.boot.module.member.dal.dataObject.app.user.MemberUserDO;
 import cn.iocoder.boot.module.member.service.user.MemberUserService;
 
 import cn.iocoder.boot.module.system.api.sms.SmsCodeApi;
+import cn.iocoder.boot.module.system.api.social.SocialUserApi;
 import cn.iocoder.boot.module.system.api.social.dto.SocialUserBindReqDTO;
 import cn.iocoder.boot.module.system.api.social.dto.SocialUserRespDTO;
 import cn.iocoder.boot.module.system.enums.sms.SmsSceneEnum;
@@ -40,7 +41,7 @@ public class AuthServiceImpl implements AuthService{
     @Resource
     private MemberUserService memberUserService;
     @Resource
-    private SocialUserService socialUserService;
+    private SocialUserApi socialUserApi;
 
     @Resource
     private OAuth2TokenCommonApi oauth2TokenApi;
@@ -56,7 +57,7 @@ public class AuthServiceImpl implements AuthService{
         String openid = null;
         if(reqVO.getSocialType()!=null){
             // 说明有绑定社交用户(第三方)
-            openid = socialUserService.bindSocialUser(new SocialUserBindReqDTO(
+            openid = socialUserApi.bindSocialUser(new SocialUserBindReqDTO(
                     userDO.getId()
                     ,getUserType().getValue()
                     ,reqVO.getSocialType(),reqVO.getSocialCode(), reqVO.getSocialState()
@@ -87,7 +88,7 @@ public class AuthServiceImpl implements AuthService{
         // 如果 socialType 非空，说明需要绑定社交用户
         String openid = null;
         if (reqVO.getSocialType()!=null){
-            openid = socialUserService.bindSocialUser(SocialUserBindReqDTO.builder()
+            openid = socialUserApi.bindSocialUser(SocialUserBindReqDTO.builder()
                     .code(reqVO.getCode())
                     .state(reqVO.getSocialState())
                     .userId(userDO.getId())
@@ -126,7 +127,7 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     public AppAuthLoginRespVO socialLogin(AppAuthSocialLoginReqVO reqVO) {
-        SocialUserRespDTO socialUser = socialUserService.getSocialUserByCode(UserTypeEnum.MEMBER.getValue(), reqVO.getCode(),
+        SocialUserRespDTO socialUser = socialUserApi.getSocialUserByCode(UserTypeEnum.MEMBER.getValue(), reqVO.getCode(),
                 reqVO.getType(), reqVO.getState());
         if (socialUser == null){
             throw exception(AUTH_SOCIAL_USER_NOT_FOUND);
@@ -139,7 +140,7 @@ public class AuthServiceImpl implements AuthService{
             // 情况二：未绑定，注册用户 + 绑定用户
             user =  memberUserService.createUser(socialUser.getNickname(),socialUser.getAvatar()
                     ,getClientIP(),getTerminal());
-            socialUserService.bindSocialUser(SocialUserBindReqDTO.builder()
+            socialUserApi.bindSocialUser(SocialUserBindReqDTO.builder()
                             .userId(user.getId())
                             .code(reqVO.getCode())
                             .socialType(reqVO.getType())

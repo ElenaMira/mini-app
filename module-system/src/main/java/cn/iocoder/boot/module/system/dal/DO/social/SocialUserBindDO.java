@@ -1,7 +1,6 @@
 package cn.iocoder.boot.module.system.dal.DO.social;
 
 import cn.iocoder.boot.common.enums.UserTypeEnum;
-import cn.iocoder.boot.module.system.dal.DO.SocialUserDO;
 import cn.iocoder.boot.mybatis.core.dataobject.BaseDO;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;

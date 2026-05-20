@@ -1,6 +1,6 @@
 package cn.iocoder.boot.module.system.dal.mysql.auth2;
 
-import cn.iocoder.boot.module.system.dal.DO.OAuth.OAuth2RefreshTokenDO;
+import cn.iocoder.boot.module.system.dal.DO.oauth.OAuth2RefreshTokenDO;
 import cn.iocoder.boot.mybatis.core.mapper.BaseMapperX;
 import cn.iocoder.boot.mybatis.core.query.LambdaQueryWrapperX;
 import org.apache.ibatis.annotations.Mapper;

@@ -6,7 +6,7 @@ import cn.iocoder.boot.common.exception.ServiceException;
 
 import cn.iocoder.boot.module.system.api.social.dto.SocialUserBindReqDTO;
 import cn.iocoder.boot.module.system.api.social.dto.SocialUserRespDTO;
-import cn.iocoder.boot.module.system.dal.DO.SocialUserDO;
+import cn.iocoder.boot.module.system.dal.DO.social.SocialUserDO;
 import cn.iocoder.boot.module.system.dal.DO.social.SocialUserBindDO;
 import cn.iocoder.boot.module.system.dal.mysql.social.SocialUserBindMapper;
 import cn.iocoder.boot.module.system.dal.mysql.social.SocialUserMapper;

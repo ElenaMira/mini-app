@@ -7,7 +7,7 @@ import cn.hutool.extra.spring.SpringUtil;
 
 import cn.iocoder.boot.common.enums.CommonStatusEnum;
 import cn.iocoder.boot.common.uitl.string.StrUtils;
-import cn.iocoder.boot.module.system.dal.DO.OAuth.OAuth2ClientDO;
+import cn.iocoder.boot.module.system.dal.DO.oauth.OAuth2ClientDO;
 import cn.iocoder.boot.module.system.dal.mysql.auth2.Auth2ClientMapper;
 import cn.iocoder.boot.module.system.dal.redis.RedisKeyConstants;
 import jakarta.annotation.Resource;

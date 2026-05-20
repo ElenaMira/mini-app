@@ -1,4 +1,4 @@
-package cn.iocoder.boot.module.system.dal.DO;
+package cn.iocoder.boot.module.system.dal.DO.social;
 
 import cn.iocoder.boot.common.enums.SocialTypeEnum;
 import cn.iocoder.boot.mybatis.core.dataobject.BaseDO;

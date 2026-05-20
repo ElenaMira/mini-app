@@ -1,4 +1,4 @@
-package cn.iocoder.boot.module.system.dal.DO.OAuth;
+package cn.iocoder.boot.module.system.dal.DO.oauth;
 
 /**
  * @author xiaosheng
