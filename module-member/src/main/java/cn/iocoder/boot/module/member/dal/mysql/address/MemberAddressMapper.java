@@ -18,9 +18,12 @@ public interface MemberAddressMapper extends BaseMapperX<MemberAddressDO> {
         return selectOne(MemberAddressDO::getUserId, loginUserId, MemberAddressDO::getId, id);
     }
 
-    default List<MemberAddressDO> selectListByUserIdAndDefaulted(Long loginUserId, boolean defaulted){
+    default List<MemberAddressDO> selectListByUserIdAndDefaulted(Long loginUserId, Boolean defaulted){
         return selectList(new LambdaQueryWrapperX<MemberAddressDO>()
                 .eq(MemberAddressDO::getUserId,loginUserId)
                 .eqIfPresent(MemberAddressDO::getDefaultStatus,defaulted));
+    }
+    default List<MemberAddressDO> selectListByUserId(Long loginUserId){
+        return selectList(new LambdaQueryWrapperX<MemberAddressDO>().eq(MemberAddressDO::getUserId, loginUserId));
     }
 }

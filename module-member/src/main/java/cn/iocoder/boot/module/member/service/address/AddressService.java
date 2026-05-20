@@ -5,6 +5,8 @@ import cn.iocoder.boot.module.member.controller.app.address.vo.AppAddressUpdateR
 import cn.iocoder.boot.module.member.dal.dataObject.app.address.MemberAddressDO;
 import jakarta.validation.Valid;
 
+import java.util.List;
+
 /**
  * @author xiaosheng
  */
@@ -35,4 +37,6 @@ public interface AddressService {
      * @return
      */
     MemberAddressDO getDefaultUserAddress(Long loginUserId);
+
+    List<MemberAddressDO> getAddressList(Long loginUserId);
 }

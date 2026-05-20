@@ -57,7 +57,7 @@ public class AreaUtils {
             // 构建父子关系：因为 Area 中没有 parentId 字段,所以需要重复读取
             for (CsvRow row : rows){
                 Area area = areas.get(Integer.valueOf(row.get(0)));
-                Area parent = areas.get(Integer.valueOf(row.get(2)));
+                Area parent = areas.get(Integer.valueOf(row.get(3)));
                 Assert.isTrue(area!=parent,"{}:父子节点相同",area.getName());
                 area.setParent(parent);
                 parent.getChildren().add(area);

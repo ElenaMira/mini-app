@@ -9,8 +9,8 @@ Authorization: Bearer {{appToken}}
   "mobile": "15601691300",
   "areaId": "610632",
   "postCode": "200000",
-  "detailAddress": "芋道源码 233 号 666 室",
-  "defaultStatus": false
+  "detailAddress": "zss",
+  "defaultStatus": true
 }
 
 ### 请求 /update 接口 => 成功
@@ -20,7 +20,7 @@ tenant-id: {{appTenantId}}
 Authorization: Bearer {{appToken}}
 
 {
-  "id": "36",
+  "id": "37",
   "name": "yunai888",
   "mobile": "15601691300",
   "areaId": "610632",
@@ -30,13 +30,13 @@ Authorization: Bearer {{appToken}}
 }
 
 ### 请求 /delete 接口 => 成功
-DELETE {{appApi}}//member/address/delete?id=2
+DELETE {{appApi}}//member/address/delete?id=37
 Content-Type: application/json
 tenant-id: {{appTenantId}}
 Authorization: Bearer {{appToken}}
 
 ### 请求 /get 接口 => 成功
-GET {{appApi}}//member/address/get?id=1
+GET {{appApi}}//member/address/get?id=35
 Content-Type: application/json
 tenant-id: {{appTenantId}}
 Authorization: Bearer {{appToken}}
@@ -48,7 +48,7 @@ tenant-id: {{appTenantId}}
 Authorization: Bearer {{appToken}}
 
 ### 请求 /list 接口 => 成功
-GET {{appApi}}//member/address/list
+GET {{appApi}}//member/address/get-list
 Content-Type: application/json
 tenant-id: {{appTenantId}}
 Authorization: Bearer {{appToken}}

@@ -10,6 +10,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 /**
  * @author xiaosheng
  */
@@ -23,6 +25,8 @@ public interface AddressConvert {
 
     @Mapping(source = "areaId", target = "areaName",  qualifiedByName = "convertAreaIdToAreaName")
     AppAddressRespVO convert(MemberAddressDO addressDO);
+
+    List<AppAddressRespVO> convertList(List<MemberAddressDO> addressDOList);
 
     @Named("convertAreaIdToAreaName")
     default String convertAreaIdToAreaName(Integer areaId) {

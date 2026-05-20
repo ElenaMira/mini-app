@@ -14,6 +14,8 @@ import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static cn.iocoder.boot.common.pojo.CommonResult.success;
 import static cn.iocoder.boot.springsecurity.core.uitl.SecurityUtils.getLoginUserId;
 
@@ -58,5 +60,11 @@ public class AppAddressController {
     public CommonResult<AppAddressRespVO> getDefaultUserAddress() {
         MemberAddressDO address = addressService.getDefaultUserAddress(getLoginUserId());
         return success(AddressConvert.INSTANCE.convert(address));
+    }
+    @GetMapping("/get-list")
+    @Operation(summary = "获取用户地址列表")
+    public CommonResult<List<AppAddressRespVO>> getAddressList(){
+        List<MemberAddressDO> addressList = addressService.getAddressList(getLoginUserId());
+        return success(AddressConvert.INSTANCE.convertList(addressList));
     }
 }
