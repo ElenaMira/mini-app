@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -30,5 +31,12 @@ public class CollectionUtils {
             return new HashSet<>();
         }
         return collection.stream().map(func).filter(Objects::nonNull).collect(Collectors.toSet());
+    }
+
+    public static <T,U> U findFirst(Collection<T> source, Predicate<T> predicate, Function<T,U> func){
+        if (CollUtil.isEmpty(source)){
+            return null;
+        }
+        return source.stream().filter(predicate).findFirst().map(func).orElse(null);
     }
 }

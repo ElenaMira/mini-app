@@ -4,6 +4,8 @@ import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 
+import java.util.Collection;
+
 /**
  * @author xiaosheng
  */
@@ -25,6 +27,11 @@ public class LambdaQueryWrapperX<T> extends LambdaQueryWrapper<T> {
         if (ObjectUtil.isNotEmpty(val)){
             return (LambdaQueryWrapperX<T>) super.eq(column, val);
         }
+        return this;
+    }
+    @Override
+    public LambdaQueryWrapperX<T> in(SFunction<T,?> column, Collection<?> cal){
+        super.in(column, cal);
         return this;
     }
 }

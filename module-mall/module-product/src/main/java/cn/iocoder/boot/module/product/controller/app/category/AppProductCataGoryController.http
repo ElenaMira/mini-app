@@ -1,0 +1,10 @@
+### 请求 /product/category/list 接口 => 有权限(需要authToken(mock模式))
+GET {{appApi}}/product/category/list
+Bearer: Bearer test
+tenant-id: {{appTenantId}}
+
+### 请求/product/category/list-by-ids
+GET {{appApi}}/product/category/list-by-ids
+Bearer: Bearer test
+tenant-id: {{appTenantId}}
+

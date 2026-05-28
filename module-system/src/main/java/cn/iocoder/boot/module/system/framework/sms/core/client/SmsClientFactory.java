@@ -7,9 +7,9 @@ import cn.iocoder.boot.module.system.framework.sms.core.property.SmsChannelPrope
  */
 public interface SmsClientFactory {
     /**
-     *
-     * @param smsChannelProperties 创建客户端必要的字段
-     * @return
+     *  创建或更新短信 Client
+     * @param smsChannelProperties 配置对象
+     * @return 短信客户端
      */
     SmsClient createOrUpdateSmsClient(SmsChannelProperties smsChannelProperties);
 }
