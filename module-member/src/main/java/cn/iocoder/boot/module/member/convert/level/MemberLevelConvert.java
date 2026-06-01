@@ -14,6 +14,9 @@ import java.util.List;
 public interface MemberLevelConvert {
     MemberLevelConvert INSTANCE = Mappers.getMapper(MemberLevelConvert.class);
 
+    // 【必加】单个 DO → VO 映射方法
+    AppMemberLevelRespVO convert(MemberLevelDO memberLevelDO);
+
 
     List<AppMemberLevelRespVO> convertList02(List<MemberLevelDO> result);
 }

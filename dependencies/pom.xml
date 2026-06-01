@@ -32,6 +32,7 @@
         <!-- 第三方依赖 -->
         <redisson.version>3.52.0</redisson.version>
         <wx-java.version>4.8.3.B</wx-java.version>
+        <wx-java-miniapp.version>4.6.0</wx-java-miniapp.version>
         <!-- web相关依赖 -->
         <springdoc.version>2.8.5</springdoc.version>
         <!-- DB相关依赖 -->
@@ -88,6 +89,16 @@
                 <dependency>
                     <groupId>cn.iocoder.boot</groupId>
                     <artifactId>module-member</artifactId>
+                    <version>${revision}</version>
+                </dependency>
+                <dependency>
+                    <groupId>cn.iocoder.boot</groupId>
+                    <artifactId>module-product</artifactId>
+                    <version>${revision}</version>
+                </dependency>
+                <dependency>
+                    <groupId>cn.iocoder.boot</groupId>
+                    <artifactId>module-promotion</artifactId>
                     <version>${revision}</version>
                 </dependency>
                 <!--web相关-->
@@ -165,6 +176,11 @@
                     <version>${wx-java.version}</version>
                     <type>pom</type>
                     <scope>import</scope>
+                </dependency>
+                <dependency>
+                    <groupId>com.github.binarywang</groupId>
+                    <artifactId>wx-java-miniapp-spring-boot-starter</artifactId>  <!-- 微信登录（小程序） -->
+                    <version>${wx-java-miniapp.version}</version>
                 </dependency>
 
 

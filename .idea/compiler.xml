@@ -8,7 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
       </profile>
-      <profile name="Annotation profile for module-promotion" enabled="true">
+      <profile name="Annotation profile for mini-app-houduan" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -23,11 +23,11 @@
         <module name="module-infra" />
         <module name="module-server" />
         <module name="common" />
-        <module name="module-promotion" />
         <module name="ip" />
         <module name="mybatis" />
-        <module name="module-product" />
+        <module name="module-promotion" />
         <module name="spring-security" />
+        <module name="module-product" />
         <module name="module-member" />
         <module name="spring-web" />
         <module name="redis" />

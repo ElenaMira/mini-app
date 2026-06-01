@@ -2,6 +2,7 @@ package cn.iocoder.boot.module.promotion.controller.app.diy;
 
 import cn.iocoder.boot.common.pojo.CommonResult;
 import cn.iocoder.boot.module.promotion.controller.app.diy.vo.AppDiyTemplatePropertyRespVO;
+import cn.iocoder.boot.module.promotion.convert.diy.DiyTemplateConvert;
 import cn.iocoder.boot.module.promotion.dal.dataObject.diy.DiyPageDO;
 import cn.iocoder.boot.module.promotion.dal.dataObject.diy.DiyTemplateDO;
 import cn.iocoder.boot.module.promotion.enums.diy.DiyPageEnum;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.annotation.security.PermitAll;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,12 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 import static cn.iocoder.boot.common.pojo.CommonResult.success;
-import static cn.iocoder.boot.common.uitl.collection.CollectionUtils.findFirst;
+import static cn.iocoder.boot.common.util.collection.CollectionUtils.findFirst;
 
 /**
  * @author xiaosheng
  */
 
+@Slf4j
 @Tag(name = "用户 APP - 装修模板")
 @RestController
 @RequestMapping("/promotion/diy-template")
@@ -41,8 +44,11 @@ public class AppDiyTemplateController {
     @PermitAll
     public CommonResult<AppDiyTemplatePropertyRespVO> getUsedDiyTemplate() {
         DiyTemplateDO diyTemplate = diyTemplateService.getUsedDiyTemplate();
+        log.info("响应值为:{}",diyTemplate);
         return success(buildVo(diyTemplate));
     }
+
+
     private AppDiyTemplatePropertyRespVO buildVo(DiyTemplateDO diyTemplate) {
         if (diyTemplate == null) {
             return null;

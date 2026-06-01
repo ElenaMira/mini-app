@@ -16,7 +16,7 @@ import me.zhyd.oauth.model.AuthUser;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static cn.iocoder.boot.common.uitl.json.JsonUtils.toJsonString;
+import static cn.iocoder.boot.common.util.json.JsonUtils.toJsonString;
 
 /**
  * @author xiaosheng

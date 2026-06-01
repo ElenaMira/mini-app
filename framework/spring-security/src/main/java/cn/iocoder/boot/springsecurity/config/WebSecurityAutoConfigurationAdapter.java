@@ -1,6 +1,5 @@
 package cn.iocoder.boot.springsecurity.config;
 
-import cn.iocoder.boot.springsecurity.config.SecurityProperties;
 import cn.iocoder.boot.springsecurity.core.filter.TokenAuthenticationFilter;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -34,7 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static cn.iocoder.boot.common.uitl.collection.CollectionUtils.convertList;
+import static cn.iocoder.boot.common.util.collection.CollectionUtils.convertList;
 
 /**
  * @author xiaosheng
@@ -69,7 +68,9 @@ public class WebSecurityAutoConfigurationAdapter {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         // 登出
         httpSecurity
+                // 开启跨域
                 .cors(Customizer.withDefaults())
+                // CSRF 禁用，因为不使用 Session
                 .csrf(AbstractHttpConfigurer::disable)
                 //无状态放行
                 .sessionManagement(c->c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

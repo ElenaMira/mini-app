@@ -19,7 +19,6 @@ import cn.iocoder.boot.module.system.api.social.SocialUserApi;
 import cn.iocoder.boot.module.system.api.social.dto.SocialUserBindReqDTO;
 import cn.iocoder.boot.module.system.api.social.dto.SocialUserRespDTO;
 import cn.iocoder.boot.module.system.enums.sms.SmsSceneEnum;
-import cn.iocoder.boot.module.system.service.social.SocialUserService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +27,7 @@ import java.util.Objects;
 
 
 import static cn.iocoder.boot.common.exception.util.ServiceExceptionUtil.exception;
-import static cn.iocoder.boot.common.uitl.servlet.ServletUtils.getClientIP;
+import static cn.iocoder.boot.common.util.servlet.ServletUtils.getClientIP;
 import static cn.iocoder.boot.module.member.enums.ErrorCodeConstants.*;
 import static cn.iocoder.boot.web.web.core.util.WebFrameworkUtils.getTerminal;
 

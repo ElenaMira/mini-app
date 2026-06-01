@@ -1,7 +1,7 @@
 package cn.iocoder.boot.common.validation;
 
 import cn.hutool.core.util.StrUtil;
-import cn.iocoder.boot.common.uitl.validation.ValidationUtils;
+import cn.iocoder.boot.common.util.validation.ValidationUtils;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

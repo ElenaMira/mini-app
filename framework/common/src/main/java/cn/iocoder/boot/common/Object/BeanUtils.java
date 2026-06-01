@@ -1,10 +1,11 @@
 package cn.iocoder.boot.common.Object;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.iocoder.boot.common.uitl.collection.CollectionUtils;
+import cn.iocoder.boot.common.pojo.PageResult;
+import cn.iocoder.boot.common.util.collection.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author xiaosheng
@@ -21,6 +22,39 @@ public class BeanUtils {
     public static<T> T toBean(Object source ,Class<T> targetClass){
         return BeanUtil.toBean(source, targetClass);
     }
+
+    /**
+     *
+     * @param source
+     * @param targetType
+     * @return
+     * @param <S>
+     * @param <T>
+     */
+    public static <S, T> PageResult<T> toBean(PageResult<S> source, Class<T> targetType) {
+        return toBean(source, targetType, null);
+    }
+
+    /**
+     *  将PageResult<S>转为<T>
+     * @param source
+     * @param targetType
+     * @param peek
+     * @return
+     * @param <S>
+     * @param <T>
+     */
+    public static <S, T> PageResult<T> toBean(PageResult<S> source, Class<T> targetType, Consumer<T> peek) {
+        if (source == null) {
+            return null;
+        }
+        List<T> list = toBean(source.getList(), targetType);
+        if (peek != null) {
+            list.forEach(peek);
+        }
+        return new PageResult<>(list, source.getTotal());
+    }
+
 
     /**
      *

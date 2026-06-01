@@ -4,7 +4,7 @@ import cn.hutool.core.io.resource.ResourceUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.text.csv.CsvRow;
 import cn.hutool.core.text.csv.CsvUtil;
-import cn.iocoder.boot.common.uitl.object.ObjectUtils;
+import cn.iocoder.boot.common.util.object.ObjectUtils;
 import cn.iocoder.boot.ip.core.Area;
 import cn.iocoder.boot.ip.core.enums.AreaTypeEnum;
 import lombok.extern.slf4j.Slf4j;

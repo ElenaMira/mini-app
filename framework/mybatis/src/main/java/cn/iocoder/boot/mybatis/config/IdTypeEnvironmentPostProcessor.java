@@ -1,7 +1,7 @@
 package cn.iocoder.boot.mybatis.config;
 
 import cn.hutool.core.util.StrUtil;
-import cn.iocoder.boot.common.uitl.collection.SetUtils;
+import cn.iocoder.boot.common.util.collection.SetUtils;
 import cn.iocoder.boot.mybatis.core.util.JdbcUtils;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.IdType;

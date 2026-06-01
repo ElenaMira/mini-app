@@ -9,9 +9,9 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 
 import cn.iocoder.boot.common.core.KeyValue;
-import cn.iocoder.boot.common.uitl.collection.MapUtils;
-import cn.iocoder.boot.common.uitl.http.HttpUtils;
-import cn.iocoder.boot.common.uitl.json.JsonUtils;
+import cn.iocoder.boot.common.util.collection.MapUtils;
+import cn.iocoder.boot.common.util.http.HttpUtils;
+import cn.iocoder.boot.common.util.json.JsonUtils;
 import cn.iocoder.boot.module.system.framework.sms.core.client.dto.SmsSendRespDTO;
 import cn.iocoder.boot.module.system.framework.sms.core.property.SmsChannelProperties;
 import lombok.SneakyThrows;

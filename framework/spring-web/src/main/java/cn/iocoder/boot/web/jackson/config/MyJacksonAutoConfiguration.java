@@ -1,12 +1,11 @@
 package cn.iocoder.boot.web.jackson.config;
 
-import cn.iocoder.boot.common.uitl.json.JsonUtils;
-import cn.iocoder.boot.common.uitl.json.databind.TimestampLocalDateTimeDeserializer;
-import cn.iocoder.boot.common.uitl.json.databind.TimestampLocalDateTimeSerializer;
+import cn.iocoder.boot.common.util.json.JsonUtils;
+import cn.iocoder.boot.common.util.json.databind.TimestampLocalDateTimeDeserializer;
+import cn.iocoder.boot.common.util.json.databind.TimestampLocalDateTimeSerializer;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.databind.ser.std.NumberSerializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;

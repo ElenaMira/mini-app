@@ -6,6 +6,8 @@ import cn.hutool.core.util.StrUtil;
 
 import cn.iocoder.boot.common.Object.BeanUtils;
 import cn.iocoder.boot.common.enums.CommonStatusEnum;
+import cn.iocoder.boot.common.enums.UserTypeEnum;
+import cn.iocoder.boot.module.member.controller.app.social.vo.AppMemberUserUpdateMobileByWeixinReqVO;
 import cn.iocoder.boot.module.member.controller.app.user.vo.AppMemberUserUpdatePasswordReqVO;
 import cn.iocoder.boot.module.member.controller.app.user.vo.AppMemberUserUpdateReqVO;
 import cn.iocoder.boot.module.member.dal.dataObject.app.user.MemberUserDO;
@@ -13,6 +15,7 @@ import cn.iocoder.boot.module.member.dal.mysql.user.MemberUserMapper;
 import cn.iocoder.boot.module.member.mq.producer.user.MemberUserProducer;
 import cn.iocoder.boot.module.system.api.sms.SmsCodeApi;
 import cn.iocoder.boot.module.system.api.sms.dto.SmsCodeUseReqDTO;
+import cn.iocoder.boot.module.system.api.social.SocialClientApi;
 import cn.iocoder.boot.module.system.enums.sms.SmsSceneEnum;
 import jakarta.annotation.Resource;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,7 +25,7 @@ import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import static cn.iocoder.boot.common.exception.util.ServiceExceptionUtil.exception;
-import static cn.iocoder.boot.common.uitl.servlet.ServletUtils.getClientIP;
+import static cn.iocoder.boot.common.util.servlet.ServletUtils.getClientIP;
 import static cn.iocoder.boot.module.member.enums.ErrorCodeConstants.USER_NOT_EXISTS;
 
 /**
@@ -41,6 +44,9 @@ public class MemberUserServiceImpl implements MemberUserService {
 
     @Resource
     private SmsCodeApi smsCodeApi;
+
+    @Resource
+    private SocialClientApi socialClientApi;
 
     @Override
     public MemberUserDO getMemberUser(String mobile) {
@@ -100,6 +106,14 @@ public class MemberUserServiceImpl implements MemberUserService {
                         .id(loginUserId)
                         .password(passwordEncoder.encode(reqVO.getPassword()))
                 .build());
+    }
+
+    @Override
+    public void updateUserMobileByWeixin(Long loginUserId, AppMemberUserUpdateMobileByWeixinReqVO reqVO) {
+        //基于Code获取对应手机号信息
+        SocialWxPhoneNumberInfoRespDTO phoneNumberInfo = socialClientApi.getWxMaPhoneNumberInfo(
+                UserTypeEnum.MEMBER.getValue(), reqVO.getCode());
+
     }
 
     private MemberUserDO validateUserExists(Long loginUserId) {

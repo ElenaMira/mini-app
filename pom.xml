@@ -16,7 +16,7 @@
         <module>module-member</module>
         <module>module-server</module>
         <module>module-infra</module>
-<!--        <module>spring-security</module>-->
+        <module>module-mall</module>
     </modules>
 
     <properties>

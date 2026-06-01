@@ -2,6 +2,7 @@ package cn.iocoder.boot.module.product.controller.app.comment;
 
 
 import cn.hutool.core.collection.CollUtil;
+import cn.iocoder.boot.common.Object.BeanUtils;
 import cn.iocoder.boot.common.pojo.CommonResult;
 import cn.iocoder.boot.common.pojo.PageResult;
 import cn.iocoder.boot.module.product.controller.app.comment.vo.AppCommentPageReqVO;
@@ -40,5 +41,12 @@ public class AppProductCommentController {
         if (CollUtil.isEmpty(pageResult.getList())) {
             return success(PageResult.empty(pageResult.getTotal()));
         }
+        // 拼接返回
+        pageResult.getList().forEach(item -> {
+            if (Boolean.TRUE.equals(item.getAnonymous())) {
+                item.setUserNickname(ProductCommentDO.NICKNAME_ANONYMOUS);
+            }
+        });
+        return success(BeanUtils.toBean(pageResult, AppProductCommentRespVO.class));
     }
 }

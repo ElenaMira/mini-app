@@ -18,7 +18,7 @@ import java.util.HashMap;
 
 import static cn.hutool.core.util.RandomUtil.randomInt;
 import static cn.iocoder.boot.common.exception.util.ServiceExceptionUtil.exception;
-import static cn.iocoder.boot.common.uitl.date.DateUtils.isToday;
+import static cn.iocoder.boot.common.util.date.DateUtils.isToday;
 import static cn.iocoder.boot.module.system.enums.ErrorCodeConstant.*;
 
 /**

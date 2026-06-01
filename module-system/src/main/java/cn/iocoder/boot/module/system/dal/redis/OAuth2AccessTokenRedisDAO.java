@@ -2,8 +2,8 @@ package cn.iocoder.boot.module.system.dal.redis;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
 
-import cn.iocoder.boot.common.uitl.collection.CollectionUtils;
-import cn.iocoder.boot.common.uitl.json.JsonUtils;
+import cn.iocoder.boot.common.util.collection.CollectionUtils;
+import cn.iocoder.boot.common.util.json.JsonUtils;
 import cn.iocoder.boot.module.system.dal.DO.oauth.OAuth2AccessTokenDO;
 
 import jakarta.annotation.Resource;

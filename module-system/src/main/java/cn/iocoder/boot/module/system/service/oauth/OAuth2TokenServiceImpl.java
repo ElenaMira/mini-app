@@ -8,7 +8,7 @@ import cn.iocoder.boot.common.Object.BeanUtils;
 import cn.iocoder.boot.common.enums.UserTypeEnum;
 import cn.iocoder.boot.common.exception.ServiceException;
 import cn.iocoder.boot.common.exception.enums.GlobalErrorCodeConstants;
-import cn.iocoder.boot.common.uitl.DataUtils;
+import cn.iocoder.boot.common.util.DataUtils;
 import cn.iocoder.boot.module.system.dal.DO.oauth.OAuth2AccessTokenDO;
 import cn.iocoder.boot.module.system.dal.DO.oauth.OAuth2ClientDO;
 import cn.iocoder.boot.module.system.dal.DO.oauth.OAuth2RefreshTokenDO;
@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import static cn.iocoder.boot.  common.exception.util.ServiceExceptionUtil.exception0;
-import static cn.iocoder.boot.  common.uitl.collection.CollectionUtils.convertSet;
+import static cn.iocoder.boot.  common.util.collection.CollectionUtils.convertSet;
 
 /**
  * @author xiaosheng

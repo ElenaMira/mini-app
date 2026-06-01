@@ -1,0 +1,9 @@
+### config: http/env.json
+### 请求 /login 接口 => 成功
+GET {{appApi}}/promotion/diy-template/used
+Content-Type: application/json
+tenant-id: {{appTenantId}}
+
+{
+
+}
