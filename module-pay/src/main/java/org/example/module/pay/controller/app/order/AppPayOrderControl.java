@@ -29,6 +29,7 @@ public class AppPayOrderControl {
     public CommonResult<PayOrderRespVO> getOder(@RequestParam(value = "id", required = false) Long id,
                                                 @RequestParam(value = "no", required = false) String no,
                                                 @RequestParam(value = "sync", required = false) Boolean sync) {
-        PayOrderDO
+//        PayOrderDO
+        return null;
     }
 }

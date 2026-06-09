@@ -84,6 +84,7 @@ public class MemberUserServiceImpl implements MemberUserService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public MemberUserDO createUser(String nickname, String avatar, String registerIp, Integer terminal) {
         return createUser(null,nickname,avatar,registerIp,terminal);
     }

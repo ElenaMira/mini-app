@@ -17,7 +17,7 @@
         <module>module-server</module>
         <module>module-infra</module>
         <module>module-mall</module>
-        <module>moduel-pay</module>
+        <module>module-pay</module>
     </modules>
 
     <properties>

@@ -19,18 +19,19 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
         </processorPath>
-        <module name="module-system" />
-        <module name="module-infra" />
         <module name="module-server" />
-        <module name="common" />
         <module name="ip" />
         <module name="mybatis" />
-        <module name="module-promotion" />
-        <module name="spring-security" />
         <module name="module-product" />
-        <module name="module-member" />
         <module name="spring-web" />
         <module name="redis" />
+        <module name="module-system" />
+        <module name="module-infra" />
+        <module name="common" />
+        <module name="module-promotion" />
+        <module name="module-pay" />
+        <module name="spring-security" />
+        <module name="module-member" />
       </profile>
     </annotationProcessing>
   </component>

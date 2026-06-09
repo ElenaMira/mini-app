@@ -125,6 +125,7 @@ public class AuthServiceImpl implements AuthService{
     }
 
     @Override
+    @Transactional
     public AppAuthLoginRespVO socialLogin(AppAuthSocialLoginReqVO reqVO) {
         SocialUserRespDTO socialUser = socialUserApi.getSocialUserByCode(UserTypeEnum.MEMBER.getValue(), reqVO.getCode(),
                 reqVO.getType(), reqVO.getState());

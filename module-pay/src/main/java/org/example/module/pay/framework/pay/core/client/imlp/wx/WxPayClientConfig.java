@@ -1,7 +1,6 @@
 package org.example.module.pay.framework.pay.core.client.imlp.wx;
 
-import cn.iocoder.boot.common.util.validation.ValidationUtils;
-import jakarta.validation.Validator;
+
 import jakarta.validation.constraints.NotBlank;
 import org.example.module.pay.framework.pay.core.client.PayClientConfig;
 
@@ -60,7 +59,7 @@ public class WxPayClientConfig implements PayClientConfig {
 
     @Override
     public void validate(Validator validator) {
-        ValidationUtils.validate(validator, this,
-                 V3.class);
+//        ValidationUtils.validate(validator, this,
+//                 V3.class);
     }
 }
