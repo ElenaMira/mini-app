@@ -56,7 +56,7 @@ public class AppMemberUserController {
         return success(true);
     }
     @PutMapping("/update-mobile-by-weixin")
-    @Operation(summary = "基于微信小程序的授权码，修改用户手机")
+    @Operation(summary = "基于微信小程序的授权码，修改用户绑定的手机")
     public CommonResult<Boolean> updateUserMobileByWeixin(@RequestBody @Valid AppMemberUserUpdateMobileByWeixinReqVO reqVO) {
         memberUserService.updateUserMobileByWeixin(getLoginUserId(), reqVO);
         return success(true);

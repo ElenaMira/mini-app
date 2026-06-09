@@ -1,5 +1,6 @@
 package cn.iocoder.boot.module.member.service.user;
 
+import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
@@ -16,7 +17,9 @@ import cn.iocoder.boot.module.member.mq.producer.user.MemberUserProducer;
 import cn.iocoder.boot.module.system.api.sms.SmsCodeApi;
 import cn.iocoder.boot.module.system.api.sms.dto.SmsCodeUseReqDTO;
 import cn.iocoder.boot.module.system.api.social.SocialClientApi;
+import cn.iocoder.boot.module.system.api.social.dto.SocialWxPhoneNumberInfoRespDTO;
 import cn.iocoder.boot.module.system.enums.sms.SmsSceneEnum;
+import com.google.common.annotations.VisibleForTesting;
 import jakarta.annotation.Resource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 
 import static cn.iocoder.boot.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.boot.common.util.servlet.ServletUtils.getClientIP;
+import static cn.iocoder.boot.module.member.enums.ErrorCodeConstants.USER_MOBILE_USED;
 import static cn.iocoder.boot.module.member.enums.ErrorCodeConstants.USER_NOT_EXISTS;
 
 /**
@@ -113,7 +117,11 @@ public class MemberUserServiceImpl implements MemberUserService {
         //基于Code获取对应手机号信息
         SocialWxPhoneNumberInfoRespDTO phoneNumberInfo = socialClientApi.getWxMaPhoneNumberInfo(
                 UserTypeEnum.MEMBER.getValue(), reqVO.getCode());
-
+        Assert.notNull(phoneNumberInfo, "获得手机信息失败，结果为空");
+        // 1.2 校验新手机是否已经被绑定
+        validateMobileUnique(loginUserId, phoneNumberInfo.getPhoneNumber());
+        // 2. 更新用户手机
+        memberUserMapper.updateById(MemberUserDO.builder().id(loginUserId).mobile(phoneNumberInfo.getPhoneNumber()).build());
     }
 
     private MemberUserDO validateUserExists(Long loginUserId) {
@@ -125,6 +133,29 @@ public class MemberUserServiceImpl implements MemberUserService {
             throw exception(USER_NOT_EXISTS);
         }
         return memberUserDO;
+    }
+
+    /**
+     *  校验手机号是否绑定
+     * @param loginUserId  登录用户的ID
+     * @param mobile    手机号
+     */
+    @VisibleForTesting
+    void validateMobileUnique(Long loginUserId, String mobile) {
+        if (StrUtil.isBlank(mobile)) {
+            return;
+        }
+        MemberUserDO user = memberUserMapper.selectByMobile(mobile);
+        if (user == null) {
+            return;
+        }
+        // 如果 loginUserId 为空，说明不用比较是否为相同 loginUserId 的用户
+        if (loginUserId == null) {
+            throw exception(USER_MOBILE_USED, mobile);
+        }
+        if (!user.getId().equals(loginUserId)) {
+            throw exception(USER_MOBILE_USED, mobile);
+        }
     }
 
     private MemberUserDO createUser(String mobile, String nickname, String avtar, String registerIp, Integer terminal){

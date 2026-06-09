@@ -53,6 +53,11 @@
             <groupId>com.github.binarywang</groupId>
             <artifactId>wx-java-miniapp-spring-boot-starter</artifactId>  <!-- 微信登录（小程序） -->
         </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId> <!-- 兼容老版本微信登录（小程序） -->
+        </dependency>
+
 
 
     </dependencies>

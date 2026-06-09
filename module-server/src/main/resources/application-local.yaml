@@ -68,4 +68,5 @@ justauth:
     timeout: 24h # 超时时长，目前只对 Redis 缓存生效，默认 3 分钟
 logging:
   level:
-    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: TRACE #显示所有HTTPRequest
+#    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: TRACE #显示所有HTTPRequest
+    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: DEBUG
