@@ -1,7 +1,13 @@
 package cn.iocoder.boot.common.util.validation;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.lang.Assert;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Validator;
 import org.springframework.util.StringUtils;
 
+import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
@@ -16,5 +22,18 @@ public class ValidationUtils {
         return StringUtils.hasText(mobile)          // 先判断不为空
                 && PATTERN_MOBILE.matcher(mobile)   // 把字符串丢进去匹配
                 .matches();                         // 返回 true/false
+    }
+
+    /**
+     * JSR303标准校验
+     * @param validator
+     * @param object
+     * @param groups
+     */
+    public static void validate(Validator validator, Object object, Class<?>... groups) {
+        Set<ConstraintViolation<Object>> constraintViolations = validator.validate(object, groups);
+        if (CollUtil.isNotEmpty(constraintViolations)) {
+            throw new ConstraintViolationException(constraintViolations);
+        }
     }
 }
