@@ -4,10 +4,13 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.iocoder.boot.common.biz.system.oauth2.OAuth2TokenCommonApi;
 import cn.iocoder.boot.common.biz.system.oauth2.dto.OAuth2AccessTokenCheckRespDTO;
 import cn.iocoder.boot.common.exception.ServiceException;
+import cn.iocoder.boot.common.pojo.CommonResult;
+import cn.iocoder.boot.common.util.servlet.ServletUtils;
 import cn.iocoder.boot.springsecurity.config.SecurityProperties;
 import cn.iocoder.boot.springsecurity.core.LoginUser;
 import cn.iocoder.boot.springsecurity.core.uitl.SecurityUtils;
 
+import cn.iocoder.boot.web.web.core.handle.GlobalExceptionHandler;
 import cn.iocoder.boot.web.web.core.util.WebFrameworkUtils;
 import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.FilterChain;
@@ -29,6 +32,8 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final OAuth2TokenCommonApi oAuth2TokenCommonApi;
 
+    private final GlobalExceptionHandler globalExceptionHandler;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
             String token = SecurityUtils.obtainToken(request,securityProperties.getTokenHeader(),securityProperties.getTokenParameter());
@@ -39,18 +44,19 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                     //1.2 基于Token构建用户
                     LoginUser loginUser = buildLonginUserByToken(token, userType);
                     // 1.2 模拟 Login 功能，方便日常开发调试
-                    if(loginUser == null){
-                        loginUser = mockLoginUser(request, token, userType);
-                    }
+//                    if(loginUser == null){
+//                        loginUser = mockLoginUser(request, token, userType);
+//                    }
 
                     // 2. 设置当前用户
                     if (loginUser != null) {
                         SecurityUtils.setLoginUser(loginUser, request);
                     }
-                }catch (Throwable e){
-//                    CommonResult<?> result = globalExceptionHandler.allExceptionHandler(request, ex);
-//                    ServletUtils.writeJSON(response, result);
-//                    return;
+                }catch (Throwable ex){
+                    CommonResult<?> result = globalExceptionHandler.allExceptionHandler(request, ex);
+                    logger.error("Token校验失败原因:{}",ex);
+                    ServletUtils.writeJSON(response,result);
+                    return;
                 }
             }
 

@@ -2,11 +2,13 @@ package cn.iocoder.boot.springsecurity.config;
 
 
 import cn.iocoder.boot.common.biz.system.oauth2.OAuth2TokenCommonApi;
+import cn.iocoder.boot.common.exception.enums.GlobalErrorCodeConstants;
 import cn.iocoder.boot.springsecurity.config.SecurityProperties;
 import cn.iocoder.boot.springsecurity.core.filter.TokenAuthenticationFilter;
 import cn.iocoder.boot.springsecurity.core.handle.AccessDeniedHandlerImpl;
 import cn.iocoder.boot.springsecurity.core.handle.AuthenticationEntryPointImpl;
 
+import cn.iocoder.boot.web.web.core.handle.GlobalExceptionHandler;
 import jakarta.annotation.Resource;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
@@ -38,8 +40,9 @@ public class SecurityAutoConfiguration {
     public PasswordEncoder passwordEncoder(){return new BCryptPasswordEncoder(securityProperties.getPasswordEncoderLength());}
 
     @Bean
-    public TokenAuthenticationFilter tokenAuthenticationFilter(OAuth2TokenCommonApi oAuth2TokenCommonApi){
-        return new TokenAuthenticationFilter(securityProperties,oAuth2TokenCommonApi);
+    public TokenAuthenticationFilter tokenAuthenticationFilter(GlobalExceptionHandler globalExceptionHandler,
+            OAuth2TokenCommonApi oAuth2TokenCommonApi){
+        return new TokenAuthenticationFilter(securityProperties,oAuth2TokenCommonApi,globalExceptionHandler);
     }
 
 

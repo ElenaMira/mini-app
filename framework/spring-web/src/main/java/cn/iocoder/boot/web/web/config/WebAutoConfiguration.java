@@ -2,6 +2,7 @@ package cn.iocoder.boot.web.web.config;
 
 import cn.hutool.core.text.AntPathMatcher;
 import cn.hutool.core.util.StrUtil;
+import cn.iocoder.boot.web.web.core.handle.GlobalExceptionHandler;
 import cn.iocoder.boot.web.web.core.util.WebFrameworkUtils;
 import com.google.common.collect.Maps;
 import org.jspecify.annotations.Nullable;
@@ -62,5 +63,10 @@ public class WebAutoConfiguration {
     @SuppressWarnings("InstantiationOfUtilityClass")
     public WebFrameworkUtils  webFrameworkUtils(WebProperties webProperties){
         return new WebFrameworkUtils(webProperties);
+    }
+
+    @Bean
+    public GlobalExceptionHandler globalExceptionHandler(){
+        return new GlobalExceptionHandler();
     }
 }

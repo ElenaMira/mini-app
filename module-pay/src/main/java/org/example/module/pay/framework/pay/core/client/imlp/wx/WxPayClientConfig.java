@@ -1,6 +1,7 @@
 package org.example.module.pay.framework.pay.core.client.imlp.wx;
 
 
+import jakarta.validation.Validator;
 import jakarta.validation.constraints.NotBlank;
 import org.example.module.pay.framework.pay.core.client.PayClientConfig;
 

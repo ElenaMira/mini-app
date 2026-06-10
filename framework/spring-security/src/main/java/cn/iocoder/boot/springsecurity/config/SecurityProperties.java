@@ -31,7 +31,7 @@ public class SecurityProperties {
      * mock模式开关,true为开
      */
     @NotNull(message = "mock开关不能为空")
-    private Boolean mockEnable = true;
+    private Boolean mockEnable = false;
 
     /**
      * mock密钥,用于获取模拟用户的信息

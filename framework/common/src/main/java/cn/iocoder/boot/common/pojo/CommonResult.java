@@ -1,5 +1,8 @@
 package cn.iocoder.boot.common.pojo;
 
+import cn.hutool.core.lang.Assert;
+import cn.iocoder.boot.common.exception.ErrorCode;
+import cn.iocoder.boot.common.exception.enums.GlobalErrorCodeConstants;
 import lombok.Data;
 
 /**
@@ -18,6 +21,17 @@ public class CommonResult<T> {
         result.setCode(200);
         result.setMsg("请求成功");
         result.setData(data);
+        return result;
+    }
+    public static CommonResult<?> error(ErrorCode error){
+        return error(error.getCode(), error.getMsg());
+    }
+
+    public static <T> CommonResult<T> error(Integer code,String message){
+        Assert.notEquals(GlobalErrorCodeConstants.SUCCESS.getCode(), code, "code 必须是错误的！");
+        CommonResult<T> result = new CommonResult<>();
+        result.setCode(code);
+        result.setMsg(message);
         return result;
     }
 }
