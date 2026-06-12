@@ -18,7 +18,7 @@ public class CommonResult<T> {
 
     public static <T> CommonResult<T> success(T data){
         CommonResult<T> result = new CommonResult<>();
-        result.setCode(200);
+        result.setCode(GlobalErrorCodeConstants.SUCCESS.getCode());
         result.setMsg("请求成功");
         result.setData(data);
         return result;

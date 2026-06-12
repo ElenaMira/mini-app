@@ -70,3 +70,10 @@ logging:
   level:
 #    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: TRACE #显示所有HTTPRequest
     org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: DEBUG
+    # 开启全局异常处理器的debug日志
+    cn:
+      iocoder:
+        boot:
+          springsecurity:
+            core:
+              handle: DEBUG

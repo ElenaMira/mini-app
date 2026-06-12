@@ -5,9 +5,13 @@ import cn.iocoder.boot.common.exception.ErrorCode;
 /**
  * @author xiaosheng
  * 接口默认静态常量(static final)
+ *
+ *
  */
 public interface GlobalErrorCodeConstants {
-
+    /**
+     * todo: yudao项目的历史遗留问题,前端不好改以后再说 
+     */
     ErrorCode SUCCESS = new ErrorCode(0,"成功");
 
     // ========== 客户端错误段 ==========

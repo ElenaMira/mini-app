@@ -1,5 +1,7 @@
 package cn.iocoder.boot.springsecurity.core.handle;
 
+import cn.iocoder.boot.common.pojo.CommonResult;
+import cn.iocoder.boot.common.util.servlet.ServletUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,8 +12,10 @@ import org.springframework.security.web.access.ExceptionTranslationFilter;
 
 import java.io.IOException;
 
+import static cn.iocoder.boot.common.exception.enums.GlobalErrorCodeConstants.UNAUTHORIZED;
+
 /**
- * todo:
+ *
  * 访问一个需要认证的 URL 资源，但是此时自己尚未认证（登录）的情况下，返回 {@link GlobalErrorCodeConstants#UNAUTHORIZED} 错误码，从而使前端重定向到登录页
  *
  * 补充：Spring Security 通过 {@link ExceptionTranslationFilter#sendStartAuthentication(HttpServletRequest, HttpServletResponse, FilterChain, AuthenticationException)} 方法，调用当前类
@@ -24,5 +28,7 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
         log.debug("[commence][访问 URL({}) 时，没有登录]", request.getRequestURI(), e);
+        ServletUtils.writeJSON(response, CommonResult.error(UNAUTHORIZED));
+
     }
 }

@@ -33,6 +33,11 @@
         <redisson.version>3.52.0</redisson.version>
         <wx-java.version>4.8.3.B</wx-java.version>
         <wx-java-miniapp.version>4.7.9-20251224.161447</wx-java-miniapp.version>
+        <!-- 文件传输 -->
+        <commons-net.version>3.12.0</commons-net.version>
+        <awssdk.version>2.40.15</awssdk.version>
+        <tika-core.version>2.9.3</tika-core.version>
+        <jsch.version>2.27.7</jsch.version>
         <!-- web相关依赖 -->
         <springdoc.version>2.8.5</springdoc.version>
         <httpclient.version>4.5.14</httpclient.version>
@@ -173,6 +178,28 @@
                     <groupId>com.alibaba</groupId>
                     <artifactId>transmittable-thread-local</artifactId>
                     <version>${ttl.version}</version>
+                </dependency>
+                <!-- 文件传输 -->
+                <dependency>
+                    <groupId>commons-net</groupId>
+                    <artifactId>commons-net</artifactId> <!-- 解决 ftp 连接 -->
+                    <version>${commons-net.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.github.mwiede</groupId>
+                    <artifactId>jsch</artifactId> <!-- 解决 sftp 连接 -->
+                    <version>${jsch.version}</version>
+                </dependency>
+                <!-- 文件客户端：解决阿里云、腾讯云、minio 等 S3 连接 -->
+                <dependency>
+                    <groupId>software.amazon.awssdk</groupId>
+                    <artifactId>s3</artifactId>
+                    <version>${awssdk.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.tika</groupId>
+                    <artifactId>tika-core</artifactId> <!-- 文件类型的识别 -->
+                    <version>${tika-core.version}</version>
                 </dependency>
 
                 <!-- 第三方wx -->
