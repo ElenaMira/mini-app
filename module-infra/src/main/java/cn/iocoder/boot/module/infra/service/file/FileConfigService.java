@@ -7,7 +7,7 @@ import cn.iocoder.boot.module.infra.framework.file.core.client.FileClient;
  */
 public interface FileConfigService {
     /**
-     * 获得 Master 文件客户端
+     * 获得 Master为true的 文件客户端
      *
      * @return 文件客户端
      */

@@ -32,16 +32,18 @@ public class FileConfigServiceImpl implements FileConfigService {
      *  CACHE_MASTER_ID默认的缓存加载ID(兜底非法ID)
      */
     private static final Long CACHE_MASTER_ID = 0L;
+
     @Getter
-    private final LoadingCache<String,FileClient> cache = buildAsyncReloadingCache(Duration.ofSeconds(10L),
+    private final LoadingCache<Long,FileClient> clientCache = buildAsyncReloadingCache(Duration.ofSeconds(10L),
         new CacheLoader<Long,FileClient>() {
             @Override
             public FileClient load(Long id) {
                 FileConfigDO config = ObjectUtil.equals(id, CACHE_MASTER_ID) ?
                         fileConfigMapper.selectByMaster() : fileConfigMapper.selectById(id);
                 if(config != null) {
-                    fileClientFactory.createOrUpdateFileClient(config.getId(),config.getStorage(),config.getC)
+                    fileClientFactory.createOrUpdateFileClient(config.getId(),config.getStorage(),config.getConfig());
                 }
+                return fileClientFactory.getFileClient(null!=config? config.getId() : id);
             }
     });
 

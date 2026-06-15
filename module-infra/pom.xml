@@ -28,6 +28,17 @@
             <groupId>cn.iocoder.boot</groupId>
             <artifactId>mybatis</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.iocoder.boot</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <scope>provided</scope> <!-- 设置为 provided，主要是 PageParam 使用到 -->
+        </dependency>
     <!-- 三方云服务相关 -->
         <dependency>
             <groupId>commons-net</groupId>
@@ -45,6 +56,10 @@
         <dependency>
             <groupId>org.apache.tika</groupId>
             <artifactId>tika-core</artifactId> <!-- 文件客户端：文件类型的识别 -->
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
         </dependency>
     </dependencies>
 

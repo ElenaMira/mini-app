@@ -35,7 +35,7 @@ public class FileTypeUtils {
      */
     public static String getExtension(String mineType) {
         try {
-            return MimeTypes.getDefaultMimeTypes().forName(mineType).getExtension()
+            return MimeTypes.getDefaultMimeTypes().forName(mineType).getExtension();
         } catch (MimeTypeException e) {
             log.warn("[getExtension][获取文件后缀({}) 失败]", mineType, e);
             return null;

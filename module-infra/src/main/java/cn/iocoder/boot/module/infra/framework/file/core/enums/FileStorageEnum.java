@@ -3,6 +3,8 @@ package cn.iocoder.boot.module.infra.framework.file.core.enums;
 import cn.hutool.core.util.ArrayUtil;
 import cn.iocoder.boot.module.infra.framework.file.core.client.FileClient;
 import cn.iocoder.boot.module.infra.framework.file.core.client.FileClientConfig;
+import cn.iocoder.boot.module.infra.framework.file.core.client.local.LocalFileClient;
+import cn.iocoder.boot.module.infra.framework.file.core.client.local.LocalFileClientConfig;
 import com.baomidou.mybatisplus.annotation.IEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +12,7 @@ import lombok.Getter;
 import java.io.Serializable;
 
 /**
+ * 文件枚举
  * @author xiaosheng
  */
 @AllArgsConstructor
