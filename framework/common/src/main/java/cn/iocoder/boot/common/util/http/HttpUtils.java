@@ -12,9 +12,15 @@ import java.util.Map;
  * @author xiaosheng
  */
 public class HttpUtils {
+    /**
+     * 编码URL参数
+     *
+     * @param value 需要编码的参数
+     * @return  编码后的参数
+     */
     @SneakyThrows
     public static String encodeUtf8(String value) {
-        return URLEncoder.encode(value, StandardCharsets.UTF_8.name());
+        return URLEncoder.encode(value, StandardCharsets.UTF_8);
     }
     /**
      * HTTP post 请求，基于 {@link cn.hutool.http.HttpUtil} 实现

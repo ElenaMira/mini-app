@@ -4,11 +4,12 @@ import cn.iocoder.boot.module.infra.framework.file.core.client.FileClientFactory
 import cn.iocoder.boot.module.infra.framework.file.core.client.FileFactoryImpl;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author xiaosheng
  */
-@AutoConfiguration
+@Configuration(proxyBeanMethods = false)
 public class FileAutoConfiguration {
     @Bean
     public FileClientFactory fileClientFactory(){return new FileFactoryImpl();

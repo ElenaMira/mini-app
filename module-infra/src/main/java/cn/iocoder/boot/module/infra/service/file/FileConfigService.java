@@ -1,5 +1,6 @@
 package cn.iocoder.boot.module.infra.service.file;
 
+import cn.iocoder.boot.module.infra.framework.file.core.client.AbstractFileClient;
 import cn.iocoder.boot.module.infra.framework.file.core.client.FileClient;
 
 /**
@@ -12,4 +13,6 @@ public interface FileConfigService {
      * @return 文件客户端
      */
     FileClient getMasterFileClient();
+
+    FileClient getFileClient(Long configId);
 }

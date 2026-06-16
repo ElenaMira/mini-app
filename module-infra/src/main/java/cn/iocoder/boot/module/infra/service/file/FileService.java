@@ -15,6 +15,14 @@ public interface FileService {
      * @param type      文件的 MIME 类型，允许空
      * @return 文件路径
      */
-    String createFile(@NotEmpty(message = "文件内容不能为空") byte[] content,
+    String createFile(@NotEmpty byte[] content,
                       String name, String directory, String type);
+
+    /**
+     *
+     * @param configId 配置ID
+     * @param path  文件相对路径
+     * @return  文件UTF-8内容
+     */
+    byte[] getFileContent(Long configId, String path);
 }

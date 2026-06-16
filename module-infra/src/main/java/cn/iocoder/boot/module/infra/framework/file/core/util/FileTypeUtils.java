@@ -1,9 +1,15 @@
 package cn.iocoder.boot.module.infra.framework.file.core.util;
 
+import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.iocoder.boot.common.util.http.HttpUtils;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tika.Tika;
 import org.apache.tika.mime.MimeTypeException;
 import org.apache.tika.mime.MimeTypes;
+
+import java.io.IOException;
 
 /**
  * @author xiaosheng
@@ -40,5 +46,40 @@ public class FileTypeUtils {
             log.warn("[getExtension][获取文件后缀({}) 失败]", mineType, e);
             return null;
         }
+    }
+
+    /**
+     *
+     * @param response
+     * @param fileName
+     * @param content
+     */
+    public static void writeAttachment(HttpServletResponse response, String fileName, byte[] content) throws IOException {
+        //设置 header和contentType
+        String mimeType = getMimeType(content,fileName);
+        response.setContentType(mimeType);
+
+        if(isImage(mimeType)){
+            //
+            response.setHeader("Content-Disposition", "inline;filename=" + HttpUtils.encodeUtf8(fileName));
+        }else{
+            response.setHeader("Content-Disposition", "attachment;filename=" + HttpUtils.encodeUtf8(fileName));
+        }
+        // 针对 video 的特殊处理，解决视频地址在移动端播放的兼容性问题
+        if (StrUtil.containsIgnoreCase(mimeType, "video")) {
+            response.setHeader("Accept-Ranges", "bytes");
+            response.setHeader("Content-Length", String.valueOf(content.length));
+        }
+        // 输出附件
+        IoUtil.write(response.getOutputStream(), false, content);
+    }
+
+    /**
+     *  判断是否为图片
+     * @param mimeType mime类型
+     * @return 是否
+     */
+    private static boolean isImage(String mimeType) {
+        return StrUtil.startWith(mimeType,"image/");
     }
 }

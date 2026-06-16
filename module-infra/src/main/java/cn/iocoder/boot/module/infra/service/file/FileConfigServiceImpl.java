@@ -3,6 +3,7 @@ package cn.iocoder.boot.module.infra.service.file;
 import cn.hutool.core.util.ObjectUtil;
 import cn.iocoder.boot.module.infra.dal.dataobject.FileConfigDO;
 import cn.iocoder.boot.module.infra.dal.mysql.FileConfigMapper;
+import cn.iocoder.boot.module.infra.framework.file.core.client.AbstractFileClient;
 import cn.iocoder.boot.module.infra.framework.file.core.client.FileClient;
 import cn.iocoder.boot.module.infra.framework.file.core.client.FileClientFactory;
 import com.google.common.cache.CacheBuilder;
@@ -51,5 +52,10 @@ public class FileConfigServiceImpl implements FileConfigService {
     @Override
     public FileClient getMasterFileClient() {
         return clientCache.getUnchecked(CACHE_MASTER_ID);
+    }
+
+    @Override
+    public FileClient getFileClient(Long configId) {
+        return clientCache.getUnchecked(configId);
     }
 }

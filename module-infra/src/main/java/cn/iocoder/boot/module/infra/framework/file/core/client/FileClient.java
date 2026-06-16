@@ -21,4 +21,11 @@ public interface FileClient {
      * @throws Exception 上传文件时，抛出 Exception 异常
      */
     String upload(byte[] content, String path, String type) throws Exception;
+
+    /**
+     * 基于路径获取客户端文件内容
+     * @param path  文件相对路径
+     * @return  内容
+     */
+    byte[] getContent(String path);
 }

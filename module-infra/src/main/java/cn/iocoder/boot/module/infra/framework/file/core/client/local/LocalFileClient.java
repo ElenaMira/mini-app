@@ -24,7 +24,21 @@ public class LocalFileClient extends AbstractFileClient<LocalFileClientConfig> {
     public String upload(byte[] content, String path, String type) throws Exception {
         String filePath = getFilePath(path);
         FileUtil.writeBytes(content, filePath);
-        return super.formatFileUtil(config.getDomain(), filePath);
+        return super.formatFileUtil(config.getDomain(), path);
+    }
+
+    @Override
+    public byte[] getContent(String path) {
+        //获取绝对路径
+        String filePath = getFilePath(path);
+        try{
+            return FileUtil.readBytes(filePath);
+        }catch (Exception e){
+            if(e.getMessage().startsWith("File not exist:")){
+                return null;
+            }
+            throw e;
+        }
     }
 
     private String getFilePath(String path) {

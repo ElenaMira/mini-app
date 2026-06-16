@@ -69,6 +69,13 @@ public class FileServiceImpl implements FileService {
         return url;
     }
 
+    @Override
+    public byte[] getFileContent(Long configId, String path) {
+        FileClient fileClient = fileConfigService.getFileClient(configId);
+        Assert.notNull(fileClient, "客户端({}) 不能为空", configId);
+        return fileClient.getContent(path);
+    }
+
     @VisibleForTesting
     private String generateUploadPath(String name, String directory) {
         // 1. 生成前缀、后缀

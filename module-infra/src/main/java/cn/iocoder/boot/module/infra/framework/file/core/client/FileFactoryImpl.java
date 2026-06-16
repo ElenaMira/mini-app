@@ -45,9 +45,12 @@ public class FileFactoryImpl implements FileClientFactory {
 
 
     @SuppressWarnings("unchecked")
-    private <Config extends FileClientConfig> AbstractFileClient<Config> createFileClient(Long configId, Integer storage, Config config) {
+    private <Config extends FileClientConfig> AbstractFileClient<Config> createFileClient
+            (Long configId, Integer storage, Config config) {
         FileStorageEnum storageEnum = FileStorageEnum.getByStorage(storage);
         Assert.notNull(storageEnum,String.format("文件配置(%s) 为空", storageEnum));
+
+        System.out.println(config.getClass());
 
         // 基于反射创建客户端
         return (AbstractFileClient<Config>) ReflectUtil.newInstance(storageEnum.getClientClass(),configId,config);

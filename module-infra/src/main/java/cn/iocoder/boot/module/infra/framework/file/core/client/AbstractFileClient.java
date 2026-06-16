@@ -61,11 +61,15 @@ public abstract class AbstractFileClient<Config extends FileClientConfig> implem
 
     /**
      * 格式化文件地址
+     *
      * @param domain 前缀地址
      * @param path 后缀地址
      * @return
      */
     protected String formatFileUtil(String domain,String path){
+        //mac环境(注意mac文件名自带/User,因此这里file{}
+//        return StrUtil.format("{}/admin-api/infra/file{}/get/{}",domain,getId(),path);
+        //windows环境
         return StrUtil.format("{}/admin-api/infra/file/{}/get/{}",domain,getId(),path);
     }
 }
