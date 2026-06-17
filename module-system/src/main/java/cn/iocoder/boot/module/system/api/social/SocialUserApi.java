@@ -29,4 +29,13 @@ public interface SocialUserApi {
      * @return
      */
     SocialUserRespDTO getSocialUserByCode(Integer userType, String code, Integer socialType, String state);
+
+    /**
+     *
+     * @param value
+     * @param loginUserId
+     * @param socialType
+     * @return
+     */
+    SocialUserRespDTO getSocialUserByUserId(Integer value, Long loginUserId, Integer socialType);
 }

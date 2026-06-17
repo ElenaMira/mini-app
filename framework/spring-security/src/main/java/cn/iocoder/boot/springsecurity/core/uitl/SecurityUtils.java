@@ -1,11 +1,13 @@
 package cn.iocoder.boot.springsecurity.core.uitl;
 
 import cn.hutool.core.util.StrUtil;
+import cn.iocoder.boot.common.exception.ServiceException;
 import cn.iocoder.boot.springsecurity.config.SecurityProperties;
 import cn.iocoder.boot.springsecurity.core.LoginUser;
 import cn.iocoder.boot.web.web.core.util.WebFrameworkUtils;
 import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -14,6 +16,9 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.util.StringUtils;
 
 import java.util.Collections;
+
+import static cn.iocoder.boot.common.exception.enums.GlobalErrorCodeConstants.UNAUTHORIZED;
+import static cn.iocoder.boot.common.exception.util.ServiceExceptionUtil.exception;
 
 /**
  *  Spring Security使用的工具
@@ -44,13 +49,27 @@ public class SecurityUtils {
     }
 
     /**
-     * 业务逻辑上loginUser不会为null
+     * 业务逻辑上loginUser不会为null,支持匿名访问
      * @return loginUser
      */
-    @Nullable
+    @NotNull
     public static Long getLoginUserId(){
         LoginUser loginUser = getLoginUser();
-        return loginUser == null ? null : loginUser.getId();
+        if (loginUser == null) {
+            throw exception(UNAUTHORIZED);
+        }
+        return loginUser.getId();
+    }
+
+    /**
+     * 【匿名/可选登录接口专用】可选获取用户ID，无登录返回null
+     */
+    public static Long getLoginUserIdOrNull() {
+        LoginUser loginUser = getLoginUser();
+        if (loginUser == null) {
+            return null;
+        }
+        return loginUser.getId();
     }
 
     @Nullable

@@ -4,6 +4,7 @@ package cn.iocoder.boot.module.member.service.user;
 import cn.iocoder.boot.common.enums.TerminalEnum;
 import cn.iocoder.boot.common.validation.Mobile;
 import cn.iocoder.boot.module.member.controller.app.social.vo.AppMemberUserUpdateMobileByWeixinReqVO;
+import cn.iocoder.boot.module.member.controller.app.user.vo.AppMemberUserUpdateMobileReqVO;
 import cn.iocoder.boot.module.member.controller.app.user.vo.AppMemberUserUpdatePasswordReqVO;
 import cn.iocoder.boot.module.member.controller.app.user.vo.AppMemberUserUpdateReqVO;
 import cn.iocoder.boot.module.member.dal.dataObject.app.user.MemberUserDO;
@@ -56,4 +57,11 @@ public interface MemberUserService {
     void updateUserPassword(Long loginUserId, @Valid AppMemberUserUpdatePasswordReqVO reqVO);
 
     void updateUserMobileByWeixin(Long loginUserId, @Valid AppMemberUserUpdateMobileByWeixinReqVO reqVO);
+
+    /**
+     * 基于线程用户,验证码,手机号更新手机号
+     * @param loginUserId   线程用户Id
+     * @param reqVO vo
+     */
+    void updateUserMobile(Long loginUserId, @Valid AppMemberUserUpdateMobileReqVO reqVO);
 }

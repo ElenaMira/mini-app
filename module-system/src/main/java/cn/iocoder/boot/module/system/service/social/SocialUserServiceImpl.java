@@ -66,6 +66,24 @@ public class SocialUserServiceImpl implements SocialUserService {
                 .build();
     }
 
+    @Override
+    public SocialUserRespDTO getSocialUserByUserId(Integer userType, Long loginUserId , Integer socialType) {
+        // 获得绑定用户
+        SocialUserBindDO socialUserBindDO =  socialUserBindMapper.selectByUserTypeAndUserIdAndSocialType(userType,loginUserId,socialType);
+        if (socialUserBindDO == null) {
+            return null;
+        }
+        // 获得社交用户
+        SocialUserDO socialUserDO = socialUserMapper.selectById(socialUserBindDO.getSocialUserId());
+        Assert.notNull(socialUserDO, "社交用户不能为空");
+        return SocialUserRespDTO.builder()
+                .openid(socialUserDO.getOpenid())
+                .avatar(socialUserDO.getAvatar())
+                .nickname(socialUserDO.getNickname())
+                .userId(socialUserBindDO.getUserId())
+                .build();
+    }
+
     /**
      * 授权获得对应的社交用户
      * 如果授权失败，则会抛出 {@link ServiceException} 异常

@@ -3,6 +3,7 @@ package cn.iocoder.boot.module.member.controller.app.user;
 import cn.iocoder.boot.common.pojo.CommonResult;
 import cn.iocoder.boot.module.member.controller.app.social.vo.AppMemberUserUpdateMobileByWeixinReqVO;
 import cn.iocoder.boot.module.member.controller.app.user.vo.AppMemberUserInfoRespVO;
+import cn.iocoder.boot.module.member.controller.app.user.vo.AppMemberUserUpdateMobileReqVO;
 import cn.iocoder.boot.module.member.controller.app.user.vo.AppMemberUserUpdatePasswordReqVO;
 import cn.iocoder.boot.module.member.controller.app.user.vo.AppMemberUserUpdateReqVO;
 import cn.iocoder.boot.module.member.convert.MemberUserConvert;
@@ -59,6 +60,12 @@ public class AppMemberUserController {
     @Operation(summary = "基于微信小程序的授权码，修改用户绑定的手机")
     public CommonResult<Boolean> updateUserMobileByWeixin(@RequestBody @Valid AppMemberUserUpdateMobileByWeixinReqVO reqVO) {
         memberUserService.updateUserMobileByWeixin(getLoginUserId(), reqVO);
+        return success(true);
+    }
+    @PutMapping("/update-mobile")
+    @Operation(summary = "修改用户手机")
+    public CommonResult<Boolean> updateUserMobile(@RequestBody @Valid AppMemberUserUpdateMobileReqVO reqVO) {
+        memberUserService.updateUserMobile(getLoginUserId(), reqVO);
         return success(true);
     }
 

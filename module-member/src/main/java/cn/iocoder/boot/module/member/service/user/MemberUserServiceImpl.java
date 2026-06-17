@@ -9,6 +9,7 @@ import cn.iocoder.boot.common.Object.BeanUtils;
 import cn.iocoder.boot.common.enums.CommonStatusEnum;
 import cn.iocoder.boot.common.enums.UserTypeEnum;
 import cn.iocoder.boot.module.member.controller.app.social.vo.AppMemberUserUpdateMobileByWeixinReqVO;
+import cn.iocoder.boot.module.member.controller.app.user.vo.AppMemberUserUpdateMobileReqVO;
 import cn.iocoder.boot.module.member.controller.app.user.vo.AppMemberUserUpdatePasswordReqVO;
 import cn.iocoder.boot.module.member.controller.app.user.vo.AppMemberUserUpdateReqVO;
 import cn.iocoder.boot.module.member.dal.dataObject.app.user.MemberUserDO;
@@ -29,8 +30,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 
 import static cn.iocoder.boot.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.boot.common.util.servlet.ServletUtils.getClientIP;
-import static cn.iocoder.boot.module.member.enums.ErrorCodeConstants.USER_MOBILE_USED;
-import static cn.iocoder.boot.module.member.enums.ErrorCodeConstants.USER_NOT_EXISTS;
+import static cn.iocoder.boot.module.member.enums.ErrorCodeConstants.*;
 
 /**
  * @author xiaosheng
@@ -125,10 +125,35 @@ public class MemberUserServiceImpl implements MemberUserService {
         memberUserMapper.updateById(MemberUserDO.builder().id(loginUserId).mobile(phoneNumberInfo.getPhoneNumber()).build());
     }
 
-    private MemberUserDO validateUserExists(Long loginUserId) {
-        if (loginUserId == null){
-            return null;
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateUserMobile(Long loginUserId, AppMemberUserUpdateMobileReqVO reqVO) {
+        //1.1 检测用户是否存在
+        MemberUserDO userDO = validateUserExists(loginUserId);
+        //1.2 校验手机号是否绑定
+        validateMobileUnique(loginUserId, reqVO.getMobile());
+
+        // 2.1 校验旧手机和旧验证码
+        if (StrUtil.isNotEmpty(reqVO.getOldCode())) {
+            smsCodeApi.useSmsCode(SmsCodeUseReqDTO.builder()
+                            .mobile(reqVO.getMobile())
+                            .scene(SmsSceneEnum.MEMBER_UPDATE_MOBILE.getScene())
+                            .code(reqVO.getOldCode())
+                            .usedIp(getClientIP()).build());
         }
+        //2.2 使用新验证码
+        smsCodeApi.useSmsCode(SmsCodeUseReqDTO.builder()
+                .mobile(reqVO.getMobile())
+                .scene(SmsSceneEnum.MEMBER_UPDATE_MOBILE.getScene())
+                .code(reqVO.getCode())
+                .usedIp(getClientIP()).build());
+        // 3. 更新用户手机
+        memberUserMapper.updateById(MemberUserDO.builder()
+                .id(loginUserId)
+                .mobile(reqVO.getMobile()).build());
+    }
+
+    private MemberUserDO validateUserExists(Long loginUserId) {
         MemberUserDO memberUserDO = memberUserMapper.selectById(loginUserId);
         if (memberUserDO == null) {
             throw exception(USER_NOT_EXISTS);
@@ -149,10 +174,6 @@ public class MemberUserServiceImpl implements MemberUserService {
         MemberUserDO user = memberUserMapper.selectByMobile(mobile);
         if (user == null) {
             return;
-        }
-        // 如果 loginUserId 为空，说明不用比较是否为相同 loginUserId 的用户
-        if (loginUserId == null) {
-            throw exception(USER_MOBILE_USED, mobile);
         }
         if (!user.getId().equals(loginUserId)) {
             throw exception(USER_MOBILE_USED, mobile);

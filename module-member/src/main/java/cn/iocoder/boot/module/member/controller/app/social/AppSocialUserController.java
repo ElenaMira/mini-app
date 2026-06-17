@@ -1,12 +1,16 @@
 package cn.iocoder.boot.module.member.controller.app.social;
 
+import cn.iocoder.boot.common.Object.BeanUtils;
 import cn.iocoder.boot.common.enums.UserTypeEnum;
 import cn.iocoder.boot.common.pojo.CommonResult;
 import cn.iocoder.boot.module.member.controller.app.social.vo.AppMemberUserUpdateMobileByWeixinReqVO;
 import cn.iocoder.boot.module.member.controller.app.social.vo.AppSocialUserBindReqVO;
+import cn.iocoder.boot.module.member.controller.app.social.vo.AppSocialUserRespVO;
 import cn.iocoder.boot.module.system.api.social.SocialUserApi;
 import cn.iocoder.boot.module.system.api.social.dto.SocialUserBindReqDTO;
+import cn.iocoder.boot.module.system.api.social.dto.SocialUserRespDTO;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.annotation.security.PermitAll;
@@ -43,4 +47,13 @@ public class AppSocialUserController {
         String openid = socialUserApi.bindSocialUser(reqDTO);
         return success(openid);
     }
+
+    @GetMapping("/get")
+    @Operation(summary = "获取社交用户")
+    @Parameter(name = "type",description = "社交平台的类型，参见 SocialTypeEnum 枚举值",required = true,example = "34")
+    public CommonResult<AppSocialUserRespVO> getSocialUser(@RequestParam("type") Integer type){
+        SocialUserRespDTO socialUser = socialUserApi.getSocialUserByUserId(UserTypeEnum.MEMBER.getValue(), getLoginUserId(), type);
+        return success(BeanUtils.toBean(socialUser, AppSocialUserRespVO.class));
+    }
+
 }

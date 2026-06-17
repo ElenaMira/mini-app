@@ -24,4 +24,12 @@ public interface SocialUserService {
      * @return
      */
     SocialUserRespDTO getSocialUserByCode(Integer userType, String code, Integer socialType, String state);
+
+    /**
+     *
+     * @param userType  用户枚举类型
+     * @param loginUserId 用户线程Id
+     * @return  用户基本信息
+     */
+    SocialUserRespDTO getSocialUserByUserId(Integer userType, Long loginUserId, Integer socialType);
 }
