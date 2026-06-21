@@ -2,6 +2,7 @@ package cn.iocoder.boot.common.exception.util;
 
 import cn.iocoder.boot.common.exception.ErrorCode;
 import cn.iocoder.boot.common.exception.ServiceException;
+import cn.iocoder.boot.common.exception.enums.GlobalErrorCodeConstants;
 import com.google.common.annotations.VisibleForTesting;
 import lombok.extern.slf4j.Slf4j;
 
@@ -55,5 +56,10 @@ public class ServiceExceptionUtil {
         }
         sbuf.append(messagePattern.substring(i));
         return sbuf.toString();
+    }
+
+
+    public static ServiceException invalidParamException(String messagePattern,Object... params){
+        return exception0(GlobalErrorCodeConstants.BAD_REQUEST.getCode(),  messagePattern, params);
     }
 }

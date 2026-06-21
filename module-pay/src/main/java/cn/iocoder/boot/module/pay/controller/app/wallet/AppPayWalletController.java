@@ -31,9 +31,6 @@ public class AppPayWalletController {
     @Resource
     private PayWalletService payWalletService;
 
-    @Resource
-    private PayWalletConvert payWalletConvert;
-
     @GetMapping("/get")
     @Operation(summary = "获取钱包")
     public CommonResult<AppPayWalletRespVO> getPayWallet() {

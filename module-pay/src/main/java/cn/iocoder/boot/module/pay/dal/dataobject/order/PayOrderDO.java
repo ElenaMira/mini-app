@@ -1,4 +1,4 @@
-package cn.iocoder.boot.module.pay.dal.dataobject;
+package cn.iocoder.boot.module.pay.dal.dataobject.order;
 
 import cn.iocoder.boot.mybatis.core.dataobject.BaseDO;
 import com.baomidou.mybatisplus.annotation.KeySequence;

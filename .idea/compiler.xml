@@ -29,8 +29,10 @@
         <module name="module-infra" />
         <module name="common" />
         <module name="module-promotion" />
+        <module name="module-trade-api" />
         <module name="module-pay" />
         <module name="spring-security" />
+        <module name="module-trade" />
         <module name="module-member" />
       </profile>
     </annotationProcessing>
@@ -39,6 +41,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="ip" options="" />
       <module name="module-mall" options="" />
+      <module name="module-trade" options="" />
     </option>
   </component>
 </project>

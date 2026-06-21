@@ -51,4 +51,7 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
     default List<T> selectList(SFunction<T, ?> field, Object value) {
         return selectList(new LambdaQueryWrapper<T>().eq(field,value));
     }
+    default List<T> selectList(SFunction<T, ?> field0, Object value0,SFunction<T, ?> field1, Object value1) {
+        return selectList(new LambdaQueryWrapper<T>().eq(field0,value0).eq(field1,value1));
+    }
 }

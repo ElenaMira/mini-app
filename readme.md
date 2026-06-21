@@ -12,3 +12,5 @@
                 .code(reqVO.getCode())
                 .usedIp(getClientIP()).build());
 ```
+### 上传
+1. 方法: 新增,删除,修改,

@@ -18,7 +18,8 @@
     <modules>
         <module>module-product</module>
         <module>module-promotion</module>
-<!--        <module>module-trade</module>-->
+        <module>module-trade</module>
+        <module>module-trade-api</module>
 <!--        <module>module-statistics</module>-->
     </modules>
 

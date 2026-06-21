@@ -14,6 +14,7 @@
         <option value="$PROJECT_DIR$/module-mall/pom.xml" />
         <option value="$PROJECT_DIR$/module-mall/module-product/pom.xml" />
         <option value="$PROJECT_DIR$/module-mall/module-promotion/pom.xml" />
+        <option value="$PROJECT_DIR$/module-mall/module-trade/pom.xml" />
       </list>
     </option>
   </component>

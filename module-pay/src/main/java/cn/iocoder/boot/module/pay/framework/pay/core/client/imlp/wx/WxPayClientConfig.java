@@ -4,12 +4,14 @@ package cn.iocoder.boot.module.pay.framework.pay.core.client.imlp.wx;
 import jakarta.validation.Validator;
 import jakarta.validation.constraints.NotBlank;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.PayClientConfig;
+import lombok.Data;
 
 /**
  * 功能描述:
  *
  * @author xiaosinian
  */
+@Data
 public class WxPayClientConfig implements PayClientConfig {
 
 
@@ -27,6 +29,26 @@ public class WxPayClientConfig implements PayClientConfig {
      * <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/wechatpay/wechatpay-1.shtml">V3 协议说明</a>
      */
     public static final String API_VERSION_V3 = "v3";
+
+
+    /**
+     * 公众号或者小程序的 appid
+     *
+     * 只有公众号或小程序需要该字段
+     */
+    @NotBlank(message = "APPID 不能为空", groups = {V3.class})
+    private String appId;
+    /**
+     * 商户号
+     */
+    @NotBlank(message = "商户号不能为空", groups = {V3.class})
+    private String mchId;
+    /**
+     * API 版本
+     */
+    @NotBlank(message = "API 版本不能为空", groups = {V3.class})
+    private String apiVersion;
+
 
     // ========== V3 版本的参数 ==========
     /**

@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.URL;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
-@ConfigurationProperties(prefix = "houduan.pay")
+@ConfigurationProperties(prefix = "hd.pay")
 @Validated
 @Data
 public class PayProperties {
