@@ -5,7 +5,10 @@ import cn.iocoder.boot.module.pay.enums.notify.PayNotifyTypeEnum;
 import cn.iocoder.boot.mybatis.core.dataobject.BaseDO;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +17,9 @@ import java.time.LocalDateTime;
  */
 @TableName("pay_notify_task")
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PayNotifyTaskDO extends BaseDO {
     /**
      * 通知频率，单位为秒。

@@ -60,9 +60,10 @@ public class AppPayOrderControl {
         //sync 仅在等待支付
         if(Boolean.TRUE.equals(sync)&& PayOrderStatusEnum.isWaiting(order.getStatus())){
             payOrderService.syncOrderQuietly(order.getId());
+
+            // 重新查询，因为同步后，可能会有变化
+            order = payOrderService.getOrder(order.getId());
         }
-
-
         return null;
     }
 }

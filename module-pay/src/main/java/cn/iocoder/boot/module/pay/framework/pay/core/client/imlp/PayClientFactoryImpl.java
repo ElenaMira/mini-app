@@ -28,7 +28,7 @@ public class PayClientFactoryImpl implements PayClientFactory {
     private final Map<PayChannelEnum, Class<? extends PayClient<?>>> clientClass = new ConcurrentHashMap<>();
 
 
-    PayClientFactoryImpl() {
+    public PayClientFactoryImpl() {
         // 微信支付客户端
         clientClass.put(WX_PUB, WxPubPayClient.class);
         clientClass.put(WX_LITE, WxLitePayClient.class);

@@ -55,9 +55,9 @@ public class PayOrderServiceImpl implements PayOrderService {
     }
 
     @Override
-    public void syncOrderQuietly(Long id) {
+    public void syncOrderQuietly(Long orderId) {
         //1. 查询待支付订单
-        List<PayOrderExtensionDO> list = payOrderExtensionMapper.selectListByOrderIdAndStatus(id, PayOrderStatusEnum.WAITING.getStatus());
+        List<PayOrderExtensionDO> list = payOrderExtensionMapper.selectListByOrderIdAndStatus(orderId, PayOrderStatusEnum.WAITING.getStatus());
 
         //2. 遍历执行
         for (PayOrderExtensionDO payOrderExtensionDO : list) {
@@ -85,6 +85,12 @@ public class PayOrderServiceImpl implements PayOrderService {
             }
             // 1.2 回调支付结果
             notifyOrder(payOrderExtensionDO.getChannelId(),respDTO);
+
+            // 2. 如果是已支付，则返回 true
+            return PayOrderStatusEnum.isSuccess(respDTO.getStatus());
+        }catch (Throwable e){
+            log.error("[syncOrder][orderExtension({}) 同步支付状态异常]", payOrderExtensionDO.getId(), e);
+            return false;
         }
     }
     @Override
@@ -117,6 +123,44 @@ public class PayOrderServiceImpl implements PayOrderService {
 
         // 情况三：WAITING：无需处理
         // 情况四：REFUND：通过退款回调处理
+    }
+
+    private void notifyOrderClosed(PayChannelDO channel, PayOrderRespDTO notify) {
+        updateOrderExtensionClosed(channel, notify);
+    }
+
+    /**
+     *  更新扩展单为关闭状态
+     * @param channel   渠道
+     * @param notify    请求扩展单
+     */
+    private void updateOrderExtensionClosed(PayChannelDO channel, PayOrderRespDTO notify) {
+        // 1. 查询 PayOrderExtensionDO
+        PayOrderExtensionDO orderExtension = payOrderExtensionMapper.selectByNo(notify.getOutTradeNo());
+        if (orderExtension == null) {
+            throw exception(PAY_ORDER_EXTENSION_NOT_FOUND);
+        }
+        if (PayOrderStatusEnum.isClosed(orderExtension.getStatus())) { // 如果已经是关闭，直接返回，不用重复更新
+            log.info("[updateOrderExtensionClosed][orderExtension({}) 已经是支付关闭，无需更新]", orderExtension.getId());
+            return;
+        }
+        // 一般出现先是支付成功，然后支付关闭，都是全部退款导致关闭的场景。这个情况，我们不更新支付拓展单，只通过退款流程，更新支付单
+        if (PayOrderStatusEnum.isSuccess(orderExtension.getStatus())) {
+            log.info("[updateOrderExtensionClosed][orderExtension({}) 是已支付，无需更新为支付关闭]", orderExtension.getId());
+            return;
+        }
+        if (ObjectUtil.notEqual(orderExtension.getStatus(), PayOrderStatusEnum.WAITING.getStatus())) { // 校验状态，必须是待支付
+            throw exception(PAY_ORDER_EXTENSION_STATUS_IS_NOT_WAITING);
+        }
+
+        // 2. 更新 PayOrderExtensionDO
+        int updateCounts = payOrderExtensionMapper.updateByIdAndStatus(orderExtension.getId(), orderExtension.getStatus(),
+                PayOrderExtensionDO.builder().status(PayOrderStatusEnum.CLOSED.getStatus()).channelNotifyData(toJsonString(notify))
+                        .channelErrorCode(notify.getChannelErrorCode()).channelErrorMsg(notify.getChannelErrorMsg()).build());
+        if (updateCounts == 0) { // 校验状态，必须是待支付
+            throw exception(PAY_ORDER_EXTENSION_STATUS_IS_NOT_WAITING);
+        }
+        log.info("[updateOrderExtensionClosed][orderExtension({}) 更新为支付关闭]", orderExtension.getId());
     }
 
     private void notifyOrderSuccess(PayChannelDO channel, PayOrderRespDTO notify) {

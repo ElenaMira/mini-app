@@ -1,5 +1,6 @@
 package cn.iocoder.boot.module.pay.dal.redis.notify;
 
+import cn.iocoder.boot.common.util.date.DateUtils;
 import jakarta.annotation.Resource;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
@@ -14,6 +15,15 @@ import static cn.iocoder.boot.module.pay.dal.redis.RedisKeyConstants.PAY_NOTIFY_
  */
 @Repository
 public class PayNotifyLockRedisDAO {
+    /**
+     * 通知超时时间，单位：秒
+     */
+    public static final int NOTIFY_TIMEOUT = 120;
+
+    /**
+     * {@link #NOTIFY_TIMEOUT} 的毫秒
+     */
+    public static final long NOTIFY_TIMEOUT_MILLIS = 120 * DateUtils.SECOND_MILLIS;
     @Resource
     private RedissonClient redissonClient;
 

@@ -25,9 +25,9 @@ public interface PayOrderService {
 
     /**
      * 同步订单的支付状态
-     * @param id
+     * @param orderId 订单ID
      */
-    void syncOrderQuietly(Long id);
+    void syncOrderQuietly(Long orderId);
 
     /**
      * 通知支付单成功

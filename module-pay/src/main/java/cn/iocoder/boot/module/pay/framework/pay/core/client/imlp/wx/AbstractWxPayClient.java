@@ -95,6 +95,7 @@ public abstract class AbstractWxPayClient extends AbstractPayClient<WxPayClientC
         try {
             switch (config.getApiVersion()) {
                 case API_VERSION_V3:
+                    client.getConfig().setApiV3HttpClient(null);
                     return doGetOrderV3(outTradeNo);
                 default:
                     throw new IllegalArgumentException(String.format("未知的 API 版本(%s)", config.getApiVersion()));
@@ -117,7 +118,6 @@ public abstract class AbstractWxPayClient extends AbstractPayClient<WxPayClientC
         //  执行请求
         WxPayOrderQueryV3Result response = client.queryOrderV3(Request);
         // 转换结果
-
         Integer status = praseStatus(response.getTradeState());
         String openid = response.getPayer() != null ? response.getPayer().getOpenid() : null;
         return PayOrderRespDTO.of(status, response.getTransactionId(), openid, parseDateV3(response.getSuccessTime()),
@@ -129,6 +129,12 @@ public abstract class AbstractWxPayClient extends AbstractPayClient<WxPayClientC
         return LocalDateTimeUtil.parse(successTime,UTC_WITH_XXX_OFFSET_PATTERN);
     }
 
+    /**
+     * wx支付响应状态统一转化为项目枚举
+     * 详细见<a href="https://pay.weixin.qq.com/doc/v3/merchant/4012791900#%E5%BA%94%E7%AD%94%E5%8F%82%E6%95%B0">...</a>
+     * @param tradeState    响应交易状态
+     * @return  枚举code
+     */
     private static Integer praseStatus(String tradeState) {
         switch (tradeState) {
             case "NOTPAY":

@@ -1,7 +1,9 @@
 package cn.iocoder.boot.module.pay.dal.dataobject.channel;
 
 import cn.hutool.core.util.StrUtil;
+import cn.iocoder.boot.common.enums.CommonStatusEnum;
 import cn.iocoder.boot.common.util.json.JsonUtils;
+import cn.iocoder.boot.module.pay.enums.pay.PayChannelEnum;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.PayClientConfig;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.imlp.wx.WxPayClientConfig;
 import cn.iocoder.boot.mybatis.core.dataobject.BaseDO;

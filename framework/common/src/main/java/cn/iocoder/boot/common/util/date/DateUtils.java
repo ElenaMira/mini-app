@@ -1,6 +1,8 @@
 package cn.iocoder.boot.common.util.date;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
+
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 /**
@@ -20,5 +22,9 @@ public class DateUtils {
      */
     public static boolean isToday(LocalDateTime date){
         return LocalDateTimeUtil.isSameDay(date, LocalDateTime.now());
+    }
+
+    public static   LocalDateTime addTime(Duration duration){
+        return LocalDateTime.now().plus(duration);
     }
 }
