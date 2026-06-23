@@ -29,6 +29,11 @@ public class WebFrameworkUtils {
         WebFrameworkUtils.webProperties = webProperties;
     }
 
+
+    public static Integer getLoginUserType(){
+        HttpServletRequest request = getRequest();
+        return getLoginUserType(request);
+    }
     /**
      *
      * @return usertype

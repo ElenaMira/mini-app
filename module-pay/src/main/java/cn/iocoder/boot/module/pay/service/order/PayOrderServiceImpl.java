@@ -3,6 +3,9 @@ package cn.iocoder.boot.module.pay.service.order;
 import cn.hutool.core.util.ObjectUtil;
 import cn.iocoder.boot.common.util.number.MoneyUtils;
 import cn.iocoder.boot.common.util.object.ObjectUtils;
+import cn.iocoder.boot.module.pay.api.order.PayOrderCreateReqDTO;
+import cn.iocoder.boot.module.pay.convert.order.PayOrderConvert;
+import cn.iocoder.boot.module.pay.dal.dataobject.app.PayAppDO;
 import cn.iocoder.boot.module.pay.dal.dataobject.channel.PayChannelDO;
 import cn.iocoder.boot.module.pay.dal.dataobject.order.PayOrderDO;
 import cn.iocoder.boot.module.pay.dal.dataobject.order.PayOrderExtensionDO;
@@ -12,12 +15,14 @@ import cn.iocoder.boot.module.pay.enums.order.PayOrderStatusEnum;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.PayClient;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.dto.pay.PayOrderRespDTO;
 import cn.iocoder.boot.module.pay.enums.notify.PayNotifyTypeEnum;
+import cn.iocoder.boot.module.pay.service.app.PayAppService;
 import cn.iocoder.boot.module.pay.service.channel.PayChannelService;
 import cn.iocoder.boot.module.pay.service.notify.PayNotifyService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.Objects;
@@ -31,6 +36,7 @@ import static cn.iocoder.boot.module.pay.enums.ErrorCodeConstants.*;
  */
 @Slf4j
 @Service
+@Validated
 public class PayOrderServiceImpl implements PayOrderService {
     @Resource
     private PayOrderMapper  payOrderMapper;
@@ -43,6 +49,9 @@ public class PayOrderServiceImpl implements PayOrderService {
 
     @Resource
     private PayNotifyService  payNotifyService;
+
+    @Resource
+    private PayAppService appService;
 
     @Override
     public PayOrderDO getOrder(Long id) {
@@ -103,6 +112,30 @@ public class PayOrderServiceImpl implements PayOrderService {
 
 //        TenantUtils.execute(channel.getTenantId(), () -> getSelf().notifyOrder(channel, notify));
     }
+
+    @Override
+    public Long createOrder(PayOrderCreateReqDTO reqDTO) {
+        // 校验 App
+        PayAppDO appDO = appService.validPayApp(reqDTO.getAppKey());
+        // 查询对应的支付交易单是否已经存在。如果是，则直接返回
+        PayOrderDO order = payOrderMapper.selectByAppIdAndMerchantOrderId(appDO.getId(), reqDTO.getMerchantOrderId());
+        if (Objects.nonNull(order)) {
+            log.warn("[createOrder][appId({}) merchantOrderId({}) 已经存在对应的支付单({})]", order.getAppId(),
+                    order.getMerchantOrderId(), toJsonString(order)); // 理论来说，不会出现这个情况
+            return order.getId();
+        }
+        // 创建支付交易单
+        order = PayOrderConvert.INSTANCE.convert(reqDTO).setAppId(appDO.getId())
+                // 商户相关字段
+                .setNotifyUrl(appDO.getOrderNotifyUrl())
+                // 订单相关字段
+                .setStatus(PayOrderStatusEnum.WAITING.getStatus())
+                // 退款相关字段
+                .setRefundPrice(0);
+        payOrderMapper.insert(order);
+        return order.getId();
+    }
+
     /**
      * 通知并更新订单的支付结果
      *

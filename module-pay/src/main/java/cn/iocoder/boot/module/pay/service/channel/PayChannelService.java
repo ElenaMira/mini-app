@@ -3,6 +3,9 @@ package cn.iocoder.boot.module.pay.service.channel;
 import cn.iocoder.boot.common.exception.ServiceException;
 import cn.iocoder.boot.module.pay.dal.dataobject.channel.PayChannelDO;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.PayClient;
+import jakarta.validation.Valid;
+
+import java.util.List;
 
 /**
  * @author xiaosheng
@@ -36,4 +39,11 @@ public interface PayChannelService {
      * @return 支付客户端
      */
     PayClient getPayClient(Long channelId);
+
+    /**
+     * 获取指定应用可用的支付渠道列表
+     * @param appId 应用id
+     * @return
+     */
+    List<PayChannelDO> getEnableChannelList(@Valid Long appId);
 }

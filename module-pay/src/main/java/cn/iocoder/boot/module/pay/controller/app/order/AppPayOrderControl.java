@@ -2,6 +2,7 @@ package cn.iocoder.boot.module.pay.controller.app.order;
 
 import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.core.util.ObjUtil;
+import cn.iocoder.boot.common.Object.BeanUtils;
 import cn.iocoder.boot.common.enums.CommonStatusEnum;
 import cn.iocoder.boot.common.pojo.CommonResult;
 import cn.iocoder.boot.module.pay.dal.dataobject.order.PayOrderDO;
@@ -64,6 +65,6 @@ public class AppPayOrderControl {
             // 重新查询，因为同步后，可能会有变化
             order = payOrderService.getOrder(order.getId());
         }
-        return null;
+        return success(BeanUtils.toBean(order, PayOrderRespVO.class));
     }
 }

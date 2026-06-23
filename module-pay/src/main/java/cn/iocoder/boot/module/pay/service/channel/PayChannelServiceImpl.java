@@ -8,6 +8,9 @@ import cn.iocoder.boot.module.pay.framework.pay.core.client.PayClientFactory;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+
+import java.util.List;
 
 import static cn.iocoder.boot.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.boot.module.pay.enums.ErrorCodeConstants.CHANNEL_IS_DISABLE;
@@ -17,10 +20,12 @@ import static cn.iocoder.boot.module.pay.enums.ErrorCodeConstants.CHANNEL_NOT_FO
  * @author xiaosheng
  */
 @Service
+@Validated
 public class PayChannelServiceImpl implements PayChannelService {
     @Resource
     private PayChannelMapper payChannelMapper;
-    @Autowired
+
+    @Resource
     private PayClientFactory payClientFactory;
 
     @Override
@@ -44,6 +49,11 @@ public class PayChannelServiceImpl implements PayChannelService {
     public PayClient getPayClient(Long channelId) {
         PayChannelDO channel = validPayChannel(channelId);
         return payClientFactory.createOrUpdatePayClient(channelId,channel.getCode(),channel.getConfig());
+    }
+
+    @Override
+    public List<PayChannelDO> getEnableChannelList(Long appId) {
+        return payChannelMapper.selectListByAppId(appId, CommonStatusEnum.ENABLE.getStatus());
     }
 
 

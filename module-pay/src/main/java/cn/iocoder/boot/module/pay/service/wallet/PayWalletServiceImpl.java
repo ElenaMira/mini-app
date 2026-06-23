@@ -2,7 +2,7 @@ package cn.iocoder.boot.module.pay.service.wallet;
 
 import cn.iocoder.boot.common.util.date.DateUtils;
 import cn.iocoder.boot.module.pay.dal.dataobject.wallet.PayWalletDO;
-import cn.iocoder.boot.module.pay.dal.mysql.PayWalletMapper;
+import cn.iocoder.boot.module.pay.dal.mysql.wallet.PayWalletMapper;
 import cn.iocoder.boot.module.pay.dal.redis.wallet.PayWalletLockRedisDAO;
 import jakarta.annotation.Resource;
 import lombok.SneakyThrows;

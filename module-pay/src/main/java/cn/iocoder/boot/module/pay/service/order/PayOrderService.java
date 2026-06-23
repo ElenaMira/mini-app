@@ -1,7 +1,9 @@
 package cn.iocoder.boot.module.pay.service.order;
 
+import cn.iocoder.boot.module.pay.api.order.PayOrderCreateReqDTO;
 import cn.iocoder.boot.module.pay.dal.dataobject.order.PayOrderDO;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.dto.pay.PayOrderRespDTO;
+import jakarta.validation.Valid;
 
 /**
  * @author xiaosheng
@@ -35,4 +37,11 @@ public interface PayOrderService {
      * @param notify    通知信息
      */
     void notifyOrder(Long channelId, PayOrderRespDTO notify);
+
+    /**
+     * 创建订单
+     * @param reqDTO
+     * @return
+     */
+    Long createOrder(@Valid PayOrderCreateReqDTO reqDTO);
 }

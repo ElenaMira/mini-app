@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @author xiaosheng
  */
@@ -15,5 +17,9 @@ public interface PayChannelMapper extends BaseMapperX<PayChannelDO> {
         return selectOne(new LambdaQueryWrapper<PayChannelDO>()
                 .eq(PayChannelDO::getAppId, appId)
                 .eq(PayChannelDO::getCode, code));
+    }
+
+    default List<PayChannelDO> selectListByAppId(Long appId, Integer status) {
+        return selectList(PayChannelDO::getAppId,appId,PayChannelDO::getStatus,status);
     }
 }
