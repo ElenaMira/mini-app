@@ -26,6 +26,12 @@ public class PayAppServiceImpl implements PayAppService {
         return validatePayApp(app);
     }
 
+    @Override
+    public PayAppDO validPayApp(Long appId) {
+        PayAppDO app = appMapper.selectById(appId);
+        return validatePayApp(app);
+    }
+
     private PayAppDO validatePayApp(PayAppDO app) {
         // 校验是否存在
         if (app == null) {

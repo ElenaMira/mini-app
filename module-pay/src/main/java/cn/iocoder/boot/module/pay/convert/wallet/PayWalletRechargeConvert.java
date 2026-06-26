@@ -1,10 +1,15 @@
 package cn.iocoder.boot.module.pay.convert.wallet;
 
+import cn.iocoder.boot.common.pojo.PageResult;
 import cn.iocoder.boot.module.pay.controller.app.wallet.vo.AppPayWalletRechargeCreateRespVO;
+import cn.iocoder.boot.module.pay.controller.app.wallet.vo.AppPayWalletRechargeRespVO;
+import cn.iocoder.boot.module.pay.dal.dataobject.order.PayOrderDO;
 import cn.iocoder.boot.module.pay.dal.dataobject.wallet.PayWalletRechargeDO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 /**
  * @author xiaosheng
@@ -17,4 +22,6 @@ public interface PayWalletRechargeConvert {
     PayWalletRechargeDO convert(Long walletId, Integer payPrice, Integer bonusPrice, Long packageId);
 
     AppPayWalletRechargeCreateRespVO convert(PayWalletRechargeDO walletRecharge);
+
+    PageResult<AppPayWalletRechargeRespVO> convertPage(PageResult<PayWalletRechargeDO> pageResult, List<PayOrderDO> payOrderList);
 }

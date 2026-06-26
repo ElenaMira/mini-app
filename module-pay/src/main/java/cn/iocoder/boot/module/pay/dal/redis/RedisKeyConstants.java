@@ -15,4 +15,12 @@ public interface RedisKeyConstants {
     String PAY_NOTIFY_LOCK = "pay_notify:lock:%d";
 
     String PAY_WALLET_LOCK = "pay_wallet:lock:%d";
+
+    /**
+     * 支付序号的缓存
+     *
+     * KEY 格式：pay_no:{prefix}
+     * VALUE 数据格式：编号自增
+     */
+    String PAY_NO = "pay_no:";
 }

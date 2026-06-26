@@ -2,7 +2,9 @@ package cn.iocoder.boot.module.pay.convert.order;
 
 import cn.binarywang.wx.miniapp.bean.WxMaMessage;
 import cn.iocoder.boot.module.pay.api.order.PayOrderCreateReqDTO;
+import cn.iocoder.boot.module.pay.controller.app.order.vo.AppPayOrderSubmitReqVO;
 import cn.iocoder.boot.module.pay.dal.dataobject.order.PayOrderDO;
+import cn.iocoder.boot.module.pay.dal.dataobject.order.PayOrderExtensionDO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -14,4 +16,6 @@ public interface PayOrderConvert {
     PayOrderConvert INSTANCE = Mappers.getMapper(PayOrderConvert.class);
 
     PayOrderDO convert(PayOrderCreateReqDTO reqDTO);
+
+    PayOrderExtensionDO convert(AppPayOrderSubmitReqVO reqDTO, String userIp);
 }

@@ -48,4 +48,7 @@ public interface ErrorCodeConstants {
     ErrorCode WALLET_RECHARGE_PACKAGE_IS_DISABLE = new ErrorCode(1_007_008_012, "钱包充值套餐已禁用");
     ErrorCode WALLET_RECHARGE_PACKAGE_NAME_EXISTS = new ErrorCode(1_007_008_013, "钱包充值套餐名称已存在");
 
+    // ========== 钱包余额明细模块 1-007-008-100 ==========
+    ErrorCode WALLET_TRANSACTION_TYPE_NOT_EXISTS = new ErrorCode(1_007_008_100, "钱包余额类型不存在");
+
 }

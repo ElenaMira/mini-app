@@ -1,9 +1,12 @@
 package cn.iocoder.boot.module.pay.service.order;
 
 import cn.hutool.core.util.ObjectUtil;
+import cn.iocoder.boot.common.util.date.DateUtils;
 import cn.iocoder.boot.common.util.number.MoneyUtils;
 import cn.iocoder.boot.common.util.object.ObjectUtils;
 import cn.iocoder.boot.module.pay.api.order.PayOrderCreateReqDTO;
+import cn.iocoder.boot.module.pay.controller.app.order.vo.AppPayOrderSubmitReqVO;
+import cn.iocoder.boot.module.pay.controller.app.order.vo.AppPayOrderSubmitRespVO;
 import cn.iocoder.boot.module.pay.convert.order.PayOrderConvert;
 import cn.iocoder.boot.module.pay.dal.dataobject.app.PayAppDO;
 import cn.iocoder.boot.module.pay.dal.dataobject.channel.PayChannelDO;
@@ -11,7 +14,9 @@ import cn.iocoder.boot.module.pay.dal.dataobject.order.PayOrderDO;
 import cn.iocoder.boot.module.pay.dal.dataobject.order.PayOrderExtensionDO;
 import cn.iocoder.boot.module.pay.dal.mysql.order.PayOrderExtensionMapper;
 import cn.iocoder.boot.module.pay.dal.mysql.order.PayOrderMapper;
+import cn.iocoder.boot.module.pay.dal.redis.no.NoRedisDAO;
 import cn.iocoder.boot.module.pay.enums.order.PayOrderStatusEnum;
+import cn.iocoder.boot.module.pay.framework.pay.config.PayProperties;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.PayClient;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.dto.pay.PayOrderRespDTO;
 import cn.iocoder.boot.module.pay.enums.notify.PayNotifyTypeEnum;
@@ -19,6 +24,8 @@ import cn.iocoder.boot.module.pay.service.app.PayAppService;
 import cn.iocoder.boot.module.pay.service.channel.PayChannelService;
 import cn.iocoder.boot.module.pay.service.notify.PayNotifyService;
 import jakarta.annotation.Resource;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,6 +59,12 @@ public class PayOrderServiceImpl implements PayOrderService {
 
     @Resource
     private PayAppService appService;
+
+    @Resource
+    private NoRedisDAO noRedisDAO;
+
+    @Resource
+    private PayProperties  payProperties;
 
     @Override
     public PayOrderDO getOrder(Long id) {
@@ -134,6 +147,92 @@ public class PayOrderServiceImpl implements PayOrderService {
                 .setRefundPrice(0);
         payOrderMapper.insert(order);
         return order.getId();
+    }
+
+    @Override
+    public AppPayOrderSubmitRespVO submitOrder(AppPayOrderSubmitReqVO reqVO, String userIp) {
+        // 1.1 获得 PayOrderDO ，并校验其是否存在
+        PayOrderDO order = validateOrderCanSubmit(reqVO.getId());
+
+        // 1.2 校验支付渠道是否有效
+        PayChannelDO channel = validateChannelCanSubmit(order.getAppId(), reqVO.getChannelCode());
+        PayClient<?> client = channelService.getPayClient(channel.getId());
+
+        // 2. 插入 PayOrderExtensionDO
+        String no = noRedisDAO.generate(payProperties.getOrderNoPrefix());
+        PayOrderExtensionDO orderExtension = PayOrderConvert.INSTANCE.convert(reqVO, userIp)
+                .setOrderId(order.getId()).setNo(no)
+                .setChannelId(channel.getId()).setChannelCode(channel.getCode())
+                .setStatus(PayOrderStatusEnum.WAITING.getStatus());
+        payOrderExtensionMapper.insert(orderExtension);
+        return null;
+    }
+
+    /**
+     * 校验支付渠道
+     * @param appId
+     * @param channelCode
+     * @return
+     */
+    private PayChannelDO validateChannelCanSubmit(Long appId,String channelCode) {
+        // 校验 App
+        appService.validPayApp(appId);
+        // 校验支付渠道是否有效
+        PayChannelDO channel = channelService.validPayChannel(appId, channelCode);
+        PayClient<?> client = channelService.getPayClient(channel.getId());
+        if (client == null) {
+            log.error("[validatePayChannelCanSubmit][渠道编号({}) 找不到对应的支付客户端]", channel.getId());
+            throw exception(CHANNEL_NOT_FOUND);
+        }
+        return channel;
+    }
+
+    private PayOrderDO validateOrderCanSubmit(Long id) {
+        PayOrderDO order = payOrderMapper.selectById(id);
+        if (order == null) { // 是否存在
+            throw exception(PAY_ORDER_NOT_FOUND);
+        }
+        if (PayOrderStatusEnum.isSuccess(order.getStatus())) { // 校验状态，发现已支付
+            throw exception(PAY_ORDER_STATUS_IS_SUCCESS);
+        }
+        if (!PayOrderStatusEnum.WAITING.getStatus().equals(order.getStatus())) { // 校验状态，必须是待支付
+            throw exception(PAY_ORDER_STATUS_IS_NOT_WAITING);
+        }
+        if (DateUtils.isExpired(order.getExpireTime())) { // 校验是否过期
+            throw exception(PAY_ORDER_IS_EXPIRED);
+        }
+        // 【重要】校验是否支付拓展单已支付，只是没有回调、或者数据不正常
+        validateOrderActuallyPaid(id);
+        return order;
+    }
+    /**
+     * 校验支付订单实际已支付
+     *
+     * @param id 支付编号
+     */
+    private void validateOrderActuallyPaid(Long id) {
+        List<PayOrderExtensionDO> extensionList = payOrderExtensionMapper.selectListByOrderId(id);
+        for (PayOrderExtensionDO orderExtension : extensionList) {
+            // 校验扩展单状态
+            if (PayOrderStatusEnum.isSuccess(orderExtension.getStatus())) {
+                log.warn("[validateOrderCanSubmit][order({}) 的 extension({}) 已支付，可能是数据不一致]",
+                        id, orderExtension.getId());
+                throw exception(PAY_ORDER_EXTENSION_IS_PAID);
+            }
+            //调用第三方接口查状态
+            PayClient<?> payClient = channelService.getPayClient(orderExtension.getChannelId());
+            if (payClient == null) {
+                log.error("[validateOrderCanSubmit][渠道编号({}) 找不到对应的支付客户端]", orderExtension.getChannelId());
+                return;
+            }
+            PayOrderRespDTO respDTO = payClient.getOrder(orderExtension.getNo());
+            if (respDTO != null && PayOrderStatusEnum.isSuccess(respDTO.getStatus())) {
+                log.warn("[validateOrderCanSubmit][order({}) 的 PayOrderRespDTO({}) 已支付，可能是回调延迟]",
+                        id, toJsonString(respDTO));
+                throw exception(PAY_ORDER_EXTENSION_IS_PAID);
+            }
+        }
+
     }
 
     /**

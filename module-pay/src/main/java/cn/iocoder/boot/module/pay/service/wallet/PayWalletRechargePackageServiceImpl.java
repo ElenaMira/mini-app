@@ -6,6 +6,8 @@ import cn.iocoder.boot.module.pay.dal.mysql.wallet.PayWalletRechargePackageMappe
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static cn.iocoder.boot.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.boot.module.pay.enums.ErrorCodeConstants.WALLET_RECHARGE_PACKAGE_IS_DISABLE;
 import static cn.iocoder.boot.module.pay.enums.ErrorCodeConstants.WALLET_RECHARGE_PACKAGE_NOT_FOUND;
@@ -28,5 +30,10 @@ public class PayWalletRechargePackageServiceImpl implements PayWalletRechargePac
             throw exception(WALLET_RECHARGE_PACKAGE_IS_DISABLE);
         }
         return rechargePackageDO;
+    }
+
+    @Override
+    public List<PayWalletRechargePackageDO> getWalletRechargePackageList(Integer status) {
+        return walletRechargePackageMapper.selectList(status);
     }
 }

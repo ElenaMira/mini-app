@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Schema(description = "管理后台 - 支付订单 Response VO")
 @Data
 @ToString(callSuper = true)
-public class PayOrderRespVO {
+public class AppPayOrderRespVO extends PayOrderBaseVO{
 
     @Schema(description = "支付订单编号", requiredMode = Schema.RequiredMode.REQUIRED)
     private Long id;

@@ -25,4 +25,12 @@ public interface PayOrderExtensionMapper extends BaseMapperX<PayOrderExtensionDO
         return update(update,new LambdaQueryWrapper<PayOrderExtensionDO>()
                 .eq(PayOrderExtensionDO::getOrderId,id).eq(PayOrderExtensionDO::getStatus,status));
     }
+
+    default PayOrderExtensionDO selectByOrderId(Long id) {
+        return selectOne(PayOrderExtensionDO::getOrderId,id);
+    }
+
+    default List<PayOrderExtensionDO> selectListByOrderId(Long id) {
+        return selectList(PayOrderExtensionDO::getOrderId,id);
+    }
 }

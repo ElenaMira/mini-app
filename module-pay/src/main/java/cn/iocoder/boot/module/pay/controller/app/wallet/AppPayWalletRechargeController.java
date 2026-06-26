@@ -1,10 +1,17 @@
 package cn.iocoder.boot.module.pay.controller.app.wallet;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.iocoder.boot.common.enums.UserTypeEnum;
 import cn.iocoder.boot.common.pojo.CommonResult;
+import cn.iocoder.boot.common.pojo.PageParam;
+import cn.iocoder.boot.common.pojo.PageResult;
 import cn.iocoder.boot.module.pay.controller.app.wallet.vo.AppPayWalletRechargeCreateReqVO;
 import cn.iocoder.boot.module.pay.controller.app.wallet.vo.AppPayWalletRechargeCreateRespVO;
+import cn.iocoder.boot.module.pay.controller.app.wallet.vo.AppPayWalletRechargeRespVO;
 import cn.iocoder.boot.module.pay.convert.wallet.PayWalletRechargeConvert;
+import cn.iocoder.boot.module.pay.dal.dataobject.order.PayOrderDO;
 import cn.iocoder.boot.module.pay.dal.dataobject.wallet.PayWalletRechargeDO;
+import cn.iocoder.boot.module.pay.service.order.PayOrderService;
 import cn.iocoder.boot.module.pay.service.wallet.PayWalletRechargeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -12,12 +19,12 @@ import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static cn.iocoder.boot.common.pojo.CommonResult.success;
+import static cn.iocoder.boot.common.util.collection.CollectionUtils.convertList;
 import static cn.iocoder.boot.common.util.servlet.ServletUtils.getClientIP;
 import static cn.iocoder.boot.springsecurity.core.uitl.SecurityUtils.getLoginUserId;
 import static cn.iocoder.boot.web.web.core.util.WebFrameworkUtils.getLoginUserType;
@@ -35,6 +42,9 @@ public class AppPayWalletRechargeController {
     @Resource
     private PayWalletRechargeService walletRechargeService;
 
+    @Resource
+    private PayOrderService payOrderService;
+
 
     @PostMapping("/create")
     @Operation(summary = "创建钱包充值记录（发起充值）")
@@ -43,5 +53,19 @@ public class AppPayWalletRechargeController {
         PayWalletRechargeDO walletRecharge = walletRechargeService.createWalletRecharge(
                 getLoginUserId(), getLoginUserType(), getClientIP(), reqVO);
         return success(PayWalletRechargeConvert.INSTANCE.convert(walletRecharge));
+    }
+
+    @GetMapping("/page")
+    @Operation(summary = "获得钱包充值记录分页")
+    public CommonResult<PageResult<AppPayWalletRechargeRespVO>> getWalletRechargePage(@Valid PageParam pageReqVO) {
+        PageResult<PayWalletRechargeDO> pageResult = walletRechargeService.getWalletRechargePackagePage(
+                getLoginUserId(), UserTypeEnum.MEMBER.getValue(), pageReqVO, true);
+        if (CollUtil.isEmpty(pageResult.getList())) {
+            return success(PageResult.empty(pageResult.getTotal()));
+        }
+        // 拼接数据
+        List<PayOrderDO> payOrderList = payOrderService.getOrderList(
+                convertList(pageResult.getList(), PayWalletRechargeDO::getPayOrderId));
+        return success(PayWalletRechargeConvert.INSTANCE.convertPage(pageResult, payOrderList));
     }
 }

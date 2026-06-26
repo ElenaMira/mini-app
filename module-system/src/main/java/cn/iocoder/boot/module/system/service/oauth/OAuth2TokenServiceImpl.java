@@ -8,7 +8,7 @@ import cn.iocoder.boot.common.Object.BeanUtils;
 import cn.iocoder.boot.common.enums.UserTypeEnum;
 import cn.iocoder.boot.common.exception.ServiceException;
 import cn.iocoder.boot.common.exception.enums.GlobalErrorCodeConstants;
-import cn.iocoder.boot.common.util.DataUtils;
+import cn.iocoder.boot.common.util.date.DateUtils;
 import cn.iocoder.boot.module.system.dal.DO.oauth.OAuth2AccessTokenDO;
 import cn.iocoder.boot.module.system.dal.DO.oauth.OAuth2ClientDO;
 import cn.iocoder.boot.module.system.dal.DO.oauth.OAuth2RefreshTokenDO;
@@ -51,7 +51,7 @@ public class OAuth2TokenServiceImpl implements OAuth2TokenService {
         if(token==null){
             throw exception0(GlobalErrorCodeConstants.UNAUTHORIZED.getCode(),"访问令牌不存在");
         }
-        if(DataUtils.isExpired(token.getExpiresTime())){
+        if(DateUtils.isExpired(token.getExpiresTime())){
             throw exception0(GlobalErrorCodeConstants.UNAUTHORIZED.getCode(),"访问令牌过期");
         }
 
@@ -104,7 +104,7 @@ public class OAuth2TokenServiceImpl implements OAuth2TokenService {
         }
 
         //校验refresh过期时间
-        if (DataUtils.isExpired(refreshTokenDO.getExpiresTime())){
+        if (DateUtils.isExpired(refreshTokenDO.getExpiresTime())){
             oAuth2RefreshTokenMapper.deleteById(refreshTokenDO.getId());
             throw exception0(GlobalErrorCodeConstants.UNAUTHORIZED.getCode(), "刷新令牌已过期");
         }
@@ -126,11 +126,11 @@ public class OAuth2TokenServiceImpl implements OAuth2TokenService {
             //看看有没有refreshToken
             //可以直接用accessToken来替代
             OAuth2RefreshTokenDO refreshTokenDO = oAuth2RefreshTokenMapper.selectByRefreshToken(accessToken);
-            if(refreshTokenDO != null&&!DataUtils.isExpired(refreshTokenDO.getExpiresTime())){
+            if(refreshTokenDO != null&&!DateUtils.isExpired(refreshTokenDO.getExpiresTime())){
                 accessTokenDO = convertToAccessToken(refreshTokenDO);
             }
         }
-        if(accessTokenDO!=null && !DataUtils.isExpired(accessTokenDO.getExpiresTime())){
+        if(accessTokenDO!=null && !DateUtils.isExpired(accessTokenDO.getExpiresTime())){
             oAuth2AccessTokenRedisDAO.set(accessTokenDO);
         }
         return accessTokenDO;

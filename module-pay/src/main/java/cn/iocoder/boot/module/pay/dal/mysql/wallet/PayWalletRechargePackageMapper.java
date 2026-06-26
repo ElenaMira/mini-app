@@ -5,10 +5,14 @@ import cn.iocoder.boot.mybatis.core.mapper.BaseMapperX;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @author xiaosheng
  */
 @Mapper
 public interface PayWalletRechargePackageMapper extends BaseMapperX<PayWalletRechargePackageDO> {
-
+    default List<PayWalletRechargePackageDO> selectList(Integer status) {
+        return selectList(PayWalletRechargePackageDO::getStatus, status);
+    }
 }

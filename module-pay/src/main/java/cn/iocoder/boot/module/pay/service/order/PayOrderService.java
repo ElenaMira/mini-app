@@ -1,9 +1,13 @@
 package cn.iocoder.boot.module.pay.service.order;
 
 import cn.iocoder.boot.module.pay.api.order.PayOrderCreateReqDTO;
+import cn.iocoder.boot.module.pay.controller.app.order.vo.AppPayOrderSubmitReqVO;
+import cn.iocoder.boot.module.pay.controller.app.order.vo.AppPayOrderSubmitRespVO;
 import cn.iocoder.boot.module.pay.dal.dataobject.order.PayOrderDO;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.dto.pay.PayOrderRespDTO;
 import jakarta.validation.Valid;
+
+import java.util.List;
 
 /**
  * @author xiaosheng
@@ -44,4 +48,13 @@ public interface PayOrderService {
      * @return
      */
     Long createOrder(@Valid PayOrderCreateReqDTO reqDTO);
+
+    AppPayOrderSubmitRespVO submitOrder(@Valid AppPayOrderSubmitReqVO reqVO, String clientIP);
+
+    /**
+     * 获取列表订单信息
+     * @param ids
+     * @return
+     */
+    List<PayOrderDO> getOrderList(List<Long> ids);
 }

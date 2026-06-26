@@ -1,9 +1,11 @@
 package cn.iocoder.boot.mybatis.core.query;
 
 import cn.hutool.core.util.ObjectUtil;
+import cn.iocoder.boot.common.util.collection.ArrayUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 /**
@@ -32,6 +34,25 @@ public class LambdaQueryWrapperX<T> extends LambdaQueryWrapper<T> {
     @Override
     public LambdaQueryWrapperX<T> in(SFunction<T,?> column, Collection<?> cal){
         super.in(column, cal);
+        return this;
+    }
+
+    public LambdaQueryWrapperX<T> betweenIfPresent(SFunction<T,?> column, Object[] objects) {
+        Object val1 = ArrayUtils.get(objects, 0);
+        Object val2 = ArrayUtils.get(objects, 1);
+        return betweenIfPresent(column,val1,val2);
+    }
+
+    public LambdaQueryWrapperX<T> betweenIfPresent(SFunction<T, ?> column, Object val1, Object val2) {
+        if (val1 != null && val2 != null) {
+            return (LambdaQueryWrapperX<T>) super.between(column, val1, val2);
+        }
+        if (val1 != null) {
+            return (LambdaQueryWrapperX<T>) ge(column, val1);
+        }
+        if (val2 != null) {
+            return (LambdaQueryWrapperX<T>) le(column, val2);
+        }
         return this;
     }
 }
