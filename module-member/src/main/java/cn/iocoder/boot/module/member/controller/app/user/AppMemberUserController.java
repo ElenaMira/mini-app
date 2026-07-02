@@ -26,7 +26,6 @@ import static cn.iocoder.boot.springsecurity.core.uitl.SecurityUtils.getLoginUse
 @Tag(name = "用户 APP - 用户个人中心")
 @RestController
 @RequestMapping("/member/user")
-
 public class AppMemberUserController {
 
     @Resource

@@ -1,5 +1,9 @@
 package cn.iocoder.boot.module.pay.dal.dataobject.order;
 
+import cn.iocoder.boot.module.pay.dal.dataobject.app.PayAppDO;
+import cn.iocoder.boot.module.pay.dal.dataobject.channel.PayChannelDO;
+import cn.iocoder.boot.module.pay.enums.order.PayOrderStatusEnum;
+import cn.iocoder.boot.module.pay.enums.pay.PayChannelEnum;
 import cn.iocoder.boot.mybatis.core.dataobject.BaseDO;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -8,7 +12,6 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @TableName("pay_order")
-@KeySequence("pay_order_seq") // 用于 Oracle、PostgreSQL、Kingbase、DB2、H2 数据库的主键自增。如果是 MySQL 等数据库，可不写。
 @Data
 @Builder
 @NoArgsConstructor

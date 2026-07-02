@@ -48,6 +48,16 @@
             <artifactId>module-product</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>cn.iocoder.boot</groupId>
+            <artifactId>module-trade</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.iocoder.boot</groupId>
+            <artifactId>module-trade-api</artifactId>
+            <version>${revision}</version>
+        </dependency>
 
         <!-- 支付相关模块。默认注释，保证编译速度-->
         <dependency>

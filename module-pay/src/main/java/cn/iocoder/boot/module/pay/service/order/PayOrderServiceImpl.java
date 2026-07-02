@@ -1,5 +1,6 @@
 package cn.iocoder.boot.module.pay.service.order;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.iocoder.boot.common.util.date.DateUtils;
 import cn.iocoder.boot.common.util.number.MoneyUtils;
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -166,6 +168,14 @@ public class PayOrderServiceImpl implements PayOrderService {
                 .setStatus(PayOrderStatusEnum.WAITING.getStatus());
         payOrderExtensionMapper.insert(orderExtension);
         return null;
+    }
+
+    @Override
+    public List<PayOrderDO> getOrderList(List<Long> ids) {
+        if (CollUtil.isEmpty(ids)) {
+            return Collections.emptyList();
+        }
+        return payOrderMapper.selectByIds(ids);
     }
 
     /**

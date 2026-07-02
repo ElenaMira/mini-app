@@ -1,9 +1,13 @@
 package cn.iocoder.boot.common.Object;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.iocoder.boot.common.pojo.PageResult;
 import cn.iocoder.boot.common.util.collection.CollectionUtils;
+import cn.iocoder.boot.common.util.object.ObjectUtils;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -21,6 +25,13 @@ public class BeanUtils {
      */
     public static<T> T toBean(Object source ,Class<T> targetClass){
         return BeanUtil.toBean(source, targetClass);
+    }
+
+    public static<S,T> List<T> toBean(Collection<S> source , Class<T> targetClass){
+        if (ObjectUtil.isEmpty(source)){
+            return new ArrayList<>();
+        }
+        return CollectionUtils.convertList(source,s->toBean(s,targetClass));
     }
 
     /**

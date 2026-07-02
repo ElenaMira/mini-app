@@ -1,0 +1,3 @@
+GET {{appApi}}/promotion/point-activity/page?pageNo=1&pageSize=5
+Bearer: Bearer test
+tenant-id: {{appTenantId}}

@@ -39,4 +39,32 @@ public class CollectionUtils {
         }
         return source.stream().filter(predicate).findFirst().map(func).orElse(null);
     }
+
+    /**
+     * 基于
+     * @param source    集合源
+     * @param keyFunc   规则字段
+     * @return  Map
+     */
+    public static <T, K> Map<K,List<T>> convertMultiMap(Collection<T> source, Function<T,K> keyFunc){
+        if (CollUtil.isEmpty(source)) {
+            return new HashMap<>();
+        }
+        //显示下游处理为原来对象
+        return source.stream().collect(Collectors.groupingBy(keyFunc,Collectors.mapping(t -> t, Collectors.toList())));
+    }
+
+    /**
+     * 获取最小的的List
+     * @param source    源list
+     * @param func  排序字段或比较器
+     * @return  小到大排序的List
+     */
+    public static <T, V extends Comparable<? super V>> T getMinObject(List<T> source,Function<T,V> func){
+        if (CollUtil.isEmpty(source)){
+            return null;
+        }
+        assert !source.isEmpty(); // 断言，避免告警
+        return source.stream().min(Comparator.comparing(func)).orElse(null);
+    }
 }
