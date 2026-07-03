@@ -1,0 +1,2 @@
+cn.iocoder.boot.job.config.QuartzAutoConfiguration
+cn.iocoder.boot.job.config.AsyncAutoConfiguration

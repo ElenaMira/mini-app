@@ -85,9 +85,14 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
         // MyBatis Plus 查询
         IPage<T> mpPage = MyBatisUtils.buildPage(pageParam, sortingFields);
         selectPage(mpPage, queryWrapper);
+        Long count = selectCount(queryWrapper);
+        mpPage.setTotal(count);
         // 转换返回
         return new PageResult<>(mpPage.getRecords(), mpPage.getTotal());
     }
 
 
+    default Long selectCount(SFunction<T,?> filed,Object value){
+        return selectCount(new LambdaQueryWrapper<T>().eq(filed,value));
+    }
 }

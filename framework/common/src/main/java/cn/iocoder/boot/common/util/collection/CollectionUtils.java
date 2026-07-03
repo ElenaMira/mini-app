@@ -3,8 +3,10 @@ package cn.iocoder.boot.common.util.collection;
 import cn.hutool.core.collection.CollUtil;
 
 import java.util.*;
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -67,4 +69,43 @@ public class CollectionUtils {
         assert !source.isEmpty(); // 断言，避免告警
         return source.stream().min(Comparator.comparing(func)).orElse(null);
     }
+
+    public static <T, K> Map<K, T> convertMap(Collection<T> from, Function<T, K> keyFunc) {
+        if (CollUtil.isEmpty(from)) {
+            return new HashMap<>();
+        }
+        return convertMap(from, keyFunc, Function.identity());
+    }
+    public static <T, K, V> Map<K, V> convertMap(Collection<T> from, Function<T, K> keyFunc, Function<T, V> valueFunc) {
+        if (CollUtil.isEmpty(from)) {
+            return new HashMap<>();
+        }
+        return convertMap(from, keyFunc, valueFunc, (v1, v2) -> v1);
+    }
+    public static <T, K, V> Map<K, V> convertMap(Collection<T> from, Function<T, K> keyFunc, Function<T, V> valueFunc, BinaryOperator<V> mergeFunction) {
+        if (CollUtil.isEmpty(from)) {
+            return new HashMap<>();
+        }
+        return convertMap(from, keyFunc, valueFunc, mergeFunction, HashMap::new);
+    }
+
+    /**
+     *
+     * @param from 源集合
+     * @param keyFunc   指定Key字段
+     * @param valueFunc     指定Value的取值(默认为from本身)
+     * @param mergeFunction 指定重复Key合并策略(默认为只取第一个Key)
+     * @param supplier  指定Map的实现类(默认为HashMap)
+     * @return  HashMap
+     * @param <T>
+     * @param <K>
+     * @param <V>
+     */
+    public static <T, K, V> Map<K, V> convertMap(Collection<T> from, Function<T, K> keyFunc, Function<T, V> valueFunc, BinaryOperator<V> mergeFunction, Supplier<? extends Map<K, V>> supplier) {
+        if (CollUtil.isEmpty(from)) {
+            return new HashMap<>();
+        }
+        return from.stream().collect(Collectors.toMap(keyFunc, valueFunc, mergeFunction, supplier));
+    }
+
 }

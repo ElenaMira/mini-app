@@ -81,3 +81,4 @@ logging:
           springsecurity:
             core:
               handle: DEBUG
+          module.promotion.dal.mysql.point.PointActivityMapper: debug

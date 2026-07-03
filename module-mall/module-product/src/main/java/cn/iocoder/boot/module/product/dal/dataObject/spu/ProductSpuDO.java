@@ -131,13 +131,6 @@ public class ProductSpuDO extends BaseDO {
      */
     private Integer giveIntegral;
 
-    /**
-     * 分销类型
-     *
-     * false - 默认
-     * true - 自行设置
-     */
-    private Boolean brokerageType;
 
     // ========== 统计相关字段 =========
 

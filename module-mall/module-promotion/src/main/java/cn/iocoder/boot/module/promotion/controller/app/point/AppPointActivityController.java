@@ -4,6 +4,9 @@ import cn.hutool.core.collection.CollUtil;
 import cn.iocoder.boot.common.Object.BeanUtils;
 import cn.iocoder.boot.common.pojo.CommonResult;
 import cn.iocoder.boot.common.pojo.PageResult;
+import cn.iocoder.boot.module.product.api.spu.ProductSpuApi;
+import cn.iocoder.boot.module.product.api.spu.dto.ProductSpuRespDTO;
+import cn.iocoder.boot.module.product.dal.dataObject.spu.ProductSpuDO;
 import cn.iocoder.boot.module.promotion.controller.app.point.vo.AppPointActivityPageReqVO;
 import cn.iocoder.boot.module.promotion.controller.app.point.vo.AppPointActivityRespVO;
 import cn.iocoder.boot.module.promotion.controller.app.point.vo.PointActivityPageReqVO;
@@ -24,6 +27,7 @@ import java.util.Map;
 
 import static cn.iocoder.boot.common.pojo.CommonResult.success;
 import static cn.iocoder.boot.common.util.collection.CollectionUtils.*;
+import static cn.iocoder.boot.common.util.collection.MapUtils.findAndThen;
 
 /**
  * @author xiaosheng
@@ -36,6 +40,8 @@ public class AppPointActivityController {
 
     @Resource
     private PointActivityService pointActivityService;
+    @Resource
+    private ProductSpuApi productSpuApi;
 
     @GetMapping("/page")
     @Operation(summary = "获得积分商城活动分页")
@@ -57,6 +63,7 @@ public class AppPointActivityController {
         List<PointProductDO> products = pointActivityService.getPointProductListByActivityIds(
                 convertSet(list, PointActivityDO::getId));
         Map<Long, List<PointProductDO>> productsMap = convertMultiMap(products, PointProductDO::getActivityId);
+        Map<Long, ProductSpuRespDTO>  spuMap = productSpuApi.getSpuMap(convertSet(products, PointProductDO::getSpuId));
         List<AppPointActivityRespVO> result = BeanUtils.toBean(list, AppPointActivityRespVO.class);
         result.forEach(respVO -> {
             PointProductDO minProduct = getMinObject(productsMap.get(respVO.getId()), PointProductDO::getPoint);
@@ -65,6 +72,8 @@ public class AppPointActivityController {
                 return;
             }
             respVO.setPoint(minProduct.getPoint());
+            findAndThen(spuMap,minProduct.getSpuId(),
+                    spu-> respVO.setSpuName(spu.getName()).setPicUrl(spu.getPicUrl()).setMarketPrice(spu.getMarketPrice()));
         });
         return result;
     }
