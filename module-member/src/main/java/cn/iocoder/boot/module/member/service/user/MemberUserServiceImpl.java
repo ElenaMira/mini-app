@@ -28,6 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
+import java.util.List;
+
 import static cn.iocoder.boot.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.boot.common.util.servlet.ServletUtils.getClientIP;
 import static cn.iocoder.boot.module.member.enums.ErrorCodeConstants.*;
@@ -151,6 +153,11 @@ public class MemberUserServiceImpl implements MemberUserService {
         memberUserMapper.updateById(MemberUserDO.builder()
                 .id(loginUserId)
                 .mobile(reqVO.getMobile()).build());
+    }
+
+    @Override
+    public List<MemberUserDO> getUserListByNickname(String nickname) {
+        return memberUserMapper.selectListByNicknameLike(nickname);
     }
 
     private MemberUserDO validateUserExists(Long loginUserId) {

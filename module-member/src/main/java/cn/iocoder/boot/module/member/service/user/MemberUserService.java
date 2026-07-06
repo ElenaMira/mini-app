@@ -10,6 +10,8 @@ import cn.iocoder.boot.module.member.controller.app.user.vo.AppMemberUserUpdateR
 import cn.iocoder.boot.module.member.dal.dataObject.app.user.MemberUserDO;
 import jakarta.validation.Valid;
 
+import java.util.List;
+
 
 /**
  * @author xiaosheng
@@ -64,4 +66,12 @@ public interface MemberUserService {
      * @param reqVO vo
      */
     void updateUserMobile(Long loginUserId, @Valid AppMemberUserUpdateMobileReqVO reqVO);
+
+    /**
+     * 基于用户昵称，模糊匹配用户列表
+     *
+     * @param nickname 用户昵称，模糊匹配
+     * @return 用户信息的列表
+     */
+    List<MemberUserDO> getUserListByNickname(String nickname);
 }

@@ -1,9 +1,11 @@
 package cn.iocoder.boot.mybatis.core.query;
 
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.iocoder.boot.common.util.collection.ArrayUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -52,6 +54,20 @@ public class LambdaQueryWrapperX<T> extends LambdaQueryWrapper<T> {
         }
         if (val2 != null) {
             return (LambdaQueryWrapperX<T>) le(column, val2);
+        }
+        return this;
+    }
+
+    public LambdaQueryWrapperX<T> likeIfPresent(SFunction<T,?>  column,String val){
+        if (StringUtils.hasText(val)) {
+            return (LambdaQueryWrapperX<T>) super.like(column, val);
+        }
+        return this;
+    }
+
+    public LambdaQueryWrapperX<T> inIfPresent(SFunction<T,?> column, Collection<?> values) {
+        if (ObjectUtil.isAllNotEmpty(values) && !ArrayUtil.isEmpty(values)) {
+            return (LambdaQueryWrapperX<T>) super.in(column, values);
         }
         return this;
     }
