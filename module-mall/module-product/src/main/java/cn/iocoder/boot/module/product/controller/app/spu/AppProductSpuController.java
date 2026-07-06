@@ -71,4 +71,5 @@ public class AppProductSpuController {
                 .setSkus(BeanUtils.toBean(skus, AppProductSpuDetailRespVO.Sku.class));
         return success(spuVO);
     }
+
 }

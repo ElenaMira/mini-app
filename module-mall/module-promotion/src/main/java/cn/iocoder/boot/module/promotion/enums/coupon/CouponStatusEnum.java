@@ -1,0 +1,34 @@
+package cn.iocoder.boot.module.promotion.enums.coupon;
+
+import cn.iocoder.boot.common.enums.ArrayValuable;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+import java.util.Arrays;
+
+/**
+ * @author xiaosheng
+ */
+@AllArgsConstructor
+@Getter
+public enum CouponStatusEnum implements ArrayValuable<Integer> {
+    UNUSED(1, "未使用"),
+    USED(2, "已使用"),
+    EXPIRE(3, "已过期");
+
+    public static final Integer[] ARRAYS = Arrays.stream(values()).map(CouponStatusEnum::getStatus).toArray(Integer[]::new);
+
+    /**
+     * 值
+     */
+    private final Integer status;
+    /**
+     * 名字
+     */
+    private final String name;
+
+    @Override
+    public Integer[] array() {
+        return new Integer[0];
+    }
+}

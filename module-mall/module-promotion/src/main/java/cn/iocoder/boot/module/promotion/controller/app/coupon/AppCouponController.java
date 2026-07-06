@@ -1,4 +1,4 @@
-package cn.iocoder.boot.module.promotion.convert.coupon;
+package cn.iocoder.boot.module.promotion.controller.app.coupon;
 
 import cn.iocoder.boot.common.pojo.CommonResult;
 import cn.iocoder.boot.module.promotion.service.coupon.CouponService;

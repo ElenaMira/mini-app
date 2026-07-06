@@ -5,7 +5,10 @@ import cn.hutool.core.util.StrUtil;
 import com.xkcoding.http.util.StringUtil;
 
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author xiaosheng
@@ -29,6 +32,18 @@ public class StrUtils {
             }
         }
         return false;
+    }
+
+    /**
+     * 将str按分割符转化为List<Long>
+     * @param str
+     * @param separator
+     * @return
+     */
+    public static List<Long> splitToLong(String str,CharSequence separator){
+        long[] longs = StrUtil.splitToLong(str, separator);
+        //泛型只能存对象,所以这里使用boxed
+        return Arrays.stream(longs).boxed().collect(Collectors.toList());
     }
 
 }
