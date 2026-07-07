@@ -23,4 +23,10 @@ public class ProductSpuApiImpl implements ProductSpuApi {
         List<ProductSpuDO> spus = productSpuService.getSpuList(ids);
         return BeanUtils.toBean(spus, ProductSpuRespDTO.class);
     }
+
+    @Override
+    public ProductSpuRespDTO getSpu(Long spuId) {
+        ProductSpuDO spu = productSpuService.getSpu(spuId);
+        return BeanUtils.toBean(spu, ProductSpuRespDTO.class);
+    }
 }

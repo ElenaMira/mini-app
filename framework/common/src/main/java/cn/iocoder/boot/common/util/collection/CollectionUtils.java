@@ -35,6 +35,22 @@ public class CollectionUtils {
         return collection.stream().map(func).filter(Objects::nonNull).collect(Collectors.toSet());
     }
 
+    /**
+     * 基于func转换器和stream流转换和过滤器,获取目标类下的源类的Set集合
+     * @param collection
+     * @param func
+     * @param filter    过滤器
+     * @return
+     * @param <T>
+     * @param <U>
+     */
+    public  static<T,U> Set<U> convertSet(Collection<T> collection,Function<T,U> func,Predicate<T> filter){
+        if (CollUtil.isEmpty(collection)){
+            return new HashSet<>();
+        }
+        return collection.stream().filter(filter).map(func).filter(Objects::nonNull).collect(Collectors.toSet());
+    }
+
     public static <T,U> U findFirst(Collection<T> source, Predicate<T> predicate, Function<T,U> func){
         if (CollUtil.isEmpty(source)){
             return null;

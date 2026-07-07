@@ -25,6 +25,7 @@
         <guava.version>33.5.0-jre</guava.version>
         <ttl.version>2.14.5</ttl.version>
         <mybatis.plus.version>3.5.12</mybatis.plus.version>
+        <mybatis-plus-join.version>1.5.5</mybatis-plus-join.version>
         <justauth.version>1.16.7</justauth.version>
         <justauth-starter.version>1.4.0</justauth-starter.version>
 
@@ -135,6 +136,12 @@
                     <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
                     <version>${mybatis.plus.version}</version>
                 </dependency>
+
+                <dependency>
+                    <groupId>com.github.yulichang</groupId>
+                    <artifactId>mybatis-plus-join-boot-starter</artifactId> <!-- MyBatis 联表查询 -->
+                    <version>${mybatis-plus-join.version}</version>
+                </dependency>
                 <!-- ip类 -->
                 <dependency>
                     <groupId>org.lionsoul</groupId>
@@ -204,7 +211,7 @@
                 <dependency>
                     <groupId>org.apache.fesod</groupId>
                     <artifactId>fesod-sheet</artifactId>
-                    <version>2.0.2-incubating</version>
+                    <version>${fesod-version}</version>
                 </dependency>
                 <!-- 文件客户端：解决阿里云、腾讯云、minio 等 S3 连接 -->
                 <dependency>

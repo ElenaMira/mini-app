@@ -2,6 +2,7 @@ package cn.iocoder.boot.mybatis.core.query;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 
 /**
  * @author xiaosheng
@@ -29,5 +30,4 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
         super.eq(column,val);
         return this;
     }
-
 }
