@@ -24,6 +24,10 @@
 			<groupId>cn.iocoder.boot</groupId>
 			<artifactId>module-product</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>cn.iocoder.boot</groupId>
+			<artifactId>module-pay</artifactId>
+		</dependency>
 
 		<!-- 参数校验 -->
 		<dependency>

@@ -35,6 +35,11 @@ public class WxPubPayClient extends AbstractWxPayClient {
     }
 
     @Override
+    protected PayOrderRespDTO doUnifiedOrder(PayOrderUnifiedReqDTO reqDTO) throws Throwable {
+        return null;
+    }
+
+    @Override
     protected PayOrderRespDTO doUnifiedOrderV3(PayOrderUnifiedReqDTO reqDTO) throws WxPayException {
         //构建 WxPayUnifiedOrderRequest 对象
         WxPayUnifiedOrderV3Request request = buildPayUnifiedOrderRequestV3(reqDTO)

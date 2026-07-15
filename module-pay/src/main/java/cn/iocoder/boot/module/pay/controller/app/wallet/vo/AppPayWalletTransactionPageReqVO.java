@@ -23,6 +23,10 @@ public class AppPayWalletTransactionPageReqVO extends PageParam {
      * 类型 - 支出
      */
     public static final Integer TYPE_EXPENSE = 2;
+    /**
+     * 类型 - 收入
+     */
+    public static final Integer TYPE_ALL = 3;
 
     @Schema(description = "类型",  example = "1")
     private Integer type;

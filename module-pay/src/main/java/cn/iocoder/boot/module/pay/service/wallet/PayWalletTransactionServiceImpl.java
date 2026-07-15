@@ -27,7 +27,8 @@ public class PayWalletTransactionServiceImpl implements PayWalletTransactionServ
     private PayWalletTransactionMapper payWalletTransactionMapper;
 
     @Override
-    public PageResult<PayWalletTransactionDO> getWalletTransactionPage(Long loginUserId, Integer userType, AppPayWalletTransactionPageReqVO pageVO) {
+    public PageResult<PayWalletTransactionDO> getWalletTransactionPage(Long loginUserId
+            , Integer userType, AppPayWalletTransactionPageReqVO pageVO) {
         PayWalletDO wallet = payWalletService.getOrCreateWallet(loginUserId, userType);
         return payWalletTransactionMapper.selectPage(wallet.getId(), pageVO.getType(), pageVO, pageVO.getCreateTime());
     }

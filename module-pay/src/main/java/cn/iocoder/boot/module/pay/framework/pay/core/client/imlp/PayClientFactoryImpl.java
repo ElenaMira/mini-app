@@ -6,6 +6,9 @@ import cn.iocoder.boot.module.pay.enums.pay.PayChannelEnum;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.PayClient;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.PayClientConfig;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.PayClientFactory;
+import cn.iocoder.boot.module.pay.framework.pay.core.client.imlp.ali.AlipayQrPayClient;
+import cn.iocoder.boot.module.pay.framework.pay.core.client.imlp.ali.AlipayWapPayClient;
+import cn.iocoder.boot.module.pay.framework.pay.core.client.imlp.wallet.WalletPayClient;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.imlp.wx.WxLitePayClient;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.imlp.wx.WxPubPayClient;
 
@@ -36,15 +39,15 @@ public class PayClientFactoryImpl implements PayClientFactory {
 //        clientClass.put(WX_BAR, WxBarPayClient.class);
 //        clientClass.put(WX_NATIVE, WxNativePayClient.class);
 //        clientClass.put(WX_WAP, WxWapPayClient.class);
-//        // 支付包支付客户端
-//        clientClass.put(ALIPAY_WAP, AlipayWapPayClient.class);
-//        clientClass.put(ALIPAY_QR, AlipayQrPayClient.class);
+        // 支付包支付客户端
+        clientClass.put(ALIPAY_WAP, AlipayWapPayClient.class);
+        clientClass.put(ALIPAY_QR, AlipayQrPayClient.class);
 //        clientClass.put(ALIPAY_APP, AlipayAppPayClient.class);
 //        clientClass.put(ALIPAY_PC, AlipayPcPayClient.class);
 //        clientClass.put(ALIPAY_BAR, AlipayBarPayClient.class);
-//        // 钱包支付客户端
-//        clientClass.put(WALLET, WalletPayClient.class);
-//        // Mock 支付客户端
+        // 钱包支付客户端
+        clientClass.put(WALLET, WalletPayClient.class);
+        // Mock 支付客户端
 //        clientClass.put(MOCK, MockPayClient.class);
     }
 

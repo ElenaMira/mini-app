@@ -43,7 +43,7 @@ public interface PayChannelService {
     /**
      * 获取指定应用可用的支付渠道列表
      * @param appId 应用id
-     * @return
+     * @return  可使用的支付app
      */
     List<PayChannelDO> getEnableChannelList(@Valid Long appId);
 }

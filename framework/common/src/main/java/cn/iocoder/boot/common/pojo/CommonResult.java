@@ -2,6 +2,7 @@ package cn.iocoder.boot.common.pojo;
 
 import cn.hutool.core.lang.Assert;
 import cn.iocoder.boot.common.exception.ErrorCode;
+import cn.iocoder.boot.common.exception.ServiceException;
 import cn.iocoder.boot.common.exception.enums.GlobalErrorCodeConstants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -51,4 +52,7 @@ public class CommonResult<T> {
     public Boolean isSuccess(){
         return isSuccess(code);
     }
+
+
+
 }

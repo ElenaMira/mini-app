@@ -5,6 +5,8 @@ import cn.iocoder.boot.common.enums.CommonStatusEnum;
 import cn.iocoder.boot.common.util.json.JsonUtils;
 import cn.iocoder.boot.module.pay.enums.pay.PayChannelEnum;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.PayClientConfig;
+import cn.iocoder.boot.module.pay.framework.pay.core.client.imlp.NonePayClientConfig;
+import cn.iocoder.boot.module.pay.framework.pay.core.client.imlp.ali.AlipayPayClientConfig;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.imlp.wx.WxPayClientConfig;
 import cn.iocoder.boot.mybatis.core.dataobject.BaseDO;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -80,12 +82,12 @@ public class PayChannelDO extends BaseDO {
             className = StrUtil.subAfter(className, ".", true);
             switch (className) {
                 //todo:
-//                case "AlipayPayClientConfig":
-//                    return JsonUtils.parseObject2(json, AlipayPayClientConfig.class);
+                case "AlipayPayClientConfig":
+                    return JsonUtils.parseObject2(json, AlipayPayClientConfig.class);
                 case "WxPayClientConfig":
                     return JsonUtils.parseObject2(json, WxPayClientConfig.class);
-//                case "NonePayClientConfig":
-//                    return JsonUtils.parseObject2(json, NonePayClientConfig.class);
+                case "NonePayClientConfig":
+                    return JsonUtils.parseObject2(json, NonePayClientConfig.class);
                 default:
                     throw new IllegalArgumentException("未知的 PayClientConfig 类型：" + json);
             }

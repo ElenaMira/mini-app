@@ -23,7 +23,7 @@ public interface PayWalletTransactionService {
     PageResult<PayWalletTransactionDO> getWalletTransactionPage(@NotNull Long loginUserId, Integer userType, @Valid AppPayWalletTransactionPageReqVO pageReqVO);
 
     /**
-     * 钱包流水统计
+     * 获取一段时间内的钱包流水统计
      * @param loginUserId
      * @param userType
      * @param createTime

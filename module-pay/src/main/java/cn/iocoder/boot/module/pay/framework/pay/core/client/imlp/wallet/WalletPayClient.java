@@ -1,6 +1,7 @@
 package cn.iocoder.boot.module.pay.framework.pay.core.client.imlp.wallet;
 
 import cn.iocoder.boot.module.pay.framework.pay.core.client.dto.pay.PayOrderRespDTO;
+import cn.iocoder.boot.module.pay.framework.pay.core.client.dto.pay.PayOrderUnifiedReqDTO;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.imlp.AbstractPayClient;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.imlp.NonePayClientConfig;
 
@@ -18,6 +19,11 @@ public class WalletPayClient extends AbstractPayClient<NonePayClientConfig> {
     @Override
     protected void doInit() {
 
+    }
+
+    @Override
+    protected PayOrderRespDTO doUnifiedOrder(PayOrderUnifiedReqDTO reqDTO) throws Throwable {
+        return null;
     }
 
     @Override

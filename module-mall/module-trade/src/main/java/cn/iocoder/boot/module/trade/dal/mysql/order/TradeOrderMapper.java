@@ -1,4 +1,4 @@
-package cn.iocoder.boot.module.trade.dal.mysql;
+package cn.iocoder.boot.module.trade.dal.mysql.order;
 
 import cn.iocoder.boot.module.trade.dal.dataobject.TradeOrderDO;
 import cn.iocoder.boot.mybatis.core.mapper.BaseMapperX;

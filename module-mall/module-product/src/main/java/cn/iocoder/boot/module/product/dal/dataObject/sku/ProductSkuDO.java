@@ -1,5 +1,6 @@
 package cn.iocoder.boot.module.product.dal.dataObject.sku;
 
+import cn.iocoder.boot.module.product.dal.dataObject.spu.ProductSpuDO;
 import cn.iocoder.boot.mybatis.core.dataobject.BaseDO;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -32,11 +33,6 @@ public class ProductSkuDO extends BaseDO {
      * 关联 {@link ProductSpuDO#getId()}
      */
     private Long spuId;
-    /**
-     * 属性数组，JSON 格式
-     */
-    @TableField(typeHandler = JacksonTypeHandler.class)
-    private List<Property> properties;
     /**
      * 商品价格，单位：分
      */

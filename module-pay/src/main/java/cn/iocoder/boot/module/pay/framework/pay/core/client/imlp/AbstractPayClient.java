@@ -1,12 +1,15 @@
 package cn.iocoder.boot.module.pay.framework.pay.core.client.imlp;
 
 import cn.iocoder.boot.common.exception.ServiceException;
+import cn.iocoder.boot.common.util.validation.ValidationUtils;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.dto.pay.PayOrderRespDTO;
+import cn.iocoder.boot.module.pay.framework.pay.core.client.dto.pay.PayOrderUnifiedReqDTO;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.exception.PayClientException;
 import lombok.extern.slf4j.Slf4j;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.PayClient;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.PayClientConfig;
 
+import static cn.iocoder.boot.common.util.json.JsonUtils.toJsonString;
 
 
 /**
@@ -80,6 +83,27 @@ public abstract class AbstractPayClient<Config extends PayClientConfig> implemen
             throw buildPayException(e);
         }
     }
+    @Override
+    public final PayOrderRespDTO unifiedOrder(PayOrderUnifiedReqDTO reqDTO) {
+        ValidationUtils.validate(reqDTO);
+        // 执行统一下单
+        PayOrderRespDTO resp;
+        try {
+            resp = doUnifiedOrder(reqDTO);
+        } catch (ServiceException ex) { // 业务异常，都是实现类已经翻译，所以直接抛出即可
+            throw ex;
+        } catch (Throwable ex) {
+            // 系统异常，则包装成 PayException 异常抛出
+            log.error("[unifiedOrder][客户端({}) request({}) 发起支付异常]",
+                    getId(), toJsonString(reqDTO), ex);
+            throw buildPayException(ex);
+        }
+        return resp;
+    }
+
+    protected abstract PayOrderRespDTO doUnifiedOrder(PayOrderUnifiedReqDTO reqDTO)
+            throws Throwable;
+
 
     /**
      *

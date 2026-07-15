@@ -2,9 +2,10 @@ package cn.iocoder.boot.module.pay.service.order;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import cn.iocoder.boot.common.util.date.DateUtils;
 import cn.iocoder.boot.common.util.number.MoneyUtils;
-import cn.iocoder.boot.common.util.object.ObjectUtils;
 import cn.iocoder.boot.module.pay.api.order.PayOrderCreateReqDTO;
 import cn.iocoder.boot.module.pay.controller.app.order.vo.AppPayOrderSubmitReqVO;
 import cn.iocoder.boot.module.pay.controller.app.order.vo.AppPayOrderSubmitRespVO;
@@ -21,12 +22,11 @@ import cn.iocoder.boot.module.pay.framework.pay.config.PayProperties;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.PayClient;
 import cn.iocoder.boot.module.pay.framework.pay.core.client.dto.pay.PayOrderRespDTO;
 import cn.iocoder.boot.module.pay.enums.notify.PayNotifyTypeEnum;
+import cn.iocoder.boot.module.pay.framework.pay.core.client.dto.pay.PayOrderUnifiedReqDTO;
 import cn.iocoder.boot.module.pay.service.app.PayAppService;
 import cn.iocoder.boot.module.pay.service.channel.PayChannelService;
 import cn.iocoder.boot.module.pay.service.notify.PayNotifyService;
 import jakarta.annotation.Resource;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -167,7 +167,40 @@ public class PayOrderServiceImpl implements PayOrderService {
                 .setChannelId(channel.getId()).setChannelCode(channel.getCode())
                 .setStatus(PayOrderStatusEnum.WAITING.getStatus());
         payOrderExtensionMapper.insert(orderExtension);
-        return null;
+
+        // 3. 调用三方接口
+        PayOrderUnifiedReqDTO unifiedOrderReqDTO = PayOrderConvert.INSTANCE.convert2(reqVO, userIp)
+                //商家相关字段
+                .setOutTradeNo(orderExtension.getNo()) // 注意，此处使用的是 PayOrderExtensionDO.no 属性！
+                .setSubject(order.getSubject()).setBody(order.getBody())
+                .setNotifyUrl(genChannelOrderNotifyUrl(channel))
+                .setReturnUrl(reqVO.getReturnUrl())
+                // 订单相关字段
+                .setPrice(order.getPrice()).setExpireTime(order.getExpireTime());
+        PayOrderRespDTO unifiedOrderResp = client.unifiedOrder(unifiedOrderReqDTO);
+        // 4. 如果调用直接支付成功，则直接更新支付单状态为成功。例如说：付款码支付，免密支付时，就直接验证支付成功
+        if (unifiedOrderResp != null) {
+            try {
+                getSelf().notifyOrder(channel, unifiedOrderResp);
+            } catch (Exception e) {
+                // 兼容 https://gitee.com/zhijiantianya/yudao-cloud/issues/I8SM9H 场景
+                // 支付宝或微信扫码之后时，由于 PayClient 是直接返回支付成功，而支付也会有回调，导致存在并发更新问题，此时一般是可以 try catch 直接忽略
+                log.warn("[submitOrder][order({}) channel({}) 支付结果({}) 通知时发生异常，可能是并发问题]",
+                        order, channel, unifiedOrderResp, e);
+            }
+            // 如有渠道错误码，则抛出业务异常，提示用户
+            if (StrUtil.isNotEmpty(unifiedOrderResp.getChannelErrorCode())) {
+                throw exception(PAY_ORDER_SUBMIT_CHANNEL_ERROR, unifiedOrderResp.getChannelErrorCode(),
+                        unifiedOrderResp.getChannelErrorMsg());
+            }
+
+            order = payOrderMapper.selectById(order.getId());
+        }
+        return PayOrderConvert.INSTANCE.convert(order, unifiedOrderResp);
+    }
+
+    private PayOrderServiceImpl getSelf() {
+        return SpringUtil.getBean(getClass());
     }
 
     @Override
@@ -243,6 +276,16 @@ public class PayOrderServiceImpl implements PayOrderService {
             }
         }
 
+    }
+
+    /**
+     * 根据支付渠道的编码，生成支付渠道的回调地址
+     *
+     * @param channel 支付渠道
+     * @return 支付渠道的回调地址  配置地址 + "/" + channel id
+     */
+    private String genChannelOrderNotifyUrl(PayChannelDO channel) {
+        return payProperties.getOrderNotifyUrl() + "/" + channel.getId();
     }
 
     /**

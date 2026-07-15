@@ -1,6 +1,6 @@
 package cn.iocoder.boot.module.trade.service.order;
 
-import cn.iocoder.boot.module.trade.dal.mysql.TradeOrderMapper;
+import cn.iocoder.boot.module.trade.dal.mysql.order.TradeOrderMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 

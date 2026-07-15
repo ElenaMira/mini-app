@@ -1,14 +1,12 @@
 package cn.iocoder.boot.module.pay.dal.dataobject.wallet;
 
+import cn.iocoder.boot.module.pay.dal.dataobject.order.PayOrderDO;
 import cn.iocoder.boot.module.pay.enums.refund.PayRefundStatusEnum;
 import cn.iocoder.boot.mybatis.core.dataobject.BaseDO;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -20,6 +18,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(callSuper = true)
 public class PayWalletRechargeDO extends BaseDO {
 
     /**

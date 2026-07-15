@@ -19,8 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import static cn.iocoder.boot.module.pay.controller.app.wallet.vo.AppPayWalletTransactionPageReqVO.TYPE_EXPENSE;
-import static cn.iocoder.boot.module.pay.controller.app.wallet.vo.AppPayWalletTransactionPageReqVO.TYPE_INCOME;
+import static cn.iocoder.boot.module.pay.controller.app.wallet.vo.AppPayWalletTransactionPageReqVO.*;
 import static cn.iocoder.boot.module.pay.enums.ErrorCodeConstants.WALLET_TRANSACTION_TYPE_NOT_EXISTS;
 
 /**
@@ -28,17 +27,20 @@ import static cn.iocoder.boot.module.pay.enums.ErrorCodeConstants.WALLET_TRANSAC
  */
 @Mapper
 public interface PayWalletTransactionMapper extends BaseMapperX<PayWalletTransactionDO> {
+    /**
+     * 分页查询钱包流水
+     *
+     * @param walletId 钱包id
+     * @param type 收支类型
+     * @param pageParam 分页参数
+     * @param createTime 创建时间区间 [开始,结束]
+     * @return 分页流水
+     */
     default PageResult<PayWalletTransactionDO> selectPage(Long walletId, Integer type,
                                                           PageParam pageParam, LocalDateTime[] createTime) {
         LambdaQueryWrapperX<PayWalletTransactionDO> query = new LambdaQueryWrapperX<PayWalletTransactionDO>()
                 .eq(PayWalletTransactionDO::getWalletId, walletId);
-        if (ObjectUtil.equal(type,TYPE_INCOME)){
-            query.gt(PayWalletTransactionDO::getPrice, 0);
-        }else if (Objects.equals(type, TYPE_EXPENSE)) {
-            query.lt(PayWalletTransactionDO::getPrice, 0);
-        }else{
-            throw new ServiceException(WALLET_TRANSACTION_TYPE_NOT_EXISTS);
-        }
+        buildPriceCondition(query,type);
         query.betweenIfPresent(PayWalletTransactionDO::getCreateTime, createTime);
         query.orderByDesc(PayWalletTransactionDO::getId);
         return selectPage(pageParam, query);
@@ -56,5 +58,23 @@ public interface PayWalletTransactionMapper extends BaseMapperX<PayWalletTransac
         // 获得 sum 结果
         Map<String, Object> first = CollUtil.getFirst(result);
         return MapUtil.getInt(first, "priceSum", 0);
+    }
+
+    /**
+     * 【私有公共方法】统一构建收支价格过滤条件
+     * @param query 包装器
+     * @param type 收支类型
+     */
+    private static void buildPriceCondition(LambdaQueryWrapperX<PayWalletTransactionDO> query, Integer type) {
+        if (ObjectUtil.equal(type, TYPE_INCOME)) {
+            query.gt(PayWalletTransactionDO::getPrice, 0);
+        } else if (ObjectUtil.equal(type, TYPE_EXPENSE)) {
+            query.lt(PayWalletTransactionDO::getPrice, 0);
+        } else if (ObjectUtil.equal(type, TYPE_ALL)) {
+            // 全部收支，不增加价格过滤条件
+            return;
+        } else {
+            throw new ServiceException(WALLET_TRANSACTION_TYPE_NOT_EXISTS);
+        }
     }
 }

@@ -2,6 +2,7 @@ package cn.iocoder.boot.module.product.service.sku;
 
 import cn.iocoder.boot.module.product.dal.dataObject.sku.ProductSkuDO;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -15,4 +16,11 @@ public interface ProductSkuService {
      * @return 商品sku 集合
      */
     List<ProductSkuDO> getSkuListBySpuId(Long spuId);
+    /**
+     * 获得商品 SKU 列表
+     *
+     * @param ids 编号
+     * @return 商品sku列表
+     */
+    List<ProductSkuDO> getSkuList(Collection<Long> ids);
 }

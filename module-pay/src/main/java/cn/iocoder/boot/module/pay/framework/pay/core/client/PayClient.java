@@ -1,6 +1,7 @@
 package cn.iocoder.boot.module.pay.framework.pay.core.client;
 
 import cn.iocoder.boot.module.pay.framework.pay.core.client.dto.pay.PayOrderRespDTO;
+import cn.iocoder.boot.module.pay.framework.pay.core.client.dto.pay.PayOrderUnifiedReqDTO;
 
 public interface PayClient<Config> {
 
@@ -24,4 +25,11 @@ public interface PayClient<Config> {
      * @return  支付订单信息
      */
     PayOrderRespDTO getOrder(String no);
+    /**
+     * 调用支付渠道，统一下单
+     *
+     * @param reqDTO 下单信息
+     * @return 支付订单信息
+     */
+    PayOrderRespDTO unifiedOrder(PayOrderUnifiedReqDTO reqDTO);
 }
