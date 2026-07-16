@@ -46,6 +46,10 @@ public class MemberUserDO {
      * 用户头像
      */
     private String avatar;
+    /**
+     * 用户性别
+     */
+    private Integer sex;
     // ========== 其它信息 ==========
     /**
      * 会员经验

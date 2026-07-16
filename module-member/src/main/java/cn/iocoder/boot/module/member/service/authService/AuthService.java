@@ -18,6 +18,11 @@ public interface AuthService {
 
     public void sendSmsCode(Long loginUserId, @Valid AppSendSmsCodeReqVO appAuthLoginReqVO);
 
+    /**
+     * 基于授权码登录
+     * @param reqVO
+     * @return
+     */
     AppAuthLoginRespVO socialLogin(@Valid AppAuthSocialLoginReqVO reqVO);
 
     void logout(String token);

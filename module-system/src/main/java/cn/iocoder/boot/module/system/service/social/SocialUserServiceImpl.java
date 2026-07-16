@@ -62,7 +62,7 @@ public class SocialUserServiceImpl implements SocialUserService {
                 .openid(socialUser.getOpenid())
                 .avatar(socialUser.getAvatar())
                 .nickname(socialUser.getNickname())
-                .userId(socialBindUser == null?null:socialBindUser.getSocialUserId())
+                .userId(socialBindUser == null?null:socialBindUser.getUserId())
                 .build();
     }
 
