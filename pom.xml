@@ -18,6 +18,7 @@
         <module>module-infra</module>
         <module>module-mall</module>
         <module>module-pay</module>
+        <module>module-reservation</module>
     </modules>
 
     <properties>

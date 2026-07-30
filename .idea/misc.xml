@@ -16,6 +16,8 @@
         <option value="$PROJECT_DIR$/module-mall/module-promotion/pom.xml" />
         <option value="$PROJECT_DIR$/module-mall/module-trade/pom.xml" />
         <option value="$PROJECT_DIR$/framework/job/pom.xml" />
+        <option value="$PROJECT_DIR$/gym/pom.xml" />
+        <option value="$PROJECT_DIR$/module-reservation/pom.xml" />
       </list>
     </option>
   </component>

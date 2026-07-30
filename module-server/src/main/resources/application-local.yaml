@@ -82,3 +82,4 @@ logging:
             core:
               handle: DEBUG
           module.promotion.dal.mysql.point.PointActivityMapper: debug
+          module.member.dal.mysql.user.MemberUserMapper: debug

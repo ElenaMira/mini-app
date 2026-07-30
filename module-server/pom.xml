@@ -37,6 +37,14 @@
             <artifactId>module-member</artifactId>
             <version>${revision}</version>
         </dependency>
+
+        <!-- 预约相关模块。默认注释，保证编译速度-->
+        <dependency>
+            <groupId>cn.iocoder.boot</groupId>
+            <artifactId>module-reservation</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
         <!-- 商城相关模块。默认注释，保证编译速度-->
         <dependency>
             <groupId>cn.iocoder.boot</groupId>
