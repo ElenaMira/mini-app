@@ -13,10 +13,12 @@ import java.util.Arrays;
 @Getter
 @AllArgsConstructor
 public enum GymReserveStatusEnum implements ArrayValuable<Integer> {
+
     PENDING(1, "待使用"),
-    CHECK_IN(2, "已核销"),
-    CANCEL(3, "已取消"),
-    MISS_APPOINT(4, "爽约失效");
+    CHECK_IN(2, "使用中"),
+    FINISHED(3, "已完成"),
+    CANCEL(4, "已取消"),
+    MISS_APPOINT(5, "爽约失效");
 
     private final Integer code;
     private final String desc;

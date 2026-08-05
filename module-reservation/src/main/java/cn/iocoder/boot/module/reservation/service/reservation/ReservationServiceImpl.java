@@ -1,8 +1,10 @@
 package cn.iocoder.boot.module.reservation.service.reservation;
 
 import cn.iocoder.boot.common.enums.CommonStatusEnum;
+import cn.iocoder.boot.common.pojo.PageResult;
 import cn.iocoder.boot.module.reservation.controller.app.reservation.vo.AppReservationSubmitReqVO;
-import cn.iocoder.boot.module.reservation.controller.app.reservation.vo.AppTimeSlotRespVO;
+import cn.iocoder.boot.module.reservation.controller.app.reservation.vo.AppUserReservationPageReqVO;
+import cn.iocoder.boot.module.reservation.controller.app.reservation.vo.GymReserveCountRespVO;
 import cn.iocoder.boot.module.reservation.dal.dataObject.reservation.GymReservationDO;
 import cn.iocoder.boot.module.reservation.dal.dataObject.reservation.GymReservationTimeSlotDO;
 import cn.iocoder.boot.module.reservation.dal.dataObject.reservation.GymUserReservationDO;
@@ -108,6 +110,16 @@ public class ReservationServiceImpl implements ReservationService {
         }
         reservationMapper.updateById(gymReservationDO);
         timeSlotMapper.updateById(slotDO);
+    }
+
+    @Override
+    public Long getUserReserveSingleCount(Long userId,Integer status) {
+        return userReservationMapper.selectCountByUserIdAndStatus(userId, status);
+    }
+
+    @Override
+    public PageResult<GymUserReservationDO> getPage(Long loginUserId, AppUserReservationPageReqVO reqVO) {
+        return userReservationMapper.selectPage(reqVO,loginUserId);
     }
 
     private void validationDate(LocalDate date){
