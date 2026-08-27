@@ -95,4 +95,8 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
     default Long selectCount(SFunction<T,?> filed,Object value){
         return selectCount(new LambdaQueryWrapper<T>().eq(filed,value));
     }
+
+    default int updateBatch(T update) {
+        return update(update, new QueryWrapper<>());
+    }
 }

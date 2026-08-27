@@ -83,3 +83,4 @@ logging:
               handle: DEBUG
           module.promotion.dal.mysql.point.PointActivityMapper: debug
           module.member.dal.mysql.user.MemberUserMapper: debug
+          module.reservation.dal.mysql.reservation.GymUserReservationMapper: debug

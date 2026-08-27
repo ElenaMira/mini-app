@@ -4,11 +4,15 @@ import cn.iocoder.boot.module.reservation.dal.dataObject.reservation.GymReservat
 import cn.iocoder.boot.module.reservation.dal.dataObject.reservation.GymReservationTimeSlotDO;
 import cn.iocoder.boot.mybatis.core.mapper.BaseMapperX;
 import cn.iocoder.boot.mybatis.core.query.LambdaQueryWrapperX;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author xiaosheng
@@ -27,4 +31,14 @@ public interface ReservationMapper extends BaseMapperX<GymReservationDO> {
         return selectOne(GymReservationDO::getTargetDate, date);
     }
 
+    /**
+     * 批量归还剩余名额。
+     */
+    default int increaseRemainPerson(LocalDate reserveDate,int addNum) {
+        LambdaUpdateWrapper<GymReservationDO> wrapper = Wrappers.lambdaUpdate();
+        // 数据库层面自增，原子操作
+        wrapper.setSql("remain_person = remain_person + " + addNum)
+                .eq(GymReservationDO::getTargetDate, reserveDate);
+        return update(null, wrapper);
+    }
 }

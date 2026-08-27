@@ -66,9 +66,9 @@ public class GymUserReservationDO extends BaseDO {
 
     /**
      * 预约状态：
-     * 1 待使用 | 2 已核销 | 3 已取消 | 4 爽约失效
+     * 1待使用 2使用中 3已完成 4已取消 5爽约失效
      */
-    @Schema(description = "预约状态：1待使用 2已核销 3已取消 4爽约")
+    @Schema(description = "预约状态：1待使用 2使用中 3已完成 4已取消 5爽约失效")
     private Integer reserveStatus;
 
     /**

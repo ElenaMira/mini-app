@@ -39,6 +39,10 @@
             <groupId>cn.iocoder.boot</groupId>
             <artifactId>mybatis</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.iocoder.boot</groupId>
+            <artifactId>job</artifactId>
+        </dependency>
         <!-- 业务相关 -->
 
         <dependency>

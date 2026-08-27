@@ -1,0 +1,37 @@
+2026-08-26 16:46:50 [com.xxl.job.core.thread.JobThread#run]-[127]-[xxl-job, JobThread-5-1787733985146] <br>----------- xxl-job job execute start -----------<br>----------- Param:
+2026-08-26 16:46:50 [com.xxl.job.core.thread.JobThread#run]-[199]-[xxl-job, JobThread-5-1787733985146] <br>----------- JobThread Exception:java.lang.reflect.InvocationTargetException
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at com.xxl.job.core.handler.impl.MethodJobHandler.execute(MethodJobHandler.java:31)
+	at com.xxl.job.core.thread.JobThread.run(JobThread.java:161)
+Caused by: com.baomidou.mybatisplus.core.exceptions.MybatisPlusException: Please check the syntax correctness! sql not contains: "{0}"
+	at com.baomidou.mybatisplus.core.toolkit.ExceptionUtils.mpe(ExceptionUtils.java:49)
+	at com.baomidou.mybatisplus.core.conditions.AbstractWrapper.formatSqlMaybeWithParam(AbstractWrapper.java:512)
+	at com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper.lambda$setSql$1(LambdaUpdateWrapper.java:89)
+	at com.baomidou.mybatisplus.core.conditions.AbstractWrapper.maybeDo(AbstractWrapper.java:545)
+	at com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper.setSql(LambdaUpdateWrapper.java:88)
+	at com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper.setSql(LambdaUpdateWrapper.java:38)
+	at com.baomidou.mybatisplus.core.conditions.update.Update.setSql(Update.java:82)
+	at cn.iocoder.boot.module.reservation.dal.mysql.reservation.ReservationMapper.increaseRemainPerson(ReservationMapper.java:40)
+	at java.base/java.lang.invoke.MethodHandle.invokeWithArguments(MethodHandle.java:732)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$DefaultMethodInvoker.invoke(MybatisMapperProxy.java:182)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:93)
+	at jdk.proxy2/jdk.proxy2.$Proxy151.increaseRemainPerson(Unknown Source)
+	at cn.iocoder.boot.module.reservation.job.GymReservationExpireXxlJob.handle(GymReservationExpireXxlJob.java:58)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:360)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728)
+	at cn.iocoder.boot.module.reservation.job.GymReservationExpireXxlJob$$SpringCGLIB$$0.handle(<generated>)
+	... 6 more
+<br>----------- xxl-job job execute end(error) -----------
+2026-08-26 16:46:50 [com.xxl.job.core.thread.TriggerCallbackThreadHelper#appendCallbackResult]-[195]-[pool-4-thread-1] <br>----------- xxl-job job callback finish.

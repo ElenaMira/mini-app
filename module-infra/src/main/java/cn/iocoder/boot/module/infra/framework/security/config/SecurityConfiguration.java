@@ -27,8 +27,13 @@ public class SecurityConfiguration {
                         .requestMatchers("/actuator/**").permitAll();
                 // Druid 监控
                 registry.requestMatchers("/druid/**").permitAll();
+                //xxl-job
+                registry.requestMatchers("xxl-job-admin/**").permitAll();
+                registry.requestMatchers("/xxl-job-admin/**").permitAll();
+
                 // 文件读取
-                registry.requestMatchers(buildAdminApi("/infra/file/*/get/**")).permitAll();
+                registry.requestMatchers(buildAdminApi("/infra/file/**")).permitAll();
+
             }
         };
     }

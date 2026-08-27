@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication(scanBasePackages ={"${hd.info.base-package}.server", "${hd.info.base-package}.module"})
 @MapperScan("cn.iocoder.boot.**.dal.mysql")
+
 public class ModuleServerApplication {
 
     public static void main(String[] args) {

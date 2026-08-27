@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.boot.module.reservation.dal.mysql.reservation.GymUserReservationMapper">
+
+    <select id="selectExpiredPendingReserveForUpdate" resultType="cn.iocoder.boot.module.reservation.dal.dataObject.reservation.GymUserReservationDO">
+        SELECT
+            id,
+            reserve_date
+        FROM gym_user_reservation
+        WHERE deleted = 0
+          AND reserve_status = #{pendingStatus}
+          AND reserve_date &lt;= DATE(#{now})
+          AND CONCAT(reserve_date, ' ', end_time) &lt; #{now}
+            FOR UPDATE
+    </select>
+
+    <update id="batchUpdateMissedByIds">
+        UPDATE gym_user_reservation
+        SET reserve_status = #{missedStatus},
+        update_time = NOW()
+        WHERE deleted = 0
+        AND reserve_status = #{pendingStatus}
+        AND id IN
+        <foreach collection="idList"
+                 item="item"
+                 open="("
+                 separator=","
+                 close=")">
+            #{item}
+        </foreach>
+    </update>
+
+
+</mapper>

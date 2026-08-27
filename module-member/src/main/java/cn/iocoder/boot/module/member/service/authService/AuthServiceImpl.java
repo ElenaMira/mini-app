@@ -7,6 +7,8 @@ import cn.iocoder.boot.common.biz.system.oauth2.OAuth2TokenCommonApi;
 import cn.iocoder.boot.common.biz.system.oauth2.dto.OAuth2AccessTokenBaseRespDTO;
 import cn.iocoder.boot.common.biz.system.oauth2.dto.OAuth2AccessTokenCreateReqDTO;
 import cn.iocoder.boot.common.enums.CommonStatusEnum;
+import cn.iocoder.boot.common.enums.SocialTypeEnum;
+import cn.iocoder.boot.common.enums.TerminalEnum;
 import cn.iocoder.boot.common.enums.UserTypeEnum;
 import cn.iocoder.boot.common.validation.Mobile;
 import cn.iocoder.boot.module.member.controller.app.auth.vo.*;
@@ -15,9 +17,11 @@ import cn.iocoder.boot.module.member.dal.dataObject.app.user.MemberUserDO;
 import cn.iocoder.boot.module.member.service.user.MemberUserService;
 
 import cn.iocoder.boot.module.system.api.sms.SmsCodeApi;
+import cn.iocoder.boot.module.system.api.social.SocialClientApi;
 import cn.iocoder.boot.module.system.api.social.SocialUserApi;
 import cn.iocoder.boot.module.system.api.social.dto.SocialUserBindReqDTO;
 import cn.iocoder.boot.module.system.api.social.dto.SocialUserRespDTO;
+import cn.iocoder.boot.module.system.api.social.dto.SocialWxPhoneNumberInfoRespDTO;
 import cn.iocoder.boot.module.system.enums.sms.SmsSceneEnum;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -43,10 +47,15 @@ public class AuthServiceImpl implements AuthService{
     private SocialUserApi socialUserApi;
 
     @Resource
+    private SocialClientApi socialClientApi;
+
+    @Resource
     private OAuth2TokenCommonApi oauth2TokenApi;
 
     @Resource
     private SmsCodeApi smsCodeApi;
+
+
 
     @Override
     public AppAuthLoginRespVO login(AppAuthLoginReqVO reqVO) {
@@ -168,6 +177,24 @@ public class AuthServiceImpl implements AuthService{
     public AppAuthLoginRespVO refreshToken(String refreshToken) {
         OAuth2AccessTokenBaseRespDTO baseRespDTO = oauth2TokenApi.refreshToken(refreshToken, "default");
         return AuthConvert.INSTANCE.convert(baseRespDTO, null);
+    }
+
+    @Override
+    public AppAuthLoginRespVO weixinMiniAppLogin(AppAuthWeixinMiniAppLoginReqVO reqVO) {
+        // 获得对应的手机号信息
+        SocialWxPhoneNumberInfoRespDTO phoneNumberInfo = socialClientApi.getWxMaPhoneNumberInfo(
+                UserTypeEnum.MEMBER.getValue(), reqVO.getPhoneCode());
+        Assert.notNull(phoneNumberInfo, "获得手机信息失败，结果为空");
+        // 获得获得注册用户
+        MemberUserDO user = memberUserService.createUserIfAbsent(phoneNumberInfo.getPurePhoneNumber(),
+                getClientIP(), TerminalEnum.WECHAT_MINI_PROGRAM.getTerminal());
+        Assert.notNull(user, "获取用户失败，结果为空");
+
+        // 绑定社交用户
+        String openid = socialUserApi.bindSocialUser(new SocialUserBindReqDTO(user.getId(), getUserType().getValue(),
+                SocialTypeEnum.WECHAT_MINI_PROGRAM.getType(), reqVO.getLoginCode(), reqVO.getState()));
+        // 创建 Token 令牌，记录登录日志
+        return createTokenAfterLoginSuccess(user, user.getMobile(), openid);
     }
 
     private AppAuthLoginRespVO createTokenAfterLoginSuccess(MemberUserDO userDO, @Mobile String mobile, String openid) {

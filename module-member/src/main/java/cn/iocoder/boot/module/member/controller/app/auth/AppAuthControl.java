@@ -82,4 +82,11 @@ public class AppAuthControl {
     public CommonResult<AppAuthLoginRespVO> socialLogin(@RequestBody @Valid AppAuthSocialLoginReqVO reqVO) {
         return success(authService.socialLogin(reqVO));
     }
+
+    @PostMapping("/weixin-mini-app-login")
+    @Operation(summary = "微信小程序的一键登录")
+    @PermitAll
+    public CommonResult<AppAuthLoginRespVO> weixinMiniAppLogin(@RequestBody @Valid AppAuthWeixinMiniAppLoginReqVO reqVO) {
+        return success(authService.weixinMiniAppLogin(reqVO));
+    }
 }

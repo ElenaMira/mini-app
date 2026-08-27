@@ -28,4 +28,11 @@ public interface AuthService {
     void logout(String token);
 
     AppAuthLoginRespVO refreshToken(String refreshToken);
+    /**
+     * 微信小程序的一键登录
+     *
+     * @param reqVO 登录信息
+     * @return 登录结果
+     */
+    AppAuthLoginRespVO weixinMiniAppLogin(@Valid AppAuthWeixinMiniAppLoginReqVO reqVO);
 }
